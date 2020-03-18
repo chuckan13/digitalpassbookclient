@@ -22,7 +22,7 @@ public interface ClubService {
     @DELETE("club/{clubID}")
     Call<Club> removeClub(@Path("clubID") int clubID);
 
-    @PATCH   ("club/{clubID}")
+    @PATCH ("club/{clubID}")
     Call<Club> updateClub(@Path("clubID") int clubID, @Body Club club );
 
 
