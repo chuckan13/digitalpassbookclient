@@ -1,3 +1,6 @@
 [submodule "peaceful-hollows-01379"]
 	path = peaceful-hollows-01379
 	url = https://git.heroku.com/peaceful-hollows-01379.git
+[submodule "server/spring-boot-android-service"]
+	path = server/spring-boot-android-service
+	url = https://git.heroku.com/peaceful-hollows-01379.git
