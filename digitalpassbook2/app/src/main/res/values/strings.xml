@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">digital passbook</string>
+    <string name="click_the_button_to_create_a_book">Click the button to create a book</string>
+    <string name="created_book">Created Book with ISBN: %1$s</string>
+</resources>
