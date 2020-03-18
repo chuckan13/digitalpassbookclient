@@ -8,7 +8,7 @@ import retrofit2.http.Path;
 
 public interface BookService {
     @GET("books")
-    Call<List<Book>> all();
+    Call<List<Book>> getall();
 
     @GET("books/{isbn}")
     Call<Book> get(@Path("isbn") String isbn);

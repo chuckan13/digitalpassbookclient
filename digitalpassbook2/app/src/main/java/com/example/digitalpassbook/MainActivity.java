@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         final Button viewAllButton = (Button) findViewById(R.id.viewAllButton);
         final TextView allBooks = (TextView) findViewById(R.id.allBooks);
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://digitalpass333.herokuapp.com")
+                .baseUrl("https://peaceful-hollows-01379.herokuapp.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         viewAllButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Call<List<Book>> createCall = service.all();
+                Call<List<Book>> createCall = service.getall();
                 createCall.enqueue(new Callback<List<Book>>() {
                     @Override
                     public void onResponse(Call<List<Book>> call, Response<List<Book>> resp) {

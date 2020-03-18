@@ -8,7 +8,7 @@ public class Student {
     @SerializedName("fullname")
     String fullName;
 
-    @SerializedName("id")
+    @SerializedName("netid")
     int netID;
 
     public Student(int studentID, String fullName, int netID) {
