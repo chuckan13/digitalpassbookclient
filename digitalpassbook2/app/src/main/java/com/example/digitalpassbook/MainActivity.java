@@ -24,32 +24,36 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final EditText isbnInput = (EditText) findViewById(R.id.isbnInput);
+        final EditText clubInput = (EditText) findViewById(R.id.clubInput);
         final TextView textView = (TextView) findViewById(R.id.textView);
         final Button button = (Button) findViewById(R.id.button);
         final Button viewAllButton = (Button) findViewById(R.id.viewAllButton);
-        final TextView allBooks = (TextView) findViewById(R.id.allBooks);
+        final TextView allClubs = (TextView) findViewById(R.id.allClubs);
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://peaceful-hollows-01379.herokuapp.com/")
+                .baseUrl("https://powerful-cove-79276.herokuapp.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        final BookService service = retrofit.create(BookService.class);
+        final ClubService service = retrofit.create(ClubService.class);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Book book = new Book(isbnInput.getText().toString());
-                Call<Book> createCall = service.create(book);
-                createCall.enqueue(new Callback<Book>() {
+                Club club = new Club(clubInput.getText().toString());
+                Call<Club> createCall = service.createClub(club);
+                createCall.enqueue(new Callback<Club>() {
                     @Override
-                    public void onResponse(Call<Book> call, Response<Book> resp) {
-                        Book newBook = resp.body();
-                        System.out.println(newBook.isbn);
-                        textView.setText("Created Book with ISBN: " + newBook.isbn);
+                    public void onResponse(Call<Club> call, Response<Club> resp) {
+                        Club newClub = resp.body();
+                        try {
+                            System.out.println(resp.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        textView.setText("Created Club with ClubName: " + newClub.clubName);
                     }
 
                     @Override
-                    public void onFailure(Call<Book> call, Throwable t) {
+                    public void onFailure(Call<Club> call, Throwable t) {
                         System.out.println("failure");
                         t.printStackTrace();
                         textView.setText(t.getMessage());
@@ -60,20 +64,20 @@ public class MainActivity extends AppCompatActivity {
         viewAllButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Call<List<Book>> createCall = service.getall();
-                createCall.enqueue(new Callback<List<Book>>() {
+                Call<List<Club>> createCall = service.allClubs();
+                createCall.enqueue(new Callback<List<Club>>() {
                     @Override
-                    public void onResponse(Call<List<Book>> call, Response<List<Book>> resp) {
-                        allBooks.setText("ALL BOOKS by ISBN:\n");
-                        for (Book b : resp.body()) {
-                            allBooks.append(b.isbn + "\n");
+                    public void onResponse(Call<List<Club>> call, Response<List<Club>> resp) {
+                        allClubs.setText("ALL CLUBS by Name:\n");
+                        for (Club b : resp.body()) {
+                            allClubs.append(b.clubName + "\n");
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<List<Book>> call, Throwable t) {
+                    public void onFailure(Call<List<Club>> call, Throwable t) {
                         t.printStackTrace();
-                        allBooks.setText(t.getMessage());
+                        allClubs.setText(t.getMessage());
                     }
                 });
             }

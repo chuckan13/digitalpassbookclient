@@ -2,10 +2,10 @@ package com.example.digitalpassbook;
 import com.google.gson.annotations.SerializedName;
 
 public class Club {
-    @SerializedName("clubid")
+    @SerializedName("clubID")
     int clubID;
 
-    @SerializedName("clubname")
+    @SerializedName("clubName")
     String clubName;
 
     public Club (int clubID, String clubName) {

@@ -11,12 +11,12 @@
     tools:context=".MainActivity">
 
     <EditText
-        android:id="@+id/isbnInput"
+        android:id="@+id/clubInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:layout_marginBottom="566dp"
-        android:hint="ISBN:"
+        android:hint="Club Name:"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="16dp" />
@@ -25,15 +25,15 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/isbnInput"
+        android:layout_below="@+id/clubInput"
         android:layout_marginStart="2dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="100dp"
         android:text="Create"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/isbnInput"
-        app:layout_constraintTop_toBottomOf="@+id/isbnInput" />
+        app:layout_constraintStart_toEndOf="@+id/clubInput"
+        app:layout_constraintTop_toBottomOf="@+id/clubInput" />
 
     <TextView
         android:id="@+id/textView"
@@ -62,7 +62,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
-        android:id="@+id/allBooks"
+        android:id="@+id/allClubs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/viewAllButton"
