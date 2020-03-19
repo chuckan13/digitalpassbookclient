@@ -28,8 +28,8 @@ public interface ClubService {
     @GET("clubs")
     Call<List<Club>> getall();
 
-    @GET("clubs/{clubname}")
-    Call<Club> get(@Path("clubname") String clubname);
+    @GET("clubs/{name}")
+    Call<Club> get(@Path("name") String name);
 
     @POST("clubs/new")
     Call<Club> create(@Body Club club);

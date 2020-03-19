@@ -28,37 +28,37 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final EditText isbnInput = (EditText) findViewById(R.id.clubInput);
+        final EditText nameInput = (EditText) findViewById(R.id.clubInput);
         final TextView textView = (TextView) findViewById(R.id.textView);
         final Button button = (Button) findViewById(R.id.button);
         final Button viewAllButton = (Button) findViewById(R.id.viewAllButton);
-        final TextView allClubs = (TextView) findViewById(R.id.allClubs);
+        final TextView allItems = (TextView) findViewById(R.id.allClubs);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://powerful-cove-79276.herokuapp.com/")
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        final ClubService service = retrofit.create(ClubService.class);
+        final OrganizationService service = retrofit.create(OrganizationService.class);
 //        final BookService service = retrofit.create(BookService.class);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Club club = new Club(isbnInput.getText().toString());
-                System.out.println("club name and id" + club.id + club.clubname);
-                Call<Club> createCall = service.create(club);
+                Organization organization = new Organization(nameInput.getText().toString());
+                System.out.println("organization name and id" + organization.id + organization.name);
+                Call<Organization> createCall = service.create(organization);
 //                System.out.println("create call:"+createCall.);
-                createCall.enqueue(new Callback<Club>() {
+                createCall.enqueue(new Callback<Organization>() {
                     @Override
-                    public void onResponse(Call<Club> call, Response<Club> resp) {
+                    public void onResponse(Call<Organization> call, Response<Organization> resp) {
 //                        System.out.println("2.0 getFeed > Full json res wrapped in gson => "+ new GsonBuilder().setPrettyPrinting().create().toJson(resp));
-                        Club newBook = resp.body();
-                        System.out.println(newBook.clubname);
-                        textView.setText("Created Book with ISBN: " + newBook.clubname);
+                        Organization newItem = resp.body();
+                        System.out.println(newItem.name);
+                        textView.setText("Created Organization: " + newItem.name);
                     }
 
                     @Override
-                    public void onFailure(Call<Club> call, Throwable t) {
+                    public void onFailure(Call<Organization> call, Throwable t) {
                         System.out.println("failure");
                         t.printStackTrace();
                         textView.setText(t.getMessage());
@@ -69,21 +69,21 @@ public class MainActivity extends AppCompatActivity {
         viewAllButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Call<List<Club>> createCall = service.getall();
-                createCall.enqueue(new Callback<List<Club>>() {
+                Call<List<Organization>> createCall = service.getall();
+                createCall.enqueue(new Callback<List<Organization>>() {
                     @Override
-                    public void onResponse(Call<List<Club>> call, Response<List<Club>> resp) {
+                    public void onResponse(Call<List<Organization>> call, Response<List<Organization>> resp) {
                         System.out.println("2.0 getFeed > Full json res wrapped in gson => "+ new GsonBuilder().setPrettyPrinting().create().toJson(resp.body()));
-                        allClubs.setText("ALL CLUBS by Name:\n");
-                        for (Club b : resp.body()) {
-                            allClubs.append(b.clubname + "\n");
+                        allItems.setText("ALL OrganizationS by Name:\n");
+                        for (Organization b : resp.body()) {
+                            allItems.append(b.name + "\n");
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<List<Club>> call, Throwable t) {
+                    public void onFailure(Call<List<Organization>> call, Throwable t) {
                         t.printStackTrace();
-                        allClubs.setText(t.getMessage());
+                        allItems.setText(t.getMessage());
                     }
                 });
             }

@@ -9,14 +9,14 @@ public class Student {
     String fullName;
 
     @SerializedName("netid")
-    int netID;
+    String netID;
 
-    public Student(int studentID, String fullName, int netID) {
+    public Student(int studentID, String fullName, String netID) {
         this.studentID = studentID;
         this.fullName = fullName;
         this.netID = netID;
     }
-    public Student(String fullName, int netID) {
+    public Student(String fullName, String netID) {
         this.fullName = fullName;
         this.netID = netID;
     }
