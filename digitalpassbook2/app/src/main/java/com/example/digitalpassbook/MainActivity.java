@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         final TextView allClubs = (TextView) findViewById(R.id.allClubs);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://powerful-cove-79276.herokuapp.com/")
-//                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
