@@ -17,6 +17,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,32 +25,33 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final EditText clubInput = (EditText) findViewById(R.id.clubInput);
+        final EditText isbnInput = (EditText) findViewById(R.id.clubInput);
         final TextView textView = (TextView) findViewById(R.id.textView);
         final Button button = (Button) findViewById(R.id.button);
         final Button viewAllButton = (Button) findViewById(R.id.viewAllButton);
         final TextView allClubs = (TextView) findViewById(R.id.allClubs);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://powerful-cove-79276.herokuapp.com/")
+//                .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         final ClubService service = retrofit.create(ClubService.class);
+//        final BookService service = retrofit.create(BookService.class);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Club club = new Club(clubInput.getText().toString());
-                Call<Club> createCall = service.createClub(club);
+                Club club = new Club();
+                club.clubname = isbnInput.getText().toString();
+                System.out.println("club name and id" + club.clubid + club.clubname);
+                Call<Club> createCall = service.create(club);
+//                System.out.println("create call:"+createCall.);
                 createCall.enqueue(new Callback<Club>() {
                     @Override
                     public void onResponse(Call<Club> call, Response<Club> resp) {
-                        Club newClub = resp.body();
-                        try {
-                            System.out.println(resp.errorBody().string());
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        textView.setText("Created Club with ClubName: " + newClub.clubName);
+                        Club newBook = resp.body();
+                        System.out.println(newBook.clubname);
+                        textView.setText("Created Book with ISBN: " + newBook.clubname);
                     }
 
                     @Override
@@ -64,13 +66,13 @@ public class MainActivity extends AppCompatActivity {
         viewAllButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Call<List<Club>> createCall = service.allClubs();
+                Call<List<Club>> createCall = service.getall();
                 createCall.enqueue(new Callback<List<Club>>() {
                     @Override
                     public void onResponse(Call<List<Club>> call, Response<List<Club>> resp) {
                         allClubs.setText("ALL CLUBS by Name:\n");
                         for (Club b : resp.body()) {
-                            allClubs.append(b.clubName + "\n");
+                            allClubs.append(b.clubname + "\n");
                         }
                     }
 

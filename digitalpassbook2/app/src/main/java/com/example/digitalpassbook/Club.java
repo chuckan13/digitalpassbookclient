@@ -2,17 +2,18 @@ package com.example.digitalpassbook;
 import com.google.gson.annotations.SerializedName;
 
 public class Club {
-    @SerializedName("clubID")
-    int clubID;
+    @SerializedName("clubid")
+    int clubid;
 
-    @SerializedName("clubName")
-    String clubName;
+    @SerializedName("clubname")
+    String clubname;
 
-    public Club (int clubID, String clubName) {
-        this.clubID = clubID;
-        this.clubName = clubName;
+    public Club (int clubid, String clubname) {
+        this.clubid = clubid;
+        this.clubname = clubname;
     }
-    public Club (String clubName) {
-        this.clubName = clubName;
+    public Club (String clubname) {
+        this.clubname = clubname;
     }
+    public Club(){}
 }
