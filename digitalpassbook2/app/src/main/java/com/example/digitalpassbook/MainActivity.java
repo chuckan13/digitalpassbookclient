@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 createCall.enqueue(new Callback<Club>() {
                     @Override
                     public void onResponse(Call<Club> call, Response<Club> resp) {
-                        System.out.println("2.0 getFeed > Full json res wrapped in gson => "+ new GsonBuilder().setPrettyPrinting().create().toJson(resp));
+//                        System.out.println("2.0 getFeed > Full json res wrapped in gson => "+ new GsonBuilder().setPrettyPrinting().create().toJson(resp));
                         Club newBook = resp.body();
                         System.out.println(newBook.clubname);
                         textView.setText("Created Book with ISBN: " + newBook.clubname);
