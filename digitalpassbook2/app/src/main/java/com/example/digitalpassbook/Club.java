@@ -15,5 +15,4 @@ public class Club {
     public Club (String clubname) {
         this.clubname = clubname;
     }
-    public Club(){}
 }

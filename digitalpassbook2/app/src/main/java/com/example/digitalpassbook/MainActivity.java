@@ -44,8 +44,7 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Club club = new Club();
-                club.clubname = isbnInput.getText().toString();
+                Club club = new Club(isbnInput.getText().toString());
                 System.out.println("club name and id" + club.clubid + club.clubname);
                 Call<Club> createCall = service.create(club);
 //                System.out.println("create call:"+createCall.);
@@ -74,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 createCall.enqueue(new Callback<List<Club>>() {
                     @Override
                     public void onResponse(Call<List<Club>> call, Response<List<Club>> resp) {
-                        System.out.println("2.0 getFeed > Full json res wrapped in gson => "+ new GsonBuilder().setPrettyPrinting().create().toJson(resp));
+                        System.out.println("2.0 getFeed > Full json res wrapped in gson => "+ new GsonBuilder().setPrettyPrinting().create().toJson(resp.body()));
                         allClubs.setText("ALL CLUBS by Name:\n");
                         for (Club b : resp.body()) {
                             allClubs.append(b.clubname + "\n");
