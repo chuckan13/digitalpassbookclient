@@ -10,8 +10,8 @@ public interface OrganizationService {
     @GET("organizations")
     Call<List<Organization>> getall();
 
-    @GET("organizations/{name}")
-    Call<Organization> get(@Path("name") String name);
+    @GET("organizations/{id}")
+    Call<Organization> get(@Path("id") int id);
 
     @POST("organizations/new")
     Call<Organization> create(@Body Organization organization);
