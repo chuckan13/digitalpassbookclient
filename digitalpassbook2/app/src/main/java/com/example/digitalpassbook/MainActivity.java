@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Club club = new Club(isbnInput.getText().toString());
-                System.out.println("club name and id" + club.clubid + club.clubname);
+                System.out.println("club name and id" + club.id + club.clubname);
                 Call<Club> createCall = service.create(club);
 //                System.out.println("create call:"+createCall.);
                 createCall.enqueue(new Callback<Club>() {
