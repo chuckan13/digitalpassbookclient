@@ -8,6 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -49,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
                 createCall.enqueue(new Callback<Club>() {
                     @Override
                     public void onResponse(Call<Club> call, Response<Club> resp) {
+                        System.out.println("2.0 getFeed > Full json res wrapped in gson => "+ new GsonBuilder().setPrettyPrinting().create().toJson(resp));
                         Club newBook = resp.body();
                         System.out.println(newBook.clubname);
                         textView.setText("Created Book with ISBN: " + newBook.clubname);
@@ -70,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
                 createCall.enqueue(new Callback<List<Club>>() {
                     @Override
                     public void onResponse(Call<List<Club>> call, Response<List<Club>> resp) {
+                        System.out.println("2.0 getFeed > Full json res wrapped in gson => "+ new GsonBuilder().setPrettyPrinting().create().toJson(resp));
                         allClubs.setText("ALL CLUBS by Name:\n");
                         for (Club b : resp.body()) {
                             allClubs.append(b.clubname + "\n");
