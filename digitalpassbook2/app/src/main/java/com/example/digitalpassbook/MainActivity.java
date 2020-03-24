@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         final Button viewAllButton = (Button) findViewById(R.id.viewAllButton);
         final TextView allItems = (TextView) findViewById(R.id.allClubs);
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://secret-fortress-35771.herokuapp.com/")
+                .baseUrl("https://stark-castle-00086.herokuapp.com/")
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
