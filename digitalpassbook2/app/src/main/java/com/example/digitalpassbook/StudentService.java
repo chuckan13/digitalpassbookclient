@@ -1,4 +1,5 @@
 package com.example.digitalpassbook;
+
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -13,7 +14,7 @@ public interface StudentService {
     @GET ("student")
     Call<List<Student>> allStudents();
 
-    @POST ("student")
+    @POST ("student/new")
     Call<Student> createStudent(@Body Student student);
 
     @GET ("student/{studentID}")
