@@ -31,8 +31,8 @@ public class PassTest {
             Response<Pass> resp = createCall.execute();
             if(resp.isSuccessful()) {
                 Pass item = resp.body();
-                if (print) System.out.println("CREATING: name = "+newItem.passName+", id = "+newItem.id+", clubID = "+newItem.orgID+", userID = "+newItem.userID+", eventID = "+newItem.eventID);
-                if (print) System.out.println("CREATED: name = "+item.passName+", id = "+item.id+", clubID = "+item.orgID+", userID = "+item.userID+", eventID = "+item.eventID);
+                if (print) System.out.println("CREATING: name = "+newItem.passName+", id = "+newItem.id+", clubID = "+newItem.organizationid+", userID = "+newItem.userid+", eventID = "+newItem.eventsid);
+                if (print) System.out.println("CREATED: name = "+item.passName+", id = "+item.id+", clubID = "+item.organizationid+", userID = "+item.userid+", eventID = "+item.eventsid);
                 return item.id;
             } else {
                 System.out.println("ERROR - CREATE: "+resp.errorBody().string());
@@ -118,14 +118,14 @@ public class PassTest {
 
     private Boolean areEqual(Pass item1, Pass item2, Boolean print) {
         if (print) {
-            System.out.println("Differing clubID: " + item1.orgID + "  " + item2.orgID);
-            System.out.println("Differing userID: " + item1.userID + "  " + item2.userID);
-            System.out.println("Differing eventID: " + item1.eventID + "  " + item2.eventID);
+            System.out.println("Differing clubID: " + item1.organizationid + "  " + item2.organizationid);
+            System.out.println("Differing userID: " + item1.userid + "  " + item2.userid);
+            System.out.println("Differing eventID: " + item1.eventsid + "  " + item2.eventsid);
             System.out.println("Differing passName: " + item1.passName + "  " + item2.passName);
         }
-        if (item1.orgID != item2.orgID) return false;
-        if (item1.userID != item2.userID) return false;
-        if (item1.eventID != item2.eventID) return false;
+        if (item1.organizationid != item2.organizationid) return false;
+        if (item1.userid != item2.userid) return false;
+        if (item1.eventsid != item2.eventsid) return false;
         if (!item1.passName.equals(item2.passName)) return false;
         return true;
     }
@@ -134,14 +134,14 @@ public class PassTest {
     @Test
     public void checkPass() {
         Boolean print = true;
-        int newClubID = 2;
-        int newUserID = 3;
-        int newEventID = 4;
-        String newPassName = "event 1";
-        int updatedClubID = 2;
-        int updatedUserID = 3;
-        int updatedEventID = 4;
-        String updatedPassName = "event 1";
+        int newClubID = 9;
+        int newUserID = 10;
+        int newEventID = 5;
+        String newPassName = "event111";
+        int updatedClubID = 9;
+        int updatedUserID = 8;
+        int updatedEventID = 7;
+        String updatedPassName = "event222";
         Pass newPass = new Pass(newClubID, newUserID, newEventID, newPassName);
         Pass updatedPass = new Pass(updatedClubID, updatedUserID, updatedEventID, updatedPassName);
 
