@@ -3,30 +3,30 @@ import com.google.gson.annotations.SerializedName;
 
 public class Pass {
 
-    @SerializedName("passid")
-    int passID;
+    @SerializedName("id")
+    int id;
 
-    @SerializedName("clubid")
-    int clubID;
+    @SerializedName("orgId")
+    int orgID;
 
-    @SerializedName("userid")
+    @SerializedName("userId")
     int userID;
 
-    @SerializedName("eventid")
+    @SerializedName("eventId")
     int eventID;
 
-    @SerializedName("passname")
+    @SerializedName("passName")
     String passName;
 
-    public Pass (int passID, int clubID, int userID, int eventID, String passName) {
-        this.passID = passID;
-        this.clubID = clubID;
+    public Pass (int passID, int orgID, int userID, int eventID, String passName) {
+        this.id = passID;
+        this.orgID = orgID;
         this.userID = userID;
         this.eventID = eventID;
         this.passName = passName;
     }
-    public Pass (int clubID, int userID, int eventID, String passName) {
-        this.clubID = clubID;
+    public Pass (int orgID, int userID, int eventID, String passName) {
+        this.orgID = orgID;
         this.userID = userID;
         this.eventID = eventID;
         this.passName = passName;

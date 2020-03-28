@@ -11,19 +11,19 @@ import retrofit2.http.DELETE;
 import retrofit2.http.Path;
 
 public interface StudentService {
-    @GET ("student")
-    Call<List<Student>> allStudents();
+    @GET ("students")
+    Call<List<Student>> getall();
 
-    @POST ("student/new")
-    Call<Student> createStudent(@Body Student student);
+    @POST ("students/new")
+    Call<Student> create(@Body Student student);
 
-    @GET ("student/{studentID}")
-    Call<Student> getStudent(@Path("studentID") int studentID);
+    @GET ("students/{id}")
+    Call<Student> get(@Path("id") int id);
 
-    @DELETE ("student/{studentID}")
-    Call<Student> removeStudent(@Path("studentID") int studentID);
+    @DELETE ("students/{id}")
+    Call<Student> delete(@Path("id") int id);
 
-    @PATCH ("student/{studentID}")
-    Call<Student> updateStudent(@Path("studentID") int studentID, @Body Student student);
+    @PATCH ("students/{id}")
+    Call<Student> update(@Path("id") int id, @Body Student student);
 
 }

@@ -20,8 +20,8 @@ public interface OrganizationService {
     Call<Organization> get(@Path("id") int id);
 
     @DELETE("organizations/{id}")
-    Call<Organization> removeOrganization(@Path("id") int id);
+    Call<Organization> delete(@Path("id") int id);
 
     @PATCH("organizations/{id}")
-    Call<Organization> updateOrganization(@Path("id") int id, @Body Organization organization);
+    Call<Organization> update(@Path("id") int id, @Body Organization organization);
 }

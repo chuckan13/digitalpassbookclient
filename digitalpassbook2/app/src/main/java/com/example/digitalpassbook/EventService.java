@@ -21,8 +21,8 @@ public interface EventService {
     Call<Event> get(@Path("id") int id);
 
     @DELETE("events/{id}")
-    Call<Event> removeEvent(@Path("studentID") int id);
+    Call<Event> delete(@Path("id") int id);
 
     @PATCH("events/{id}")
-    Call<Event> updateEvent(@Path("id") int id, @Body Event event);
+    Call<Event> update(@Path("id") int id, @Body Event event);
 }

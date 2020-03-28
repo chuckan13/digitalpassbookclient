@@ -6,11 +6,11 @@ public class Event {
     @SerializedName("id")
     int id;
 
-    @SerializedName("orgid")
-    int orgid;
+    @SerializedName("orgId")
+    int orgId;
 
-    @SerializedName("eventname")
-    String eventname;
+    @SerializedName("eventName")
+    String eventName;
 
     @SerializedName("description")
     String description;
@@ -18,11 +18,11 @@ public class Event {
     @SerializedName("date")
     String date;
 
-    @SerializedName("starttime")
-    String starttime;
+    @SerializedName("startTime")
+    String startTime;
 
-    @SerializedName("endtime")
-    String endtime;
+    @SerializedName("endTime")
+    String endTime;
 
     @SerializedName("location")
     String location;
@@ -30,31 +30,31 @@ public class Event {
     public Event (int eventID, int orgID, String eventName, String description, String date,
                   String starttime, String endtime, String location) {
         this.id = eventID;
-        this.orgid = orgID;
-        this.eventname = eventName;
+        this.orgId = orgID;
+        this.eventName = eventName;
         this.description = description;
         this.date = date;
-        this.starttime = starttime;
-        this.endtime = endtime;
+        this.startTime = starttime;
+        this.endTime = endtime;
         this.location = location;
     }
     public Event (int orgID, String eventName, String description, String date,
                   String starttime, String endtime, String location) {
-        this.orgid = orgID;
-        this.eventname = eventName;
+        this.orgId = orgID;
+        this.eventName = eventName;
         this.description = description;
         this.date = date;
-        this.starttime = starttime;
-        this.endtime = endtime;
+        this.startTime = starttime;
+        this.endTime = endtime;
         this.location = location;
     }
     public Event (int orgID, String eventName) {
-        this.orgid = orgID;
-        this.eventname = eventName;
-        this.description = "";
-        this.date = "";
-        this.starttime = "";
-        this.endtime = "";
-        this.location = "";
+        this.orgId = orgID;
+        this.eventName = eventName;
+        this.description = " ";
+        this.date = " ";
+        this.startTime = " ";
+        this.endTime = " ";
+        this.location = " ";
     }
 }

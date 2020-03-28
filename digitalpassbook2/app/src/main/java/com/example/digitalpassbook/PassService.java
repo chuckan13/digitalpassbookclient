@@ -21,8 +21,8 @@ public interface PassService {
     Call<Pass> get(@Path("id") int id);
 
     @DELETE("passes/{id}")
-    Call<Pass> removePass(@Path("studentID") int id);
+    Call<Pass> delete(@Path("id") int id);
 
     @PATCH("passes/{id}")
-    Call<Pass> updatePass(@Path("studentID") int id, @Body Pass pass);
+    Call<Pass> update(@Path("id") int id, @Body Pass pass);
 }

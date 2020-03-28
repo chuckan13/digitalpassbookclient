@@ -38,12 +38,6 @@ public class MainActivity extends AppCompatActivity {
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
-        final EditText eventName = (EditText) findViewById(R.id.eventName);
-        final Button submitEvent = (Button) findViewById(R.id.submitEvent);
-        final Button viewEventsButton = (Button) findViewById(R.id.viewEventsButton);
-        final TextView allEvents = (TextView) findViewById(R.id.allEvents);
-
         final OrganizationService service = retrofit.create(OrganizationService.class);
         final EventService eventService = retrofit.create(EventService.class);
 
@@ -88,53 +82,6 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<List<Organization>> call, Throwable t) {
-                        t.printStackTrace();
-                        allItems.setText(t.getMessage());
-                    }
-                });
-            }
-        });
-
-        submitEvent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Event event = new Event(1, eventName.getText().toString());
-                System.out.println("event id and name" + event.id + event.eventname);
-                Call<Event> createCall = eventService.create(event);
-//                System.out.println("create call:"+createCall.);
-                createCall.enqueue(new Callback<Event>() {
-                    @Override
-                    public void onResponse(Call<Event> call, Response<Event> resp) {
-                        Event newItem = resp.body();
-                        System.out.println(newItem.eventname);
-                        textView.setText("Created Event: " + newItem.eventname);
-                    }
-
-                    @Override
-                    public void onFailure(Call<Event> call, Throwable t) {
-                        System.out.println("failure");
-                        t.printStackTrace();
-                        textView.setText(t.getMessage());
-                    }
-                });
-            }
-        });
-        viewEventsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Call<List<Event>> createCall = eventService.getall();
-                createCall.enqueue(new Callback<List<Event>>() {
-                    @Override
-                    public void onResponse(Call<List<Event>> call, Response<List<Event>> resp) {
-                        System.out.println("2.0 getFeed > Full json res wrapped in gson => "+ new GsonBuilder().setPrettyPrinting().create().toJson(resp.body()));
-                        allItems.setText("ALL Events by Name:\n");
-                        for (Event b : resp.body()) {
-                            allItems.append(b.eventname + "\n");
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<Event>> call, Throwable t) {
                         t.printStackTrace();
                         allItems.setText(t.getMessage());
                     }
