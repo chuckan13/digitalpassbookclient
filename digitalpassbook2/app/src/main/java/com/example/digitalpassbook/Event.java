@@ -2,32 +2,47 @@ package com.example.digitalpassbook;
 import com.google.gson.annotations.SerializedName;
 
 public class Event {
-    @SerializedName("eventid")
-    int eventID;
+    @SerializedName("id")
+    int id;
 
-    @SerializedName("clubid")
-    int clubID;
+    @SerializedName("orgid")
+    int orgid;
 
     @SerializedName("eventname")
-    String eventName;
+    String eventname;
 
-    @SerializedName("time")
-    String time;
+    @SerializedName("description")
+    String description;
+
+    @SerializedName("date")
+    String date;
+
+    @SerializedName("starttime")
+    String starttime;
+
+    @SerializedName("endtime")
+    String endtime;
 
     @SerializedName("location")
     String location;
 
-    public Event (int eventID, int clubID, String eventName, String time, String location) {
-        this.eventID = eventID;
-        this.clubID = clubID;
-        this.eventName = eventName;
-        this.time = time;
+    public Event (int eventID, int clubID, String eventName, String description, String date, String starttime, String endtime, String location) {
+        this.id = eventID;
+        this.orgid = clubID;
+        this.eventname = eventName;
+        this.description = description;
+        this.date = date;
+        this.starttime = starttime;
+        this.endtime = endtime;
         this.location = location;
     }
-    public Event (int clubID, String eventName, String time, String location) {
-        this.clubID = clubID;
-        this.eventName = eventName;
-        this.time = time;
+    public Event (int clubID, String eventName, String description, String date, String starttime, String endtime, String location) {
+        this.orgid = clubID;
+        this.eventname = eventName;
+        this.description = description;
+        this.date = date;
+        this.starttime = starttime;
+        this.endtime = endtime;
         this.location = location;
     }
 }

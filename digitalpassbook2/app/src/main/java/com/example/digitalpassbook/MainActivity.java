@@ -39,26 +39,35 @@ public class MainActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        final OrganizationService service = retrofit.create(OrganizationService.class);
+        final EventService service = retrofit.create(EventService.class);
 //        final BookService service = retrofit.create(BookService.class);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Organization organization = new Organization(nameInput.getText().toString());
-                System.out.println("organization name and id" + organization.id + organization.name);
-                Call<Organization> createCall = service.create(organization);
+
+                int orgid = 3;
+                String eventname = "semis";
+                String description = "formals";
+                String date = "2/3/13";
+                String starttime = "8pm";
+                String endtime = "2am";
+                String location = "cap and gown";
+
+                Event event = new Event(orgid, nameInput.getText().toString(), description, date, starttime, endtime, location);
+                System.out.println("event name and id" + event.id + event.eventname);
+                Call<Event> createCall = service.create(event);
 //                System.out.println("create call:"+createCall.);
-                createCall.enqueue(new Callback<Organization>() {
+                createCall.enqueue(new Callback<Event>() {
                     @Override
-                    public void onResponse(Call<Organization> call, Response<Organization> resp) {
+                    public void onResponse(Call<Event> call, Response<Event> resp) {
 //                        System.out.println("2.0 getFeed > Full json res wrapped in gson => "+ new GsonBuilder().setPrettyPrinting().create().toJson(resp));
-                        Organization newItem = resp.body();
-                        System.out.println(newItem.name);
-                        textView.setText("Created Organization: " + newItem.name);
+                        Event newItem = resp.body();
+                        System.out.println(newItem.eventname);
+                        textView.setText("Created Event: " + newItem.eventname);
                     }
 
                     @Override
-                    public void onFailure(Call<Organization> call, Throwable t) {
+                    public void onFailure(Call<Event> call, Throwable t) {
                         System.out.println("failure");
                         t.printStackTrace();
                         textView.setText(t.getMessage());
@@ -69,19 +78,19 @@ public class MainActivity extends AppCompatActivity {
         viewAllButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Call<List<Organization>> createCall = service.getall();
-                createCall.enqueue(new Callback<List<Organization>>() {
+                Call<List<Event>> createCall = service.getall();
+                createCall.enqueue(new Callback<List<Event>>() {
                     @Override
-                    public void onResponse(Call<List<Organization>> call, Response<List<Organization>> resp) {
+                    public void onResponse(Call<List<Event>> call, Response<List<Event>> resp) {
                         System.out.println("2.0 getFeed > Full json res wrapped in gson => "+ new GsonBuilder().setPrettyPrinting().create().toJson(resp.body()));
-                        allItems.setText("ALL OrganizationS by Name:\n");
-                        for (Organization b : resp.body()) {
-                            allItems.append(b.name + "\n");
+                        allItems.setText("ALL EventS by Name:\n");
+                        for (Event b : resp.body()) {
+                            allItems.append(b.eventname + "\n");
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<List<Organization>> call, Throwable t) {
+                    public void onFailure(Call<List<Event>> call, Throwable t) {
                         t.printStackTrace();
                         allItems.setText(t.getMessage());
                     }
