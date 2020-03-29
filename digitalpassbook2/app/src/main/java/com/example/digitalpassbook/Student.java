@@ -3,21 +3,20 @@ import com.google.gson.annotations.SerializedName;
 
 public class Student {
     @SerializedName("id")
-    int id;
+    private int id;
 
-    @SerializedName("fullName")
-    String fullName;
+    @SerializedName("name")
+    private String name;
 
-    @SerializedName("netID")
-    String netId;
+    @SerializedName("netId")
+    private String netId;
 
-    public Student(int id, String fullName, String netID) {
-        this.id = id;
-        this.fullName = fullName;
-        this.netId = netID;
-    }
     public Student(String fullName, String netID) {
-        this.fullName = fullName;
+        this.name = fullName;
         this.netId = netID;
     }
+
+    public int getId() { return this.id; }
+    public String getName() { return this.name; }
+    public String getNetid() { return this.netId; }
 }

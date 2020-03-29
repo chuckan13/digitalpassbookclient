@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class StudentTest {
     private Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("https://stark-castle-00086.herokuapp.com/")
+            .baseUrl("https://pure-river-68629.herokuapp.com/")
             .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .build();
@@ -31,9 +31,9 @@ public class StudentTest {
             Response<Student> resp = createCall.execute();
             if(resp.isSuccessful()) {
                 Student item = resp.body();
-                if (print) System.out.println("CREATING: name = "+newItem.fullName+", id = "+newItem.id+", netid = "+newItem.netId);
-                if (print) System.out.println("CREATED: name = "+item.fullName+", id = "+item.id+", netid = "+newItem.netId);
-                return item.id;
+                if (print) System.out.println("CREATING: name = "+newItem.getName()+", id = "+newItem.getId()+", netid = "+newItem.getNetid());
+                if (print) System.out.println("CREATED: name = "+item.getName()+", id = "+item.getId()+", netid = "+newItem.getNetid());
+                return item.getId();
             } else {
                 System.out.println("ERROR - CREATE: "+resp.errorBody().string());
             }
@@ -52,8 +52,8 @@ public class StudentTest {
                 int[] ids = new int[items.size()];
                 for (int i = 0; i < items.size(); i++) {
                     Student item = items.get(i);
-                    ids[i] = item.id;
-                    if (print) System.out.println("GETALL: name = "+item.fullName+", id = "+item.id);
+                    ids[i] = item.getId();
+                    if (print) System.out.println("GETALL: name = "+item.getName()+", id = "+item.getId());
                 }
                 return ids;
             } else {
@@ -72,8 +72,8 @@ public class StudentTest {
             Response<Student> resp = deleteItem.execute();
             if(resp.isSuccessful()) {
                 Student item = resp.body();
-                if (print) System.out.println("DELETED: name = "+item.fullName+", id = "+item.id);
-                return item.id;
+                if (print) System.out.println("DELETED: name = "+item.getName()+", id = "+item.getId());
+                return item.getId();
             } else {
                 System.out.println("ERROR - DELETE: "+resp.errorBody().string());
             }
@@ -89,8 +89,8 @@ public class StudentTest {
             Response<Student> resp = updateItem.execute();
             if(resp.isSuccessful()) {
                 Student item = resp.body();
-                if (print) System.out.println("UPDATE: name = "+item.fullName+", id = "+item.id);
-                return item.id;
+                if (print) System.out.println("UPDATE: name = "+item.getName()+", id = "+item.getId());
+                return item.getId();
             } else {
                 System.out.println("ERROR - UPDATE: "+resp.errorBody().string());
             }
@@ -118,16 +118,16 @@ public class StudentTest {
 
     private Boolean areEqual(Student item1, Student item2, Boolean print) {
         if (print) {
-            System.out.println("Differing fullName: " + item1.fullName + "  " + item2.fullName);
-            System.out.println("Differing netid: " + item1.netId + "  " + item2.netId);
+            System.out.println("Differing fullName: " + item1.getName() + "  " + item2.getName());
+            System.out.println("Differing netid: " + item1.getNetid() + "  " + item2.getNetid());
         }
-        if (!item1.fullName.equals(item2.fullName)) return false;
-        if (!item1.netId.equals(item2.netId)) return false;
+        if (!item1.getName().equals(item2.getName())) return false;
+        if (!item1.getNetid().equals(item2.getNetid())) return false;
         return true;
     }
 
 
-    @Test
+//    @Test
     public void checkStudent() {
         Boolean print = false;
         String newName = "David Basili";

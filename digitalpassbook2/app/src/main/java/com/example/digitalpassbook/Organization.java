@@ -4,17 +4,16 @@ import com.google.gson.annotations.SerializedName;
 public class Organization {
 
     @SerializedName("id")
-    int id;
+    private int id;
 
     @SerializedName("name")
-    String name;
-
-    public Organization(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
+    private String name;
 
     public Organization(String name) {
         this.name = name;
     }
+
+    public int getId() { return this.id; }
+    public String getName() { return this.name; }
+
 }

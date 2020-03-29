@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         final Button viewAllButton = (Button) findViewById(R.id.viewAllButton);
         final TextView allItems = (TextView) findViewById(R.id.allClubs);
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://stark-castle-00086.herokuapp.com/")
+                .baseUrl("https://pure-river-68629.herokuapp.com/")
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Organization organization = new Organization(nameInput.getText().toString());
-                System.out.println("organization name and id" + organization.id + organization.name);
+                System.out.println("organization name and id" + organization.getId() + organization.getName());
                 Call<Organization> createCall = service.create(organization);
 //                System.out.println("create call:"+createCall.);
                 createCall.enqueue(new Callback<Organization>() {
@@ -53,8 +53,8 @@ public class MainActivity extends AppCompatActivity {
                     public void onResponse(Call<Organization> call, Response<Organization> resp) {
 //                        System.out.println("2.0 getFeed > Full json res wrapped in gson => "+ new GsonBuilder().setPrettyPrinting().create().toJson(resp));
                         Organization newItem = resp.body();
-                        System.out.println(newItem.name);
-                        textView.setText("Created Organization: " + newItem.name);
+                        System.out.println(newItem.getName());
+                        textView.setText("Created Organization: " + newItem.getName());
                     }
 
                     @Override
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                         System.out.println("2.0 getFeed > Full json res wrapped in gson => "+ new GsonBuilder().setPrettyPrinting().create().toJson(resp.body()));
                         allItems.setText("ALL OrganizationS by Name:\n");
                         for (Organization b : resp.body()) {
-                            allItems.append(b.name + "\n");
+                            allItems.append(b.getName() + "\n");
                         }
                     }
 

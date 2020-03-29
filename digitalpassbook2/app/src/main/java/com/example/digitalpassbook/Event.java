@@ -4,57 +4,55 @@ import com.google.gson.annotations.SerializedName;
 public class Event {
 
     @SerializedName("id")
-    int id;
+    private int id;
 
     @SerializedName("orgId")
-    int orgId;
+    private int orgId;
 
-    @SerializedName("eventName")
-    String eventName;
+    @SerializedName("name")
+    private String name;
 
     @SerializedName("description")
-    String description;
+    private String description;
 
     @SerializedName("date")
-    String date;
+    private String date;
 
-    @SerializedName("startTime")
-    String startTime;
+    @SerializedName("start")
+    private String start;
 
-    @SerializedName("endTime")
-    String endTime;
+    @SerializedName("end")
+    private String end;
 
     @SerializedName("location")
-    String location;
+    private String location;
 
-    public Event (int eventID, int orgID, String eventName, String description, String date,
-                  String starttime, String endtime, String location) {
-        this.id = eventID;
-        this.orgId = orgID;
-        this.eventName = eventName;
-        this.description = description;
-        this.date = date;
-        this.startTime = starttime;
-        this.endTime = endtime;
-        this.location = location;
-    }
     public Event (int orgID, String eventName, String description, String date,
                   String starttime, String endtime, String location) {
         this.orgId = orgID;
-        this.eventName = eventName;
+        this.name = eventName;
         this.description = description;
         this.date = date;
-        this.startTime = starttime;
-        this.endTime = endtime;
+        this.start = starttime;
+        this.end = endtime;
         this.location = location;
     }
     public Event (int orgID, String eventName) {
         this.orgId = orgID;
-        this.eventName = eventName;
+        this.name = eventName;
         this.description = " ";
         this.date = " ";
-        this.startTime = " ";
-        this.endTime = " ";
+        this.start = " ";
+        this.end = " ";
         this.location = " ";
     }
+
+    public int getId() { return this.id; }
+    public int getOrgId() { return this.orgId; }
+    public String getName() { return this.name; }
+    public String getDescription() { return this.description; }
+    public String getDate() { return this.date; }
+    public String getStartTime() { return this.start; }
+    public String getEndTime() { return this.end; }
+    public String getLocation() { return this.location; }
 }

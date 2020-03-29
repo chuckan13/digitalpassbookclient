@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class EventTest {
     private Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("https://stark-castle-00086.herokuapp.com/")
+            .baseUrl("https://pure-river-68629.herokuapp.com/")
             .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .build();
@@ -31,9 +31,9 @@ public class EventTest {
             Response<Event> resp = createCall.execute();
             if(resp.isSuccessful()) {
                 Event item = resp.body();
-                if (print) System.out.println("CREATING: name = "+newItem.eventName+", id = "+newItem.id+", orgid = "+newItem.orgId);
-                if (print) System.out.println("CREATED: name = "+item.eventName+", id = "+item.id+", orgid = "+item.orgId);
-                return item.id;
+                if (print) System.out.println("CREATING: name = "+newItem.getName()+", id = "+newItem.getId()+", orgid = "+newItem.getOrgId());
+                if (print) System.out.println("CREATED: name = "+item.getName()+", id = "+item.getId()+", orgid = "+item.getOrgId());
+                return item.getId();
             } else {
                 System.out.println("ERROR - CREATE: "+resp.errorBody().string());
             }
@@ -52,8 +52,8 @@ public class EventTest {
                 int[] ids = new int[items.size()];
                 for (int i = 0; i < items.size(); i++) {
                     Event item = items.get(i);
-                    ids[i] = item.id;
-                    if (print) System.out.println("GETALL: name = "+item.eventName+", id = "+item.id);
+                    ids[i] = item.getId();
+                    if (print) System.out.println("GETALL: name = "+item.getName()+", id = "+item.getId());
                 }
                 return ids;
             } else {
@@ -72,8 +72,8 @@ public class EventTest {
             Response<Event> resp = deleteItem.execute();
             if(resp.isSuccessful()) {
                 Event item = resp.body();
-                if (print) System.out.println("DELETED: name = "+item.eventName+", id = "+item.id);
-                return item.id;
+                if (print) System.out.println("DELETED: name = "+item.getName()+", id = "+item.getId());
+                return item.getId();
             } else {
                 System.out.println("ERROR - DELETE: "+resp.errorBody().string());
             }
@@ -89,8 +89,8 @@ public class EventTest {
             Response<Event> resp = updateItem.execute();
             if(resp.isSuccessful()) {
                 Event item = resp.body();
-                if (print) System.out.println("UPDATE: name = "+item.eventName+", id = "+item.id);
-                return item.id;
+                if (print) System.out.println("UPDATE: name = "+item.getName()+", id = "+item.getId());
+                return item.getId();
             } else {
                 System.out.println("ERROR - UPDATE: "+resp.errorBody().string());
             }
@@ -118,26 +118,26 @@ public class EventTest {
 
     private Boolean areEqual(Event item1, Event item2, Boolean print) {
         if (print) {
-            System.out.println("Differing orgids: " + item1.orgId + "  " + item2.orgId);
-            System.out.println("Differing eventNames: " + item1.eventName + "  " + item2.eventName);
-            System.out.println("Differing descriptions: " + item1.description + "  " + item2.description);
-            System.out.println("Differing dates: " + item1.date + "  " + item2.date);
-            System.out.println("Differing startTimes: " + item1.startTime + "  " + item2.startTime);
-            System.out.println("Differing endTimes: " + item1.endTime + "  " + item2.endTime);
-            System.out.println("Differing locations: " + item1.location + "  " + item2.location);
+            System.out.println("Differing orgids: " + item1.getOrgId() + "  " + item2.getOrgId());
+            System.out.println("Differing eventNames: " + item1.getName() + "  " + item2.getName());
+            System.out.println("Differing descriptions: " + item1.getDescription() + "  " + item2.getDescription());
+            System.out.println("Differing dates: " + item1.getDate() + "  " + item2.getDate());
+            System.out.println("Differing startTimes: " + item1.getStartTime() + "  " + item2.getStartTime());
+            System.out.println("Differing endTimes: " + item1.getEndTime() + "  " + item2.getEndTime());
+            System.out.println("Differing locations: " + item1.getLocation() + "  " + item2.getLocation());
         }
-        if (item1.orgId != item2.orgId) return false;
-        if (!item1.eventName.equals(item2.eventName)) return false;
-        if (!item1.description.equals(item2.description)) return false;
-        if (!item1.date.equals(item2.date)) return false;
-        if (!item1.startTime.equals(item2.startTime)) return false;
-        if (!item1.endTime.equals(item2.endTime)) return false;
-        if (!item1.location.equals(item2.location)) return false;
+        if (item1.getOrgId() != item2.getOrgId()) return false;
+        if (!item1.getName().equals(item2.getName())) return false;
+        if (!item1.getDescription().equals(item2.getDescription())) return false;
+        if (!item1.getDate().equals(item2.getDate())) return false;
+        if (!item1.getStartTime().equals(item2.getStartTime())) return false;
+        if (!item1.getEndTime().equals(item2.getEndTime())) return false;
+        if (!item1.getLocation().equals(item2.getLocation())) return false;
         return true;
     }
 
 
-    @Test
+//    @Test
     public void checkEvent() {
         Boolean print = false;
         int orgID = 25;
@@ -163,8 +163,6 @@ public class EventTest {
         id = delete(id, print);
         assert(id >= 0);
         assertEquals(getAll(false).length, originalLen);
-
-
 
     }
 }

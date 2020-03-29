@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class OrganizationTest {
     private Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("https://stark-castle-00086.herokuapp.com/")
+            .baseUrl("https://pure-river-68629.herokuapp.com/")
             .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .build();
@@ -32,8 +32,8 @@ public class OrganizationTest {
             Response<Organization> resp = createCall.execute();
             if(resp.isSuccessful()) {
                 Organization item = resp.body();
-                if (print) System.out.println("CREATE: name = "+item.name+", id = "+item.id);
-                return item.id;
+                if (print) System.out.println("CREATE: name = "+item.getName()+", id = "+item.getId());
+                return item.getId();
             } else {
                 System.out.println("ERROR - CREATE: "+resp.errorBody().string());
             }
@@ -54,8 +54,8 @@ public class OrganizationTest {
                 int[] ids = new int[items.size()];
                 for (int i = 0; i < items.size(); i++) {
                     Organization item = items.get(i);
-                    ids[i] = item.id;
-                    if (print) System.out.println("GETALL: name = "+item.name+", id = "+item.id);
+                    ids[i] = item.getId();
+                    if (print) System.out.println("GETALL: name = "+item.getName()+", id = "+item.getId());
                 }
                 return ids;
             } else {
@@ -74,8 +74,8 @@ public class OrganizationTest {
             Response<Organization> resp = deleteItem.execute();
             if(resp.isSuccessful()) {
                 Organization item = resp.body();
-                if (print) System.out.println("DELETED: name = "+item.name+", id = "+item.id);
-                return item.id;
+                if (print) System.out.println("DELETED: name = "+item.getName()+", id = "+item.getId());
+                return item.getId();
             } else {
                 System.out.println("ERROR - DELETE: "+resp.errorBody().string());
             }
@@ -91,8 +91,8 @@ public class OrganizationTest {
             Response<Organization> resp = updateItem.execute();
             if(resp.isSuccessful()) {
                 Organization item = resp.body();
-                if (print) System.out.println("UPDATE: name = "+item.name+", id = "+item.id);
-                return item.id;
+                if (print) System.out.println("UPDATE: name = "+item.getName()+", id = "+item.getId());
+                return item.getId();
             } else {
                 System.out.println("ERROR - UPDATE: "+resp.errorBody().string());
             }
@@ -108,7 +108,7 @@ public class OrganizationTest {
             Response<Organization> resp = getItem.execute();
             if(resp.isSuccessful()) {
                 Organization item = resp.body();
-                return item.name;
+                return item.getName();
             } else {
                 System.out.println("ERROR - GET: " + resp.errorBody().string());
             }
@@ -119,7 +119,7 @@ public class OrganizationTest {
     }
 
 
-    @Test
+//    @Test
     public void checkOrganization() {
         Boolean print = false;
 
@@ -142,8 +142,5 @@ public class OrganizationTest {
         int deleteid = delete(id, print);
         assert(deleteid >= 0);
         assertEquals(getAll(false).length, originalLen);
-
-
-
     }
 }
