@@ -9,7 +9,7 @@ public class Event {
     @SerializedName("orgId")
     private int orgId;
 
-    @SerializedName("name")
+    @SerializedName("eventName")
     private String name;
 
     @SerializedName("description")
@@ -18,11 +18,11 @@ public class Event {
     @SerializedName("date")
     private String date;
 
-    @SerializedName("start")
+    @SerializedName("startTime")
     private String start;
 
-    @SerializedName("end")
-    private String end;
+    @SerializedName("endTime")
+    private String ends;
 
     @SerializedName("location")
     private String location;
@@ -34,7 +34,7 @@ public class Event {
         this.description = description;
         this.date = date;
         this.start = starttime;
-        this.end = endtime;
+        this.ends = endtime;
         this.location = location;
     }
     public Event (int orgID, String eventName) {
@@ -43,7 +43,7 @@ public class Event {
         this.description = " ";
         this.date = " ";
         this.start = " ";
-        this.end = " ";
+        this.ends = " ";
         this.location = " ";
     }
 
@@ -53,6 +53,6 @@ public class Event {
     public String getDescription() { return this.description; }
     public String getDate() { return this.date; }
     public String getStartTime() { return this.start; }
-    public String getEndTime() { return this.end; }
+    public String getEndTime() { return this.ends; }
     public String getLocation() { return this.location; }
 }

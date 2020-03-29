@@ -8,15 +8,15 @@ public class Student {
     @SerializedName("name")
     private String name;
 
-    @SerializedName("netId")
-    private String netId;
+    @SerializedName("netID")
+    private String netID;
 
     public Student(String fullName, String netID) {
         this.name = fullName;
-        this.netId = netID;
+        this.netID = netID;
     }
 
     public int getId() { return this.id; }
     public String getName() { return this.name; }
-    public String getNetid() { return this.netId; }
+    public String getNetid() { return this.netID; }
 }

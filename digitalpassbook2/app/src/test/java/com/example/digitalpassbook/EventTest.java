@@ -137,7 +137,7 @@ public class EventTest {
     }
 
 
-//    @Test
+    @Test
     public void checkEvent() {
         Boolean print = false;
         int orgID = 25;
@@ -160,9 +160,9 @@ public class EventTest {
         assert(id >= 0);
         assert(areEqual(get(id), updatedEvent, print));
 
-        id = delete(id, print);
-        assert(id >= 0);
-        assertEquals(getAll(false).length, originalLen);
+//        id = delete(id, print);
+//        assert(id >= 0);
+//        assertEquals(getAll(false).length, originalLen);
 
     }
 }

@@ -131,7 +131,7 @@ public class PassTest {
     }
 
 
-    @Test
+//    @Test
     public void checkPass() {
         Boolean print = true;
         int newClubID = 9;
@@ -155,9 +155,9 @@ public class PassTest {
         assertEquals(getAll(print).length-1, originalLen);
         assert(areEqual(get(id), newPass, print));
 
-//        id = update(id, updatedPass, print);
-//        assert(id >= 0);
-//        assert(areEqual(get(id), updatedPass, print));
+        id = update(id, updatedPass, print);
+        assert(id >= 0);
+        assert(areEqual(get(id), updatedPass, print));
 //
 //        id = delete(id, print);
 //        assert(id >= 0);

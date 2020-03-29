@@ -151,8 +151,8 @@ public class StudentTest {
         assert(id >= 0);
         assert(areEqual(get(id), updatedStudent, print));
 
-        id = delete(id, print);
-        assert(id >= 0);
-        assertEquals(getAll(false).length, originalLen);
+//        id = delete(id, print);
+//        assert(id >= 0);
+//        assertEquals(getAll(false).length, originalLen);
     }
 }
