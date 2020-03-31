@@ -4,10 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.digitalpassbook2.R
 
 class CreateEventFragment : Fragment() {
@@ -27,5 +30,16 @@ class CreateEventFragment : Fragment() {
             textView.text = it
         })
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        view.findViewById<Button>(R.id.submit).setOnClickListener {
+            // need to replace this with a function that handles the data and navigates home
+            // but also does other stuff
+            findNavController().navigate(R.id.navigation_home)
+        }
+
     }
 }
