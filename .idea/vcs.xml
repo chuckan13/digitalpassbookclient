@@ -3,5 +3,6 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/server/spring-boot-android-service" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/server/spring-boot-android-service/stark-castle-00086" vcs="Git" />
   </component>
 </project>
