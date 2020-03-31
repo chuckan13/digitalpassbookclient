@@ -1,0 +1,2 @@
+rootProject.name='com.example.digitalpassbook2'
+include ':app'
