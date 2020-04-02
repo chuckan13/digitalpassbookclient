@@ -2,6 +2,10 @@ package com.example.digitalpassbook2
 
 import retrofit2.Call
 import retrofit2.http.*
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
+import retrofit2.http.Query
 
 interface EventService {
     @GET("events")
@@ -21,4 +25,19 @@ interface EventService {
         @Path("id") id: Int,
         @Body event: Event?
     ): Call<Event?>?
+
+
+    companion object {
+        fun create(): EventService {
+
+            val retrofit = Retrofit.Builder()
+                .baseUrl("https://pure-river-68629.herokuapp.com/")
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+
+            return retrofit.create(EventService::class.java)
+        }
+    }
 }

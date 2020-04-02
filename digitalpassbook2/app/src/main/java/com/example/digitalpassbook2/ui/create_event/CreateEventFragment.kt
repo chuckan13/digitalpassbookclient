@@ -12,11 +12,25 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.digitalpassbook2.Event
+import com.example.digitalpassbook2.EventService
 import com.example.digitalpassbook2.R
+import io.reactivex.disposables.Disposable
+import retrofit2.Call
+import retrofit2.Callback;
+import retrofit2.Response;
+//import com.example.digitalpassbook2.EventService
 
 class CreateEventFragment : Fragment() {
 
     private lateinit var createEventViewModel: CreateEventViewModel
+
+    private var disposable: Disposable? = null
+
+    private val EventServe by lazy {
+        EventService.create()
+    }
+
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -45,6 +59,20 @@ class CreateEventFragment : Fragment() {
         view.findViewById<Button>(R.id.submit).setOnClickListener {
             // need to replace this with a function that handles the data and navigates home
             // but also does other stuff
+            var new_event = Event(1, event_title.text.toString(), description.text.toString(), date.text.toString(), start_time.text.toString(), end_time.text.toString(), "cap and gown")
+//            val event_servce = EventService()
+            val createCall:Call<Event?>? = EventServe.create(new_event)
+//            println(result)
+            createCall?.enqueue(object : Callback<Event?> {
+                override fun onResponse(call: Call<Event?>?, response: Response<Event?>?) {
+                    val newItem = response?.body()
+                    println(newItem?.name)
+                }
+
+                override fun onFailure(call: Call<Event?>?, t: Throwable?) {
+                    println("falure")
+                }
+            })
             findNavController().navigate(R.id.navigation_home)
         }
 
