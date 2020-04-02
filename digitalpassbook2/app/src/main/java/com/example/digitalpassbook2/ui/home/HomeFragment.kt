@@ -36,6 +36,7 @@ class HomeFragment : Fragment() {
             textView.text = it
         })
 
+        
         passesListView = root.findViewById<ListView>(R.id.passes_list_view)
 
         val passesList = arrayOf("a", "b", "c")
