@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 class CreateEventViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "Create Event"
+            value = "Create Event"
     }
     val text: LiveData<String> = _text
 }
