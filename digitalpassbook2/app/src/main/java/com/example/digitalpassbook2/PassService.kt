@@ -11,7 +11,7 @@ interface PassService {
     fun create(@Body pass: Pass?): Call<Pass?>?
 
     @GET("passes/{id}")
-    operator fun get(@Path("id") id: Int): Call<Pass?>?
+    fun get(@Path("id") id: Int): Call<Pass?>?
 
     @DELETE("passes/{id}")
     fun delete(@Path("id") id: Int): Call<Pass?>?
@@ -21,4 +21,7 @@ interface PassService {
         @Path("id") id: Int,
         @Body pass: Pass?
     ): Call<Pass?>?
+
+    @GET("passes/user/{id}")
+    fun getByUserId(@Path("id") userId: Int): Call<List<Pass?>?>?
 }
