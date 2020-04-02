@@ -1,12 +1,15 @@
 package com.example.digitalpassbook2
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.digitalpassbook2.ui.login.LoginActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,5 +25,10 @@ class MainActivity : AppCompatActivity() {
             R.id.navigation_home, R.id.navigation_create_event))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+    }
+
+    fun logOut(view: View) {
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
     }
 }

@@ -11,6 +11,7 @@
     <string name="end_time_hint">End Time</string>
     <string name="description_hint">Description</string>
     <string name="title_activity_login">Sign in</string>
+    <string name="signout_btn">Sign Out</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -34,6 +35,12 @@ class CreateEventFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val event_title = view.findViewById<EditText>(R.id.event_title)
+        val start_time = view.findViewById<EditText>(R.id.start_time)
+        val end_time = view.findViewById<EditText>(R.id.end_time)
+        val date = view.findViewById<EditText>(R.id.date)
+        val description = view.findViewById<EditText>(R.id.description)
 
         view.findViewById<Button>(R.id.submit).setOnClickListener {
             // need to replace this with a function that handles the data and navigates home
