@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.example.digitalpassbook2.Event
 import com.example.digitalpassbook2.EventService
 import com.example.digitalpassbook2.R
@@ -50,18 +49,18 @@ class CreateEventFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val event_title = view.findViewById<EditText>(R.id.event_title)
-        val start_time = view.findViewById<EditText>(R.id.start_time)
-        val end_time = view.findViewById<EditText>(R.id.end_time)
+        val eventTitle = view.findViewById<EditText>(R.id.event_title)
+        val startTime = view.findViewById<EditText>(R.id.start_time)
+        val endTime = view.findViewById<EditText>(R.id.end_time)
         val date = view.findViewById<EditText>(R.id.date)
         val description = view.findViewById<EditText>(R.id.description)
 
         view.findViewById<Button>(R.id.submit).setOnClickListener {
             // need to replace this with a function that handles the data and navigates home
             // but also does other stuff
-            var new_event = Event(1, event_title.text.toString(), description.text.toString(), date.text.toString(), start_time.text.toString(), end_time.text.toString(), "cap and gown")
-//            val event_servce = EventService()
-            val createCall:Call<Event?>? = EventServe.create(new_event)
+            var newEvent = Event(1, eventTitle.text.toString(), description.text.toString(), date.text.toString(), startTime.text.toString(), endTime.text.toString(), "cap and gown")
+//            val event_service = EventService()
+            val createCall:Call<Event?>? = EventServe.create(newEvent)
 //            println(result)
             createCall?.enqueue(object : Callback<Event?> {
                 override fun onResponse(call: Call<Event?>?, response: Response<Event?>?) {
@@ -70,7 +69,7 @@ class CreateEventFragment : Fragment() {
                 }
 
                 override fun onFailure(call: Call<Event?>?, t: Throwable?) {
-                    println("falure")
+                    println("failure")
                 }
             })
             findNavController().navigate(R.id.navigation_home)

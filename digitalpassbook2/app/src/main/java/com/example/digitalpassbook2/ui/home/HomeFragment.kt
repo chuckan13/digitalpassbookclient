@@ -53,7 +53,7 @@ class HomeFragment : Fragment() {
                     passList.add(b)
                 }
                 val adapter =
-                    activity?.let { PassListAdapter2(it, passList) }
+                    activity?.let { PassListAdapter(it, passList) }
                 passesListView.adapter = adapter
             }
             override fun onFailure(call: Call<List<Pass?>?>?, t: Throwable?) {

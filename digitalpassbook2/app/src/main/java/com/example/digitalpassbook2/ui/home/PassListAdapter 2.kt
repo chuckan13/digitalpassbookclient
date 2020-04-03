@@ -8,15 +8,11 @@ import android.widget.BaseAdapter
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import com.example.digitalpassbook2.Pass
 import com.example.digitalpassbook2.R
 import kotlinx.android.synthetic.main.pass_list.view.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
-class PassListAdapter2 (private val context: Context,
-                        private val passList: MutableList<Pass?>) : BaseAdapter() {
+class PassListAdapter (private val context: Context,
+                       private val passList: MutableList<String?>) : BaseAdapter() {
     private val inflater: LayoutInflater =
         context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
@@ -25,14 +21,15 @@ class PassListAdapter2 (private val context: Context,
     }
 
     override fun getItem(position: Int): String? {
-        return passList[position]?.passName
+        return passList[position]
     }
 
     override fun getItemId(position: Int): Long {
-        return passList[position]?.id?.toLong()!!
+        return position.toLong()
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+        // Get view for row item
         val rowView = inflater.inflate(R.layout.pass_list, parent, false)
 
         val passName = rowView.findViewById(R.id.pass_list) as TextView
