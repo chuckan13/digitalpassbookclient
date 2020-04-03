@@ -45,22 +45,22 @@ class HomeFragment : Fragment() {
 //        }
 
         val createCall: Call<List<Pass?>?>? = passServe.getByUserId(1)
-        val passList: MutableList<String?> = ArrayList()
+        val passList: MutableList<Pass?> = ArrayList()
 
         createCall?.enqueue(object : Callback<List<Pass?>?> {
             override fun onResponse(call: Call<List<Pass?>?>?, response: Response<List<Pass?>?>?) {
                 for (b in response?.body()!!) {
-                    passList.add(b?.passName)
+                    passList.add(b)
                 }
+                val adapter =
+                    activity?.let { PassListAdapter2(it, passList) }
+                passesListView.adapter = adapter
             }
             override fun onFailure(call: Call<List<Pass?>?>?, t: Throwable?) {
                 println("failure")
             }
         })
 
-        val adapter =
-            activity?.let { PassListAdapter(it, passList) }
-        passesListView.adapter = adapter
         passesListView = root.findViewById<ListView>(R.id.passes_list_view)
 
         return root
