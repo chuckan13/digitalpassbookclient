@@ -1,33 +1,35 @@
 package com.example.digitalpassbook2.ui.home
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.findNavController
-import com.example.digitalpassbook2.MainActivity
-import com.example.digitalpassbook2.R
-import com.example.digitalpassbook2.ui.login.LoginActivity
 import com.example.digitalpassbook2.Pass
 import com.example.digitalpassbook2.PassService
 import com.example.digitalpassbook2.R
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.converter.scalars.ScalarsConverterFactory
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+//import sun.text.normalizer.UTF16.append
+
 
 class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
 
     private lateinit var passesListView : ListView
+
+//    private val passlist: MutableList<String> = ArrayList()
+
+    private val PassServe by lazy {
+        PassService.create()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,13 +48,35 @@ class HomeFragment : Fragment() {
 //            val intent = Intent(context, LoginActivity::class.java)
 //            context?.startActivity(intent)
 //        }
-        
+
+
+        val passlist: MutableList<String?> = ArrayList()
+        val createCall: Call<List<Pass?>?>? = PassServe.getByUserId(1)
+//            println(result)
+        createCall?.enqueue(object : Callback<List<Pass?>?> {
+            override fun onResponse(call: Call<List<Pass?>?>?, response: Response<List<Pass?>?>?) {
+//                val newItem = response?.body()
+                for (b in response?.body()!!) {
+                    passlist.add(b?.passName)
+                }
+//                println(passlist.size)
+                val adapter =
+                    activity?.let { ArrayAdapter(it, android.R.layout.simple_list_item_1, passlist) }
+                passesListView.adapter = adapter
+            }
+
+            override fun onFailure(call: Call<List<Pass?>?>?, t: Throwable?) {
+                println("falure")
+            }
+        })
+
         passesListView = root.findViewById<ListView>(R.id.passes_list_view)
 
-        val passesList = arrayOf("a", "b", "c")
-        val adapter =
-            activity?.let { ArrayAdapter(it, android.R.layout.simple_list_item_1, passesList) }
-        passesListView.adapter = adapter
+        val passesList = arrayOf(passlist)
+
+//        val adapter =
+//            activity?.let { ArrayAdapter(it, android.R.layout.simple_list_item_1, passesList) }
+//        passesListView.adapter = adapter
 
         return root
     }
