@@ -26,7 +26,7 @@ class CreateEventFragment : Fragment() {
 
     private var disposable: Disposable? = null
 
-    private val EventServe by lazy {
+    private val eventServe by lazy {
         EventService.create()
     }
 
@@ -39,10 +39,6 @@ class CreateEventFragment : Fragment() {
         createEventViewModel =
                 ViewModelProviders.of(this).get(CreateEventViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_create_event, container, false)
-        val textView: TextView = root.findViewById(R.id.text_create_event)
-        createEventViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
         return root
     }
 
@@ -60,7 +56,7 @@ class CreateEventFragment : Fragment() {
             // but also does other stuff
             var newEvent = Event(1, eventTitle.text.toString(), description.text.toString(), date.text.toString(), startTime.text.toString(), endTime.text.toString(), "cap and gown")
 //            val event_service = EventService()
-            val createCall:Call<Event?>? = EventServe.create(newEvent)
+            val createCall:Call<Event?>? = eventServe.create(newEvent)
 //            println(result)
             createCall?.enqueue(object : Callback<Event?> {
                 override fun onResponse(call: Call<Event?>?, response: Response<Event?>?) {

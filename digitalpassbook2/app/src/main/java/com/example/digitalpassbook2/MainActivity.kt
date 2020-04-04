@@ -7,6 +7,7 @@ import android.widget.ArrayAdapter
 import android.widget.ListView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -29,8 +30,13 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
     }
 
-    fun logOut(view: View) {
-        val intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
-    }
+//    fun moveFragment(fragment: Fragment, tag: String) {
+//        supportFragmentManager.beginTransaction()
+//            .replace(R.id.container, fragment, tag).addToBackStack("").commit()
+//    }
+
+//    fun logOut(view: View) {
+//        val intent = Intent(this, LoginActivity::class.java)
+//        startActivity(intent)
+//    }
 }
