@@ -1,5 +1,6 @@
 package com.example.digitalpassbook2.ui.home
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -34,22 +35,9 @@ class PassListAdapter (private val context: Context,
         val rowView = inflater.inflate(R.layout.pass_list, parent, false)
 
         val passName = rowView.findViewById(R.id.pass_list) as TextView
-        val viewButton = rowView.findViewById(R.id.view_button) as Button
-//        val sendButton = rowView.findViewById(R.id.send_button) as Button
 
         val pass = getItem(position)
         passName.text = pass?.passName
-
-        viewButton.setOnClickListener {
-            val displayPass = DisplayPassFragment(pass)
-            (rowView.context as FragmentActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.passes_list_view, displayPass, displayPass.tag).addToBackStack("").commit()
-            findNavController((rowView.context as FragmentActivity), R.id.navigation_display_pass)
-        }
-
-//        sendButton.setOnClickListener {
-//
-//        }
 
         return rowView
     }

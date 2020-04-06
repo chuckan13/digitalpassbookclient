@@ -30,13 +30,4 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
     }
 
-//    fun moveFragment(fragment: Fragment, tag: String) {
-//        supportFragmentManager.beginTransaction()
-//            .replace(R.id.container, fragment, tag).addToBackStack("").commit()
-//    }
-
-//    fun logOut(view: View) {
-//        val intent = Intent(this, LoginActivity::class.java)
-//        startActivity(intent)
-//    }
 }

@@ -32,6 +32,13 @@
         android:id="@+id/navigation_display_pass"
         android:name="com.example.digitalpassbook2.ui.home.DisplayPassFragment"
         android:label="@string/title_display_pass"
-        tools:layout="@layout/fragment_display_pass" />
+        tools:layout="@layout/fragment_display_pass" >
+        <action
+            android:id="@+id/action_navigation_display_pass_to_navigation_home"
+            app:destination="@id/navigation_home" />
+        <argument
+            android:name="passArg"
+            app:argType="long" />
+    </fragment>
 
 </navigation>
