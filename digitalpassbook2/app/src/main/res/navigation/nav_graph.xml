@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_navigation_home_to_navigation_display_pass"
             app:destination="@id/navigation_display_pass" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_send_pass"
+            app:destination="@id/navigation_send_pass" />
     </fragment>
 
     <fragment
@@ -30,11 +33,24 @@
 
     <fragment
         android:id="@+id/navigation_display_pass"
-        android:name="com.example.digitalpassbook2.ui.home.DisplayPassFragment"
+        android:name="com.example.digitalpassbook2.ui.display_pass.DisplayPassFragment"
         android:label="@string/title_display_pass"
         tools:layout="@layout/fragment_display_pass" >
         <action
             android:id="@+id/action_navigation_display_pass_to_navigation_home"
+            app:destination="@id/navigation_home" />
+        <argument
+            android:name="passArg"
+            app:argType="long" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_send_pass"
+        android:name="com.example.digitalpassbook2.ui.send_pass.SendPassFragment"
+        android:label="@string/title_send_pass"
+        tools:layout="@layout/fragment_display_pass" >
+        <action
+            android:id="@+id/action_navigation_send_pass_to_navigation_home"
             app:destination="@id/navigation_home" />
         <argument
             android:name="passArg"
