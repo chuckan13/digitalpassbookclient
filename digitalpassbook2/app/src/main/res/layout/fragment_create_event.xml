@@ -13,7 +13,7 @@
         android:ems="10"
         android:fontFamily="sans-serif"
         android:hint="@string/event_title_hint"
-        android:inputType="textPersonName"
+        android:inputType="text"
         android:maxLength="30"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,20 +58,48 @@
         app:layout_constraintTop_toBottomOf="@+id/date" />
 
     <EditText
+        android:id="@+id/location"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:fontFamily="sans-serif"
+        android:hint="@string/location_hint"
+        android:inputType="text"
+        android:textSize="18sp"
+        android:maxLength="30"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/start_time" />
+
+    <EditText
         android:id="@+id/description"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:fontFamily="sans-serif"
         android:hint="@string/description_hint"
-        android:gravity="start|top"
+        android:gravity="start|bottom"
         android:inputType="textMultiLine"
         android:textSize="18sp"
         android:maxLength="140"
-        android:maxLines="6"
+        android:maxLines="3"
+        android:minLines="3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/start_time" />
+        app:layout_constraintTop_toBottomOf="@+id/location" />
+
+    <AutoCompleteTextView
+        android:id="@+id/invited"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:fontFamily="sans-serif"
+        android:hint="@string/invited_hint"
+        android:inputType="text"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/description" />
 
     <Button
         android:id="@+id/submit"

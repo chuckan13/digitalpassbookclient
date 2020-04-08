@@ -27,5 +27,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_display_pass">Display Pass</string>
     <string name="title_send_pass">Send Pass</string>
+    <string name="location_hint">Location</string>
+    <string name="invited_hint">Invited</string>
 
 </resources>
