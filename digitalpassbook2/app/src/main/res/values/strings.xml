@@ -29,5 +29,6 @@
     <string name="title_send_pass">Send Pass</string>
     <string name="location_hint">Location</string>
     <string name="invited_hint">Invited</string>
+    <string name="number_hint"># of passes?</string>
 
 </resources>

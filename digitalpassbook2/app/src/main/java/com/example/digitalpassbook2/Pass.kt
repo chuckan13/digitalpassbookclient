@@ -12,5 +12,4 @@ class Pass(
 ) {
     @SerializedName("id")
     val id = 0
-
 }
