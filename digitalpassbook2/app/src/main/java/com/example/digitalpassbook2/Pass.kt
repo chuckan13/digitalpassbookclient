@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 class Pass(
     @field:SerializedName("orgId") val orgId: Int,
-    @field:SerializedName("userId") val userId: Int,
+    @field:SerializedName("userId") var userId: Int,
     @field:SerializedName(
         "eventsId"
     ) val eventId: Int,
