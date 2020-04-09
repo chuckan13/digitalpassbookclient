@@ -19,6 +19,9 @@ interface StudentService {
     @DELETE("students/{id}")
     fun delete(@Path("id") id: Int): Call<Student?>?
 
+    @GET("students/netid/{netid}")
+    fun getByNetId(@Path ("netid") netid: String): Call<Student?>?
+
     @PATCH("students/{id}")
     fun update(
         @Path("id") id: Int,

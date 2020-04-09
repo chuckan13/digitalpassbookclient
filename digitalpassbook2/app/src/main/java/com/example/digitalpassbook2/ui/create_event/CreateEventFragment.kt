@@ -33,7 +33,12 @@ class CreateEventFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         createEventViewModel = ViewModelProviders.of(this).get(CreateEventViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_create_event, container, false)
+        return inflater.inflate(R.layout.fragment_create_event, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         val createCall = studentServe.getall()
         val studentList: MutableList<String> = ArrayList()
 
@@ -49,12 +54,7 @@ class CreateEventFragment : Fragment() {
                 println("failure")
             }
         })
-        invitedAutoCompleteTextView = root.findViewById(R.id.invited)
-        return root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        invitedAutoCompleteTextView = view.findViewById(R.id.invited)
 
         val eventTitle = view.findViewById<EditText>(R.id.event_title)
         val date = view.findViewById<EditText>(R.id.date)
