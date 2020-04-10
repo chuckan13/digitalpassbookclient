@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
-import com.example.digitalpassbook2.Pass
-import com.example.digitalpassbook2.PassService
+import com.example.digitalpassbook2.server.Pass
+import com.example.digitalpassbook2.server.PassService
 import com.example.digitalpassbook2.R
 import retrofit2.Call
 import retrofit2.Callback

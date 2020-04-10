@@ -8,7 +8,7 @@ import android.widget.BaseAdapter
 import android.widget.Button
 import android.widget.TextView
 import androidx.navigation.findNavController
-import com.example.digitalpassbook2.Pass
+import com.example.digitalpassbook2.server.Pass
 import com.example.digitalpassbook2.R
 
 

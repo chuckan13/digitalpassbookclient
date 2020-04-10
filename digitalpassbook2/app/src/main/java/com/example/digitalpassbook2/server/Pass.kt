@@ -1,4 +1,4 @@
-package com.example.digitalpassbook2
+package com.example.digitalpassbook2.server
 
 import com.google.gson.annotations.SerializedName
 

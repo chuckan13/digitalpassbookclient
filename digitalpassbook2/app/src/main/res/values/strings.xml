@@ -33,5 +33,6 @@
     <string name="guest_name">Guest Name</string>
     <string name="submit_button">Submit</string>
     <string name="guest_name_hint">Guest Name</string>
+    <string name="number_hint">Passes per member</string>
 
 </resources>

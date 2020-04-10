@@ -11,6 +11,10 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.digitalpassbook2.*
+import com.example.digitalpassbook2.server.Pass
+import com.example.digitalpassbook2.server.PassService
+import com.example.digitalpassbook2.server.Student
+import com.example.digitalpassbook2.server.StudentService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

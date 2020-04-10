@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.example.digitalpassbook2.*
+import com.example.digitalpassbook2.server.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -69,7 +70,15 @@ class CreateEventFragment : Fragment() {
         val description = view.findViewById<EditText>(R.id.description)
 
         view.findViewById<Button>(R.id.submit).setOnClickListener {
-            var newEvent = Event(1, eventTitle.text.toString(), description.text.toString(), date.text.toString(), startTime.text.toString(), endTime.text.toString(), location.text.toString())
+            var newEvent = Event(
+                1,
+                eventTitle.text.toString(),
+                description.text.toString(),
+                date.text.toString(),
+                startTime.text.toString(),
+                endTime.text.toString(),
+                location.text.toString()
+            )
             val createCall:Call<Event?>? = eventServe.create(newEvent)
             val enqueue = createCall?.enqueue(object : Callback<Event?> {
                 override fun onResponse(call: Call<Event?>?, response: Response<Event?>?) {
@@ -95,7 +104,13 @@ class CreateEventFragment : Fragment() {
                     for (member in memberList) {
                         for (i in 0 until numberPasses) {
                             Log.d("myTag", "numberPasses")
-                            val newPass = Pass(1, 1, newEvent.id, newEvent.name)
+                            val newPass =
+                                Pass(
+                                    1,
+                                    1,
+                                    newEvent.id,
+                                    newEvent.name
+                                )
                             val passCallback = passServe.create(newPass)
 
                             // just to run the damn pass creation
