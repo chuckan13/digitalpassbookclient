@@ -1,5 +1,6 @@
 package com.example.digitalpassbook2.data
 
+import android.util.Log
 import com.example.digitalpassbook2.data.model.LoggedInUser
 
 /**
@@ -29,6 +30,7 @@ class LoginRepository(val dataSource: LoginDataSource) {
 
     fun login(username: String, password: String): Result<LoggedInUser> {
         // handle login
+        Log.d("LoginRepo -> ", "DataSource")
         val result = dataSource.login(username, password)
 
         if (result is Result.Success) {

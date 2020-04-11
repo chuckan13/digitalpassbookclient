@@ -1,9 +1,14 @@
 package com.example.digitalpassbook2.ui.login
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
 /**
  * User details post authentication that is exposed to the UI
  */
+@Parcelize
 data class LoggedInUserView(
-    val displayName: String
-    //... other data fields that may be accessible to the UI
-)
+    val id: Int?,
+    val displayName: String,
+    val isClub: Boolean// data fields accessible to UI
+): Parcelable

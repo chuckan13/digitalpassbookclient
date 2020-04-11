@@ -5,5 +5,5 @@ package com.example.digitalpassbook2.ui.login
  */
 data class LoginResult(
     val success: LoggedInUserView? = null,
-    val error: Int? = null
+    val error: String? = null
 )

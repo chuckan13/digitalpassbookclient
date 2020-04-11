@@ -26,14 +26,14 @@ interface StudentService {
     ): Call<Student?>?
 
     companion object {
-        fun create(): StudentService {
+        var student: Student? = null
 
+        fun create(): StudentService {
             val retrofit = Retrofit.Builder()
                 .baseUrl("https://pure-river-68629.herokuapp.com/")
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
 
             return retrofit.create(StudentService::class.java)
         }
