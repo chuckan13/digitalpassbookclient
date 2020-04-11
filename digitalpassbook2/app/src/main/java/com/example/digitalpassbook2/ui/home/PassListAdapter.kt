@@ -50,7 +50,7 @@ class PassListAdapter (private val context: Context,
                 val club = response?.body()
                 val clubId = club?.id
                 clubName.text = club?.name
-                clubLogo.setImageResource(R.drawable.ic_ivy_logo)
+                clubLogo.setImageResource(rowView.resources.getIdentifier(club?.logo, "drawable", context.packageName))
     
                 rowView.findViewById<Button>(R.id.view_button).setOnClickListener {
                     val action =

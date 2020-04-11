@@ -66,7 +66,7 @@ class DisplayPassFragment() : Fragment() {
             override fun onResponse(call: Call<Organization?>?, response: Response<Organization?>?) {
                 val club = response?.body()
                 clubName.text = club?.name
-                clubLogo.setImageResource(R.drawable.ic_ivy_logo)
+                clubLogo.setImageResource(resources.getIdentifier(club?.logo, "drawable", context?.packageName))
             }
             override fun onFailure(call: Call<Organization?>?, t: Throwable?) {
                 println("failure")
