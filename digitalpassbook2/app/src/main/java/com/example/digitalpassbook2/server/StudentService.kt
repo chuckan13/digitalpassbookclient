@@ -1,4 +1,4 @@
-package com.example.digitalpassbook2
+package com.example.digitalpassbook2.server
 
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -18,6 +18,9 @@ interface StudentService {
 
     @DELETE("students/{id}")
     fun delete(@Path("id") id: Int): Call<Student?>?
+
+    @GET("students/netid/{netid}")
+    fun getByNetId(@Path ("netid") netid: String): Call<Student?>?
 
     @PATCH("students/{id}")
     fun update(

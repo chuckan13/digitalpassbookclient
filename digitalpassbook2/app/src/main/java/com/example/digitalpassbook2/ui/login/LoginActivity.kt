@@ -16,7 +16,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
-import com.example.digitalpassbook2.MainActivity
+import com.example.digitalpassbook2.ui.MainActivity
 
 import com.example.digitalpassbook2.R
 

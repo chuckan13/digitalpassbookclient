@@ -7,7 +7,11 @@
     tools:context="com.example.digitalpassbook2.ui.display_pass.DisplayPassFragment">
 
     <TextView
-        android:id="@+id/pass_name"
+        android:id="@+id/pass_club_name"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <ImageView
+        android:id="@+id/pass_club_logo"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

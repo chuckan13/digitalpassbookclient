@@ -4,15 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView.OnItemClickListener
-import android.widget.Button
 import android.widget.ListView
-import androidx.core.view.iterator
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.findNavController
-import com.example.digitalpassbook2.Pass
-import com.example.digitalpassbook2.PassService
+import com.example.digitalpassbook2.server.Pass
+import com.example.digitalpassbook2.server.PassService
 import com.example.digitalpassbook2.R
 import retrofit2.Call
 import retrofit2.Callback

@@ -1,15 +1,25 @@
 package com.example.digitalpassbook2.ui.display_pass
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.digitalpassbook2.Pass
-import com.example.digitalpassbook2.PassService
 import com.example.digitalpassbook2.R
+import com.example.digitalpassbook2.server.Organization
+import com.example.digitalpassbook2.server.OrganizationService
+import com.example.digitalpassbook2.server.Pass
+import com.example.digitalpassbook2.server.PassService
+import com.example.digitalpassbook2.ui.MainActivity
+import com.example.digitalpassbook2.ui.home.HomeFragmentDirections
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -19,6 +29,10 @@ class DisplayPassFragment() : Fragment() {
 
     private val passServe by lazy {
         PassService.create()
+    }
+
+    private val organizationServe by lazy {
+        OrganizationService.create()
     }
 
     private val args: DisplayPassFragmentArgs by navArgs()
@@ -31,17 +45,30 @@ class DisplayPassFragment() : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val passId = args.passArg
+        val clubId = args.clubArg
+
+        val clubName = view.findViewById(R.id.pass_club_name) as TextView
+        val clubLogo = view.findViewById(R.id.pass_club_logo) as ImageView
 
         val passCall = passServe.get(passId.toInt())
-        val passName = view.findViewById(R.id.pass_name) as TextView
-
         passCall?.enqueue(object : Callback<Pass?> {
             override fun onResponse(call: Call<Pass?>?, response: Response<Pass?>?) {
                 val pass = response?.body()
-                passName.text = pass?.passName
             }
 
             override fun onFailure(call: Call<Pass?>?, t: Throwable?) {
+                println("failure")
+            }
+        })
+
+        val organizationCall = organizationServe[clubId]
+        organizationCall?.enqueue(object : Callback<Organization?> {
+            override fun onResponse(call: Call<Organization?>?, response: Response<Organization?>?) {
+                val club = response?.body()
+                clubName.text = club?.name
+                clubLogo.setImageResource(resources.getIdentifier(club?.logo, "drawable", context?.packageName))
+            }
+            override fun onFailure(call: Call<Organization?>?, t: Throwable?) {
                 println("failure")
             }
         })

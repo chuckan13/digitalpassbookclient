@@ -42,6 +42,9 @@
         <argument
             android:name="passArg"
             app:argType="long" />
+        <argument
+            android:name="clubArg"
+            app:argType="integer" />
     </fragment>
 
     <fragment
