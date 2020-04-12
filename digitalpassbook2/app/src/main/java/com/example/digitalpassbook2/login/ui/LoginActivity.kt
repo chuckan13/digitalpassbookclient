@@ -1,24 +1,23 @@
-package com.example.digitalpassbook2.ui.login
+package com.example.digitalpassbook2.login.ui
 
 import android.app.Activity
 import android.content.Intent
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
-import com.example.digitalpassbook2.ui.MainActivity
+import com.example.digitalpassbook2.organization.OrganizationActivity
 
 import com.example.digitalpassbook2.R
+import com.example.digitalpassbook2.student.StudentActivity
 
 class LoginActivity : AppCompatActivity() {
 
@@ -59,7 +58,10 @@ class LoginActivity : AppCompatActivity() {
                 showLoginFailed(loginResult.error)
             }
             if (loginResult.success != null) {
-                val intent = Intent(this, MainActivity::class.java)
+                val intent: Intent = if (loginResult.success.isClub)
+                    Intent(this, OrganizationActivity::class.java)
+                else
+                    Intent(this, StudentActivity::class.java)
                 intent.putExtra("EXTRA_PARCEL", loginResult.success)
                 startActivity(intent)
                 setResult(Activity.RESULT_OK)

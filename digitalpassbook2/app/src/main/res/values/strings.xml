@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">digitalpassbook2</string>
-    <string name="main_activity">main activity</string>
+    <string name="organization_activity">organization activity</string>
+    <string name="student_activity">student activity</string>
     <string name="title_home">Home</string>
     <string name="title_create_event">Create Event</string>
     <string name="text_home">Home</string>

@@ -1,4 +1,4 @@
-package com.example.digitalpassbook2.ui.login
+package com.example.digitalpassbook2.login.ui
 
 /**
  * Data validation state of the login form.

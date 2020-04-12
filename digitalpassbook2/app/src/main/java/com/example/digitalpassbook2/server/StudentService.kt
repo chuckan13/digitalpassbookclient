@@ -1,5 +1,6 @@
-package com.example.digitalpassbook2.server
+ package com.example.digitalpassbook2.server
 
+import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -34,8 +35,7 @@ interface StudentService {
         fun create(): StudentService {
             val retrofit = Retrofit.Builder()
                 .baseUrl("https://pure-river-68629.herokuapp.com/")
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
                 .build();
 
             return retrofit.create(StudentService::class.java)

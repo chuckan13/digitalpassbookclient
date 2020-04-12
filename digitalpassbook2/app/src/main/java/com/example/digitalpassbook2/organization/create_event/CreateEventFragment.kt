@@ -1,4 +1,4 @@
-package com.example.digitalpassbook2.ui.create_event
+package com.example.digitalpassbook2.organization.create_event
 
 import android.util.Log
 import android.os.Bundle

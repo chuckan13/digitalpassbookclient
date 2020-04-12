@@ -1,4 +1,4 @@
-package com.example.digitalpassbook2.data
+package com.example.digitalpassbook2.login.data
 
 /**
  * A generic class that holds a value with its loading status.
@@ -13,6 +13,7 @@ sealed class Result<out T : Any> {
         return when (this) {
             is Success<*> -> "Success[data=$data]"
             is Error -> "Error[exception=$exception]"
+
         }
     }
 }

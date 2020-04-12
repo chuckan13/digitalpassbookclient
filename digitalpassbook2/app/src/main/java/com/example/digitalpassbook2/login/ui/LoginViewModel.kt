@@ -1,12 +1,11 @@
-package com.example.digitalpassbook2.ui.login
+package com.example.digitalpassbook2.login.ui
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import android.util.Patterns
-import com.example.digitalpassbook2.data.LoginRepository
-import com.example.digitalpassbook2.data.Result
+import com.example.digitalpassbook2.login.data.LoginRepository
+import com.example.digitalpassbook2.login.data.Result
 
 import com.example.digitalpassbook2.R
 
@@ -20,14 +19,14 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
 
     fun login(username: String, password: String) {
         // can be launched in a separate asynchronous job
-        Log.d("LoginVM -> LRepo", "")
         val result = loginRepository.login(username, password)
 
         if (result is Result.Success) {
             _loginResult.value =
                 LoginResult(success = LoggedInUserView(id = result.data.id, displayName = result.data.displayName, isClub = result.data.isClub))
-        } else {
-            _loginResult.value = LoginResult(error = result.toString())
+        }
+        else if (result is Result.Error) {
+            _loginResult.value = LoginResult(error = result.exception.message.toString())
         }
     }
 

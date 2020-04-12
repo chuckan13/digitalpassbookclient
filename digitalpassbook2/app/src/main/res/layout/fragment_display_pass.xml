@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.digitalpassbook2.ui.display_pass.DisplayPassFragment">
+    tools:context="com.example.digitalpassbook2.organization.display_pass.DisplayPassFragment">
 
     <TextView
         android:id="@+id/pass_club_name"

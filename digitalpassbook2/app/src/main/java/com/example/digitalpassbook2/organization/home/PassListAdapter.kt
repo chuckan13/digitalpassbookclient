@@ -1,4 +1,4 @@
-package com.example.digitalpassbook2.ui.home
+package com.example.digitalpassbook2.organization.home
 
 import android.content.Context
 import android.view.LayoutInflater

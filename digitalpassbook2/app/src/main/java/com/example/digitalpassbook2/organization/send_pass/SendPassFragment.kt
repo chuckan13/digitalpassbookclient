@@ -1,4 +1,4 @@
-package com.example.digitalpassbook2.ui.send_pass
+package com.example.digitalpassbook2.organization.send_pass
 
 import android.os.Bundle
 import android.view.LayoutInflater

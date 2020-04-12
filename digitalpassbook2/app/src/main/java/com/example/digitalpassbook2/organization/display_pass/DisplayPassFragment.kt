@@ -1,25 +1,18 @@
-package com.example.digitalpassbook2.ui.display_pass
+package com.example.digitalpassbook2.organization.display_pass
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.digitalpassbook2.R
 import com.example.digitalpassbook2.server.Organization
 import com.example.digitalpassbook2.server.OrganizationService
 import com.example.digitalpassbook2.server.Pass
 import com.example.digitalpassbook2.server.PassService
-import com.example.digitalpassbook2.ui.MainActivity
-import com.example.digitalpassbook2.ui.home.HomeFragmentDirections
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

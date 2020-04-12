@@ -30,6 +30,8 @@ interface OrganizationService {
     fun getMembers(@Path("id") id: Int): Call<List<Student?>?>?
 
     companion object {
+        var organization: Organization? = null
+
         fun create(): OrganizationService {
 
             val retrofit = Retrofit.Builder()

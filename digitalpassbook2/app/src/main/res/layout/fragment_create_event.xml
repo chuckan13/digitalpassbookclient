@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.create_event.CreateEventFragment">
+    tools:context=".organization.create_event.CreateEventFragment">
 
     <EditText
         android:id="@+id/event_title"

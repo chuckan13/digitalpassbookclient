@@ -1,7 +1,6 @@
-package com.example.digitalpassbook2.data
+package com.example.digitalpassbook2.login.data
 
-import android.util.Log
-import com.example.digitalpassbook2.data.model.LoggedInUser
+import com.example.digitalpassbook2.login.data.model.LoggedInUser
 
 /**
  * Class that requests authentication and user information from the remote data source and
@@ -29,8 +28,7 @@ class LoginRepository(val dataSource: LoginDataSource) {
     }
 
     fun login(username: String, password: String): Result<LoggedInUser> {
-        // handle login
-        Log.d("LoginRepo -> ", "DataSource")
+        // handle login + caching
         val result = dataSource.login(username, password)
 
         if (result is Result.Success) {
