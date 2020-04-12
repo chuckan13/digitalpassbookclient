@@ -15,6 +15,7 @@ import com.example.digitalpassbook2.server.Pass
 import com.example.digitalpassbook2.server.PassService
 import com.example.digitalpassbook2.server.Student
 import com.example.digitalpassbook2.server.StudentService
+import com.example.digitalpassbook2.organization.send_pass.SendPassFragmentArgs
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

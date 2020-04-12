@@ -13,6 +13,7 @@ import com.example.digitalpassbook2.server.Organization
 import com.example.digitalpassbook2.server.OrganizationService
 import com.example.digitalpassbook2.server.Pass
 import com.example.digitalpassbook2.server.PassService
+import com.example.digitalpassbook2.organization.display_pass.DisplayPassFragmentArgs
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

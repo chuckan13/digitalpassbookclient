@@ -29,6 +29,10 @@ interface OrganizationService {
     @GET("organizations/members/{id}")
     fun getMembers(@Path("id") id: Int): Call<List<Student?>?>?
 
+    // retrieves all events associated with a given orgid
+    @GET("organizations/events/{id}")
+    fun getEvents(@Path("id") id: Int): Call<List<Event?>?>?
+
     companion object {
         var organization: Organization? = null
 
