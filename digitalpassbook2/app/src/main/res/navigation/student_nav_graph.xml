@@ -10,6 +10,9 @@
         android:name="com.example.digitalpassbook2.student.passbook.PassbookFragment"
         android:label="@string/title_passbook"
         tools:layout="@layout/fragment_passbook" >
+        <action
+            android:id="@+id/action_navigation_passbook_to_navigation_eventbook"
+            app:destination="@id/navigation_eventbook" />
     </fragment>
 
     <fragment
@@ -17,6 +20,9 @@
         android:name="com.example.digitalpassbook2.student.eventbook.EventbookFragment"
         android:label="@string/title_eventbook"
         tools:layout="@layout/fragment_eventbook" >
+        <action
+            android:id="@+id/action_navigation_eventbook_to_navigation_passbook"
+            app:destination="@id/navigation_passbook" />
     </fragment>
 
 </navigation>

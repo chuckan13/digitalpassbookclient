@@ -71,7 +71,7 @@ class CreateEventFragment : Fragment() {
         val description = view.findViewById<EditText>(R.id.description)
 
         view.findViewById<Button>(R.id.submit).setOnClickListener {
-            var newEvent = Event(MyOrganization.organization?.id!!, eventTitle.text.toString(), description.text.toString(),
+            var newEvent = Event(MyOrganization.id, eventTitle.text.toString(), description.text.toString(),
                 date.text.toString(), startTime.text.toString(), endTime.text.toString(), location.text.toString())
             val createCall:Call<Event?>? = eventServe.create(newEvent)
             val enqueue = createCall?.enqueue(object : Callback<Event?> {
@@ -86,7 +86,7 @@ class CreateEventFragment : Fragment() {
             })
 
             val numberPasses = view.findViewById<EditText>(R.id.number).text.toString().toInt()
-            val sendMembersCall = organizationServe.getMembers(MyOrganization.organization?.id!!)
+            val sendMembersCall = organizationServe.getMembers(MyOrganization.id)
             val memberList: MutableList<Student> = ArrayList()
 
             sendMembersCall?.enqueue(object : Callback<List<Student?>?> {
@@ -98,7 +98,7 @@ class CreateEventFragment : Fragment() {
                     for (member in memberList) {
                         for (i in 0 until numberPasses) {
                             Log.d("myTag", "numberPasses")
-                            val newPass = Pass(MyOrganization.organization?.id!!, member.id, newEvent.id, newEvent.name)
+                            val newPass = Pass(MyOrganization.id, member.id, newEvent.id, newEvent.name)
                             val passCallback = passServe.create(newPass)
 
                             // just to run the damn pass creation

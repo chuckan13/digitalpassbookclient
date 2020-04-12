@@ -30,7 +30,7 @@ class HomeFragment : Fragment() {
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
 
-        val createCall: Call<List<Pass?>?>? = passServe.getByUserId(MyOrganization.organization?.id!!)
+        val createCall: Call<List<Pass?>?>? = passServe.getByUserId(MyOrganization.id)
         val passList: MutableList<Pass?> = ArrayList()
 
         createCall?.enqueue(object : Callback<List<Pass?>?> {
