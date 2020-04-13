@@ -13,6 +13,12 @@
         <action
             android:id="@+id/action_navigation_passbook_to_navigation_eventbook"
             app:destination="@id/navigation_eventbook" />
+        <action
+            android:id="@+id/action_navigation_passbook_to_navigation_display_pass"
+            app:destination="@id/navigation_display_pass" />
+        <action
+            android:id="@+id/action_navigation_passbook_to_navigation_send_pass"
+            app:destination="@id/navigation_send_pass" />
     </fragment>
 
     <fragment
@@ -23,6 +29,35 @@
         <action
             android:id="@+id/action_navigation_eventbook_to_navigation_passbook"
             app:destination="@id/navigation_passbook" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_display_pass"
+        android:name="com.example.digitalpassbook2.student.display_pass.DisplayPassFragment"
+        android:label="@string/title_display_pass"
+        tools:layout="@layout/fragment_display_pass" >
+        <action
+            android:id="@+id/action_navigation_display_pass_to_navigation_passbook"
+            app:destination="@id/navigation_passbook" />
+        <argument
+            android:name="passArg"
+            app:argType="long" />
+        <argument
+            android:name="clubArg"
+            app:argType="integer" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_send_pass"
+        android:name="com.example.digitalpassbook2.student.send_pass.SendPassFragment"
+        android:label="@string/title_send_pass"
+        tools:layout="@layout/fragment_send_pass" >
+        <action
+            android:id="@+id/action_navigation_send_pass_to_navigation_passbook"
+            app:destination="@id/navigation_passbook" />
+        <argument
+            android:name="passArg"
+            app:argType="long" />
     </fragment>
 
 </navigation>

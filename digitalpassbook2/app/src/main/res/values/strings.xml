@@ -13,7 +13,7 @@
     <string name="description_hint">Description (optional)</string>
     <string name="title_activity_login">Sign in</string>
     <string name="signout_btn">Sign Out</string>
-    <string name="prompt_email">Email</string>
+    <string name="prompt_username">Username</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
@@ -36,5 +36,6 @@
     <string name="number_hint">Passes per member</string>
     <string name="title_eventbook">Events</string>
     <string name="title_passbook">Passbook</string>
+    <string name="edit_button">Edit</string>
 
 </resources>

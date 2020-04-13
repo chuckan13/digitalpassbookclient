@@ -1,4 +1,4 @@
-package com.example.digitalpassbook2.organization.send_pass
+package com.example.digitalpassbook2.student.send_pass
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,7 +15,6 @@ import com.example.digitalpassbook2.server.Pass
 import com.example.digitalpassbook2.server.PassService
 import com.example.digitalpassbook2.server.Student
 import com.example.digitalpassbook2.server.StudentService
-import com.example.digitalpassbook2.organization.send_pass.SendPassFragmentArgs
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -75,7 +74,7 @@ class SendPassFragment : Fragment() {
                             passCall?.enqueue(object : Callback<Pass?> {
                                 override fun onResponse(call: Call<Pass?>?, response: Response<Pass?>?) {
                                     val newItem = response?.body()
-                                    findNavController().navigate(R.id.navigation_home)
+                                    findNavController().navigate(R.id.navigation_passbook)
                                 }
                                 override fun onFailure(call: Call<Pass?>?, t: Throwable?) {
                                     println("failure")

@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.example.digitalpassbook2.server.Pass
@@ -31,6 +30,8 @@ class PassbookFragment : Fragment() {
         passbookViewModel = ViewModelProviders.of(this).get(PassbookViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_passbook, container, false)
 
+        passesListView = root.findViewById<ListView>(R.id.student_passes_list_view)
+
         val createCall: Call<List<Pass?>?>? = passServe.getByUserId(MyStudent.id)
         val passList: MutableList<Pass?> = ArrayList()
 
@@ -46,8 +47,6 @@ class PassbookFragment : Fragment() {
                 println("failure")
             }
         })
-
-        passesListView = root.findViewById<ListView>(R.id.student_passes_list_view)
 
         return root
     }

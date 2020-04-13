@@ -52,17 +52,17 @@ class StudentPassListAdapter (private val context: Context,
                 clubName.text = club?.name
                 clubLogo.setImageResource(rowView.resources.getIdentifier(club?.logo, "drawable", context.packageName))
     
-//                rowView.findViewById<Button>(R.id.view_button).setOnClickListener {
-////                    val action =
-////                        PassbookFragmentDirections.actionNavigationPassbookToNavigationDisplayPass(passId, clubId!!)
-////                    rowView.findNavController().navigate(action)
-//                }
-//
-//                rowView.findViewById<Button>(R.id.send_button).setOnClickListener {
-////                    val action =
-////                        PassbookFragmentDirections.actionNavigationPassbookToNavigationSendPass(passId)
-////                    rowView.findNavController().navigate(action)
-//                }
+                rowView.findViewById<Button>(R.id.view_button).setOnClickListener {
+                    val action =
+                        PassbookFragmentDirections.actionNavigationPassbookToNavigationDisplayPass(passId, clubId!!)
+                    rowView.findNavController().navigate(action)
+                }
+
+                rowView.findViewById<Button>(R.id.send_button).setOnClickListener {
+                    val action =
+                        PassbookFragmentDirections.actionNavigationPassbookToNavigationSendPass(passId)
+                    rowView.findNavController().navigate(action)
+                }
             }
             override fun onFailure(call: Call<Organization?>?, t: Throwable?) {
                 println("failure")
