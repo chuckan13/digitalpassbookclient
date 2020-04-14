@@ -5,15 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.digitalpassbook2.R
 import com.example.digitalpassbook2.server.*
 import com.example.digitalpassbook2.student.MyStudent
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 
 class EventbookFragment : Fragment() {
@@ -21,22 +19,6 @@ class EventbookFragment : Fragment() {
     private lateinit var eventbookViewModel: EventbookViewModel
 
     private lateinit var eventsListView : ListView
-
-    private val studentServe by lazy {
-        StudentService.create()
-    }
-
-    private val passServe by lazy {
-        PassService.create()
-    }
-
-    private val organizationServe by lazy {
-        OrganizationService.create()
-    }
-
-    private val eventServe by lazy {
-        EventService.create()
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         eventbookViewModel = ViewModelProviders.of(this).get(EventbookViewModel::class.java)
@@ -48,55 +30,40 @@ class EventbookFragment : Fragment() {
 
         eventsListView = view.findViewById<ListView>(R.id.student_events_list_view)
 
-        val eventList: MutableList<Event?> = ArrayList()
-        val eventIdList: MutableList<Int> = ArrayList()
-        val studentCall: Call<Student?>? = studentServe[MyStudent.id]
-        studentCall?.enqueue(object : Callback<Student?> {
-            override fun onResponse(call: Call<Student?>, response: Response<Student?>) {
-                val student = response.body()
-                val memberEventsCall: Call<List<Event?>?>? = student?.orgId?.let { organizationServe.getEvents(it) }
-                memberEventsCall?.enqueue(object : Callback<List<Event?>?> {
-                    override fun onResponse(call: Call<List<Event?>?>?, response: Response<List<Event?>?>?) {
-                        for (b in response?.body()!!) {
-                            eventIdList.add(b?.id!!)
-                            eventList.add(b)
-                        }
-//                val sortedEventList : MutableList<Event?> = eventList.sortedWith(compareBy {it?.date}) as MutableList<Event?>
-                        val adapter = activity?.let { StudentEventListAdapter(it, eventList) }
-                        eventsListView.adapter = adapter
-                    }
-                    override fun onFailure(call: Call<List<Event?>?>?, t: Throwable?) {
-                        println("failure")
-                    }
-                })
-            }
-            override fun onFailure(call: Call<Student?>, t: Throwable) {
-                println("failure")
-            }
+        var student : Student? = null
+        eventbookViewModel.student.observe(context as FragmentActivity, Observer {
+            eventbookViewModel.getStudent(MyStudent.id)
+            student = it ?: return@Observer
         })
 
-//        val guestEventsCall: Call<List<Pass?>?>? = passServe.getByUserId(MyStudent.id)
-//        guestEventsCall?.enqueue(object : Callback<List<Pass?>?> {
-//            override fun onResponse(call: Call<List<Pass?>?>?, response: Response<List<Pass?>?>?) {
-//                for (b in response?.body()!!) {
-//                    if (b?.eventId !in eventIdList) {
-//                        eventIdList.add(b?.eventId!!)
-//                        val eventCall: Call<Event?>? = eventServe[b.eventId]
-//                        eventCall?.enqueue(object : Callback<Event?> {
-//                            override fun onResponse(call: Call<Event?>?, response: Response<Event?>?) {
-//                                eventList.add(response?.body())
-//                            }
-//                            override fun onFailure(call: Call<Event?>?, t: Throwable?) {
-//                                println("failure")
-//                            }
-//                        })
-//                    }
-//                }
-//            }
-//            override fun onFailure(call: Call<List<Pass?>?>?, t: Throwable?) {
-//                println("failure")
-//            }
-//        })
+        val eventList : MutableList<Event?> = ArrayList()
+        val eventIdList: MutableList<Int> = ArrayList()
+
+        var memberEventList : MutableList<Event?> = ArrayList()
+        eventbookViewModel.memberEventList.observe(context as FragmentActivity, Observer {
+            eventbookViewModel.getMemberEventList(student?.orgId!!)
+            memberEventList = ((it ?: return@Observer) as MutableList<Event?>)
+        })
+        memberEventList.forEach {
+            eventList.add(it)
+            eventIdList.add(it!!.id)
+        }
+
+        var guestEventList : MutableList<Event?> = ArrayList()
+        eventbookViewModel.guestEventList.observe(context as FragmentActivity, Observer {
+            student?.id?.let { it1 -> eventbookViewModel.getGuestEventList(it1) }
+            guestEventList = ((it ?: return@Observer) as MutableList<Event?>)
+        })
+        guestEventList.forEach {
+            if (it?.id !in eventIdList) {
+                eventList.add(it)
+                eventIdList.add(it!!.id)
+            }
+        }
+
+//        val sortedEventList : MutableList<Event?> = eventList.sortedWith(compareBy {it?.date}) as MutableList<Event?>
+        val adapter = activity?.let { StudentEventListAdapter(it, eventList) }
+        eventsListView.adapter = adapter
 
     }
 

@@ -1,42 +1,24 @@
 package com.example.digitalpassbook2.organization.create_event
 
-import android.util.Log
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.example.digitalpassbook2.*
 import com.example.digitalpassbook2.organization.MyOrganization
 import com.example.digitalpassbook2.server.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class CreateEventFragment : Fragment() {
 
     private lateinit var createEventViewModel: CreateEventViewModel
 
-    private val studentServe by lazy {
-        StudentService.create()
-    }
-
-    private val organizationServe by lazy {
-        OrganizationService.create()
-    }
-
     private lateinit var invitedAutoCompleteTextView : AutoCompleteTextView
-
-    private val eventServe by lazy {
-        EventService.create()
-    }
-
-    private val passServe by lazy {
-        PassService.create()
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         createEventViewModel = ViewModelProviders.of(this).get(CreateEventViewModel::class.java)
@@ -46,77 +28,51 @@ class CreateEventFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val createCall = studentServe.getall()
-        val studentList: MutableList<String> = ArrayList()
-
-        createCall?.enqueue(object : Callback<List<Student?>?> {
-            override fun onResponse(call: Call<List<Student?>?>?, response: Response<List<Student?>?>?) {
-                for (b in response?.body()!!) {
-                    b?.netid?.let { studentList.add(it) }
-                }
-                val adapter = activity?.let {ArrayAdapter<String>(it, android.R.layout.simple_dropdown_item_1line, studentList)}
-                invitedAutoCompleteTextView.setAdapter(adapter)
-            }
-            override fun onFailure(call: Call<List<Student?>?>?, t: Throwable?) {
-                println("failure")
-            }
-        })
+        // Take the person's input in the invited field
         invitedAutoCompleteTextView = view.findViewById(R.id.invited)
-
-        val eventTitle = view.findViewById<EditText>(R.id.event_title)
-        val date = view.findViewById<EditText>(R.id.date)
-        val startTime = view.findViewById<EditText>(R.id.start_time)
-        val endTime = view.findViewById<EditText>(R.id.end_time)
-        val location = view.findViewById<EditText>(R.id.location)
-        val description = view.findViewById<EditText>(R.id.description)
+        var studentList : MutableList<Student> = ArrayList()
+        createEventViewModel.studentList.observe(context as FragmentActivity, Observer {
+            createEventViewModel.getStudentList()
+            studentList = (it ?: return@Observer) as MutableList<Student>
+        })
+        // change this to eliminate studentStringList and use custom adapter
+        val studentStringList : MutableList<String> = ArrayList()
+        studentList.forEach{
+            studentStringList.add(it.netid)
+        }
+        val adapter = activity?.let {ArrayAdapter<String>(it, android.R.layout.simple_dropdown_item_1line, studentStringList)}
+        invitedAutoCompleteTextView.setAdapter(adapter)
 
         view.findViewById<Button>(R.id.submit).setOnClickListener {
-            var newEvent = Event(MyOrganization.id, eventTitle.text.toString(), description.text.toString(),
+            // Create event
+            val eventTitle = view.findViewById<EditText>(R.id.event_title)
+            val date = view.findViewById<EditText>(R.id.date)
+            val startTime = view.findViewById<EditText>(R.id.start_time)
+            val endTime = view.findViewById<EditText>(R.id.end_time)
+            val location = view.findViewById<EditText>(R.id.location)
+            val description = view.findViewById<EditText>(R.id.description)
+            var event = Event(MyOrganization.id, eventTitle.text.toString(), description.text.toString(),
                 date.text.toString(), startTime.text.toString(), endTime.text.toString(), location.text.toString())
-            val createCall:Call<Event?>? = eventServe.create(newEvent)
-            val enqueue = createCall?.enqueue(object : Callback<Event?> {
-                override fun onResponse(call: Call<Event?>?, response: Response<Event?>?) {
-                    val newItem = response?.body()
-                    println(newItem?.name)
-                }
-
-                override fun onFailure(call: Call<Event?>?, t: Throwable?) {
-                    println("failure")
-                }
+            createEventViewModel.event.observe(viewLifecycleOwner, Observer {
+                createEventViewModel.createEvent(event)
+                event = (it ?: return@Observer)
             })
 
+            // Distribute passes
             val numberPasses = view.findViewById<EditText>(R.id.number).text.toString().toInt()
-            val sendMembersCall = organizationServe.getMembers(MyOrganization.id)
-            val memberList: MutableList<Student> = ArrayList()
-
-            sendMembersCall?.enqueue(object : Callback<List<Student?>?> {
-                override fun onResponse(call: Call<List<Student?>?>?, response: Response<List<Student?>?>?) {
-                    for (member in response?.body()!!) {
-                        member?.let { memberList.add(it) }
-                    }
-                    // for each member in the list, create num passes and give to them
-                    for (member in memberList) {
-                        for (i in 0 until numberPasses) {
-                            Log.d("myTag", "numberPasses")
-                            val newPass = Pass(MyOrganization.id, member.id, newEvent.id, newEvent.name)
-                            val passCallback = passServe.create(newPass)
-
-                            // just to run the damn pass creation
-                            passCallback?.enqueue(object : Callback<Pass?> {
-                                override fun onResponse(call: Call<Pass?>?, response: Response<Pass?>?) {
-                                    val newItem = 1;
-                                }
-                                override fun onFailure(call: Call<Pass?>?, t: Throwable?) {
-                                    println("failure")
-                                }
-                            })
-                        }
-                    }
-                }
-                override fun onFailure(call: Call<List<Student?>?>?, t: Throwable?) {
-                    println("failure")
-                }
+            var memberList : MutableList<Student> = ArrayList()
+            createEventViewModel.memberList.observe(context as FragmentActivity, Observer {
+                createEventViewModel.getMemberList(MyOrganization.id)
+                memberList = (it ?: return@Observer) as MutableList<Student>
             })
+            memberList.forEach {
+                for (i in 0 until numberPasses) {
+                    val pass = Pass(MyOrganization.id, it.id, event.id, event.name)
+                    createEventViewModel.createPass(pass)
+                }
+            }
+
+            // Head back home
             findNavController().navigate(R.id.navigation_home)
         }
     }
