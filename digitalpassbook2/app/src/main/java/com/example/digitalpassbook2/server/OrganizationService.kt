@@ -51,6 +51,10 @@ interface OrganizationService {
         @Path("password") password: String
     ): Boolean?
 
+//    Returns an organization by its {signin}
+    @GET("organizations/signin/{signin}")
+    suspend fun getOrganizationBySignin (@Path("signin") signin: String): Organization?
+
     companion object {
         fun create(): OrganizationService {
 
