@@ -6,5 +6,5 @@ import retrofit2.http.GET
 
 interface HerokuService {
     @GET("hello")
-    fun hello(): Call<ResponseBody?>?
+    suspend fun hello(): ResponseBody?
 }

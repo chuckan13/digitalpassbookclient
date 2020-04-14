@@ -8,29 +8,54 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.*
 
 interface StudentService {
+//    Get a list of all students sorted by Name
     @GET("students")
-    fun getall(): Call<List<Student?>?>?
+    suspend fun getall(): List<Student?>?
 
+//    Create a new student
     @POST("students/new")
-    fun create(@Body student: Student?): Call<Student?>?
+    suspend fun create(@Body student: Student?): Student?
 
+//    Get a student by its {id}
     @GET("students/{id}")
-    operator fun get(@Path("id") id: Int): Call<Student?>?
+    suspend fun get(@Path("id") id: Int): Student?
 
+//    Delete a student by its {id}
     @DELETE("students/{id}")
-    fun delete(@Path("id") id: Int): Call<Student?>?
+    suspend fun delete(@Path("id") id: Int): Student?
 
+//    Get a student by its {netid}
     @GET("students/netid/{netid}")
-    fun getByNetId(@Path ("netid") netid: String): Call<Student?>?
+    suspend fun getByNetId(@Path ("netid") netid: String): Student?
 
+//    Update a student by its {id} with @body student
     @PATCH("students/{id}")
     fun update(
         @Path("id") id: Int,
         @Body student: Student?
-    ): Call<Student?>?
+    ): Student?
+
+//    Update/edit a student's password
+    @PATCH("students/{id}/password")
+    fun editPassword(
+        @Path("id") id: Int,
+        @Body password: String
+    ): Student?
+
+//    Check if a student with {netid} exists
+    @GET("students/existance/{netid}")
+    fun checkStudentExist(
+        @Path("netid") netId: String
+    ): Boolean?
+
+//    Check if {password} matches the password of student of {netid}
+    @GET("students/passwordcorrectness/{netid}/{password}")
+    fun checkStudentPassword(
+        @Path("netid") netId: String,
+        @Path("password") password: String
+    ): Boolean?
 
     companion object {
-        var student: Student? = null
 
         fun create(): StudentService {
             val retrofit = Retrofit.Builder()
