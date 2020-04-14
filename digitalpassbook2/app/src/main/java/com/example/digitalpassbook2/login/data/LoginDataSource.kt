@@ -6,12 +6,12 @@ import com.example.digitalpassbook2.server.OrganizationService
 import com.example.digitalpassbook2.server.Student
 import com.example.digitalpassbook2.server.StudentService
 import com.example.digitalpassbook2.login.data.model.LoggedInUser
-import com.example.digitalpassbook2.server.OrganizationService.Companion.organization
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
-import com.example.digitalpassbook2.server.StudentService.Companion.student
 
 /**
  * Class that handles authentication w/ login credentials and retrieves user information.
@@ -26,53 +26,22 @@ class LoginDataSource {
         OrganizationService.create()
     }
 
-    private fun updateOrganizationVar(username: String) {
-        val createOrganizationCall: Call<List<Organization?>?>? = organizationServe.getall()
-        // connect to database to find check if student with given username exists
-        Log.d("RQ Started", "call enqueued")
-        createOrganizationCall?.enqueue(object : Callback<List<Organization?>?> {
-            override fun onResponse(call: Call<List<Organization?>?>?,  response: Response<List<Organization?>?>?)
-            {
-                Log.d("RQ Inside", "executing body")
-                val organizationsList = response?.body()!!
-                organizationsList.forEach {
-                    if (username.equals(it?.signin, true)) {
-                        organization = it
-                    }
-                }
-                Log.d("Data Username", organization?.signin.toString())
+    private suspend fun getOrgVar(username: String): Organization? {
+        val organizationsList = organizationServe.getall()
+        organizationsList?.forEach {
+            if (username.equals(it?.signin, true)) {
+                return it
             }
-            override fun onFailure(call: Call<List<Organization?>?>?, t: Throwable?) {
-                println(t?.message)
-            }
-        })
+        }
+        return null
     }
 
-    private fun updateStudentVar(username: String) {
+    private suspend fun getStudentVar(username: String): Student? {
         // call to Student section of database
-        val createStudentCall: Call<List<Student?>?>? = studentServe.getall()
-        // connect to database to find check if student with given username exists
-
-        Log.d("RQ Started", "call enqueued")
-        createStudentCall?.enqueue(object : Callback<List<Student?>?> {
-            override fun onResponse(call: Call<List<Student?>?>?,  response: Response<List<Student?>?>?)
-            {
-                Log.d("RQ Inside", "executing body")
-                val studentsList = response?.body()!!
-                studentsList.forEach {
-                    if (username.equals(it?.netid, true)) {
-                        student = it
-                    }
-                }
-                Log.d("Data Username", student?.netid.toString())
-            }
-            override fun onFailure(call: Call<List<Student?>?>?, t: Throwable?) {
-                println(t?.message)
-            }
-        })
+        return studentServe.getByNetId(username)
     }
 
-    private fun handleAuthentication(username: String, password: String): Result<LoggedInUser> {
+    private fun handleAuthentication(username: String, password: String, student: Student?, organization: Organization?): Result<LoggedInUser> {
         return if (username.equals(student?.netid.toString(), true)) {
             if (password.equals(student?.password.toString())) {
                 val user = LoggedInUser(student?.id, student?.netid.toString(), false)
@@ -94,23 +63,15 @@ class LoginDataSource {
         }
     }
 
-    fun login(username: String, password: String): Result<LoggedInUser> {
+    suspend fun login(username: String, password: String): Result<LoggedInUser> {
         return try {
-            Log.d("RQ Student Username Pre", student?.netid.toString())
-            updateStudentVar(username)
-            Log.d("RQ Stdent Username Post", student?.netid.toString())
-            Log.d("RQ Username", username)
-            Log.d("RQ Org Username Pre", organization?.signin.toString())
-            updateOrganizationVar(username)
-            Log.d("RQ Org Username Post", organization?.signin.toString())
-            handleAuthentication(username, password)
+            coroutineScope {
+                val student = async { getStudentVar(username) }
+                val organization = async { getOrgVar(username) }
+                handleAuthentication(username, password, student.await(), organization.await())
+            }
         } catch (e: Throwable) {
-            Result.Error(
-                IOException(
-                    "Error connecting to database",
-                    e
-                )
-            )
+            Result.Error(IOException("Error connecting to database", e))
         }
     }
 

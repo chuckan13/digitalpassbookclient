@@ -9,34 +9,34 @@ import retrofit2.http.*
 interface PassService {
 //    Get all passes sorted by date
     @GET("passes")
-    fun getall(): Call<List<Pass?>?>?
+    suspend fun getall(): List<Pass?>?
 
 //    Create new pass
     @POST("passes/new")
-    fun create(@Body pass: Pass?): Call<Pass?>?
+    suspend fun create(@Body pass: Pass?): Pass?
 
 //    Get pass by {id}
     @GET("passes/{id}")
-    fun get(@Path("id") id: Int): Call<Pass?>?
+    suspend fun get(@Path("id") id: Int): Pass?
 
 //    Delete pass by {id}
     @DELETE("passes/{id}")
-    fun delete(@Path("id") id: Int): Call<Pass?>?
+    suspend fun delete(@Path("id") id: Int): Pass?
 
 //    Update pass by {id} with @body pass
     @PATCH("passes/{id}")
-    fun update(
+    suspend fun update(
         @Path("id") id: Int,
         @Body pass: Pass?
-    ): Call<Pass?>?
+    ): Pass?
 
 //    Get the passes of a student with {id} sorted by date and excluding expired passes
     @GET("passes/user/{id}")
-    fun getByUserId(@Path("id") userId: Int): Call<List<Pass?>?>?
+    suspend fun getByUserId(@Path("id") userId: Int): List<Pass?>?
 
 //    Get the passes of an event with {id}
     @GET("passes/event/{id}")
-    fun getByEventsId(@Path("id") eventsId: Int): Call<List<Pass?>?>?
+    fun getByEventsId(@Path("id") eventsId: Int): List<Pass?>?
 
     companion object {
         fun create(): PassService {
