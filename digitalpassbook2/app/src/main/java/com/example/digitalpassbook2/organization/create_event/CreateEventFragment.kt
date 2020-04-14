@@ -52,7 +52,7 @@ class CreateEventFragment : Fragment() {
             val location = view.findViewById<EditText>(R.id.location)
             val description = view.findViewById<EditText>(R.id.description)
             var event = Event(MyOrganization.id, eventTitle.text.toString(), description.text.toString(),
-                date.text.toString(), startTime.text.toString(), endTime.text.toString(), location.text.toString())
+                date.text.toString(), startTime.text.toString(), endTime.text.toString(), location.text.toString(), false, false, false, false) // replace false values with switch values
             createEventViewModel.event.observe(viewLifecycleOwner, Observer {
                 createEventViewModel.createEvent(event)
                 event = (it ?: return@Observer)
@@ -67,7 +67,7 @@ class CreateEventFragment : Fragment() {
             })
             memberList.forEach {
                 for (i in 0 until numberPasses) {
-                    val pass = Pass(MyOrganization.id, it.id, event.id, event.name)
+                    val pass = Pass(MyOrganization.id, it.id, event.id, event.name, false) //replcae false with transferability switch
                     createEventViewModel.createPass(pass)
                 }
             }
