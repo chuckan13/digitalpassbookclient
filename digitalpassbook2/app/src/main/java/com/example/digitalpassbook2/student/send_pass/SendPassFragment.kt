@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.digitalpassbook2.*
@@ -22,6 +23,8 @@ import retrofit2.Response
 
 class SendPassFragment : Fragment() {
 
+    private lateinit var sendPassViewModel: SendPassViewModel
+
     private val passServe by lazy {
         PassService.create()
     }
@@ -35,6 +38,7 @@ class SendPassFragment : Fragment() {
     private val args: SendPassFragmentArgs by navArgs()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        sendPassViewModel = ViewModelProviders.of(this).get(SendPassViewModel::class.java)
         return inflater.inflate(R.layout.fragment_send_pass, container, false)
     }
 
