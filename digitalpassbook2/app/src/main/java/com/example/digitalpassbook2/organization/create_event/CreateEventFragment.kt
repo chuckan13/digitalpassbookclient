@@ -28,20 +28,24 @@ class CreateEventFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        createEventViewModel.getStudentList()
         // Take the person's input in the invited field
         invitedAutoCompleteTextView = view.findViewById(R.id.invited)
-        var studentList : MutableList<Student> = ArrayList()
+
         createEventViewModel.studentList.observe(context as FragmentActivity, Observer {
-            createEventViewModel.getStudentList()
-            studentList = (it ?: return@Observer) as MutableList<Student>
+            val studentList = (it?: return@Observer)
+
+            // change this to eliminate studentStringList and use custom adapter
+            val studentStringList : MutableList<String> = ArrayList()
+            studentList.forEach{
+                studentStringList.add(it?.netid.toString())
+            }
+
+            val adapter = activity?.let {ArrayAdapter<String>(it, android.R.layout.simple_dropdown_item_1line, studentStringList)}
+            invitedAutoCompleteTextView.setAdapter(adapter)
         })
-        // change this to eliminate studentStringList and use custom adapter
-        val studentStringList : MutableList<String> = ArrayList()
-        studentList.forEach{
-            studentStringList.add(it.netid)
-        }
-        val adapter = activity?.let {ArrayAdapter<String>(it, android.R.layout.simple_dropdown_item_1line, studentStringList)}
-        invitedAutoCompleteTextView.setAdapter(adapter)
+
+
 
         view.findViewById<Button>(R.id.submit).setOnClickListener {
             // Create event

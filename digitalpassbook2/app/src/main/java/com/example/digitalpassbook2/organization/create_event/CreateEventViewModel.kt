@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.digitalpassbook2.server.*
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class CreateEventViewModel : ViewModel() {
@@ -53,7 +54,8 @@ class CreateEventViewModel : ViewModel() {
 
     fun getMemberList(id : Int) {
         viewModelScope.launch {
-            _memberList.value = organizationServe.getMembers(id)
+            val deferredMembers = async {organizationServe.getMembers(id)}
+            _memberList.value = deferredMembers.await()
         }
     }
 
@@ -62,7 +64,8 @@ class CreateEventViewModel : ViewModel() {
 
     fun createPass(localPass : Pass) {
         viewModelScope.launch {
-            _pass.value = passServe.create(localPass)
+            val deferredPass = async {passServe.create(localPass)}
+            _pass.value = deferredPass.await()
         }
     }
 
