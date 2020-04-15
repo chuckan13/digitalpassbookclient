@@ -44,7 +44,10 @@ class EventbookViewModel : ViewModel() {
 
     fun getMemberEventList(id: Int) {
         viewModelScope.launch {
-            _memberEventList.value = organizationServe.getEvents(id)
+            val student = studentServe.get(id)
+            if (student != null) {
+                _memberEventList.value = organizationServe.getEvents(student.orgId)
+            }
         }
     }
 

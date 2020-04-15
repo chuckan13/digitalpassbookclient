@@ -34,18 +34,16 @@ class DisplayPassFragment() : Fragment() {
         val orgName = view.findViewById(R.id.pass_club_name) as TextView
         val orgLogo = view.findViewById(R.id.pass_club_logo) as ImageView
 
-        var pass : Pass? = null
+        displayPassViewModel.getPass(passId)
         displayPassViewModel.pass.observe(context as FragmentActivity, Observer {
-            displayPassViewModel.getPass(passId)
-            pass = (it ?: return@Observer)
+            val pass = (it ?: return@Observer)
         })
 
-        var organization : Organization? = null
+        displayPassViewModel.getOrganization(orgId)
         displayPassViewModel.organization.observe(context as FragmentActivity, Observer {
-            displayPassViewModel.getOrganization(orgId)
-            organization = (it ?: return@Observer)
+            val organization = (it ?: return@Observer)
+            orgName.text = organization.name
+            orgLogo.setImageResource(resources.getIdentifier(organization.logo, "drawable", context?.packageName))
         })
-        orgName.text = organization?.name
-        orgLogo.setImageResource(resources.getIdentifier(organization?.logo, "drawable", context?.packageName))
     }
 }

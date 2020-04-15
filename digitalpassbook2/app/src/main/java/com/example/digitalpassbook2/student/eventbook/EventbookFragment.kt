@@ -30,36 +30,30 @@ class EventbookFragment : Fragment() {
 
         eventsListView = view.findViewById<ListView>(R.id.student_events_list_view)
 
-        var student : Student? = null
-        eventbookViewModel.student.observe(context as FragmentActivity, Observer {
-            eventbookViewModel.getStudent(MyStudent.id)
-            student = it ?: return@Observer
-        })
+        eventbookViewModel.getStudent(MyStudent.id)
+        eventbookViewModel.getMemberEventList(MyStudent.id)
+        eventbookViewModel.getGuestEventList(MyStudent.id)
 
         val eventList : MutableList<Event?> = ArrayList()
         val eventIdList: MutableList<Int> = ArrayList()
 
-        var memberEventList : MutableList<Event?> = ArrayList()
-        eventbookViewModel.memberEventList.observe(context as FragmentActivity, Observer {
-            eventbookViewModel.getMemberEventList(student?.orgId!!)
-            memberEventList = ((it ?: return@Observer) as MutableList<Event?>)
-        })
-        memberEventList.forEach {
-            eventList.add(it)
-            eventIdList.add(it!!.id)
-        }
-
-        var guestEventList : MutableList<Event?> = ArrayList()
-        eventbookViewModel.guestEventList.observe(context as FragmentActivity, Observer {
-            student?.id?.let { it1 -> eventbookViewModel.getGuestEventList(it1) }
-            guestEventList = ((it ?: return@Observer) as MutableList<Event?>)
-        })
-        guestEventList.forEach {
-            if (it?.id !in eventIdList) {
+        eventbookViewModel.memberEventList.observe(context as FragmentActivity, Observer { it1 ->
+            val memberEventList = ((it1 ?: return@Observer) as MutableList<Event?>)
+            memberEventList.forEach {
                 eventList.add(it)
                 eventIdList.add(it!!.id)
             }
-        }
+        })
+
+        eventbookViewModel.guestEventList.observe(context as FragmentActivity, Observer { it1 ->
+            val guestEventList = ((it1 ?: return@Observer) as MutableList<Event?>)
+            guestEventList.forEach {
+                if (it?.id !in eventIdList) {
+                    eventList.add(it)
+                    eventIdList.add(it!!.id)
+                }
+            }
+        })
 
 //        val sortedEventList : MutableList<Event?> = eventList.sortedWith(compareBy {it?.date}) as MutableList<Event?>
         val adapter = activity?.let { StudentEventListAdapter(it, eventList) }

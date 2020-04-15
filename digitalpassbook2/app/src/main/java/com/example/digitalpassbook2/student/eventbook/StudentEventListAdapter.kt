@@ -39,20 +39,17 @@ class StudentEventListAdapter (private val context: Context,
         val rowView = inflater.inflate(R.layout.adapter_student_event_list, parent, false)
 
         val event = getItem(position)
+        val clubLogo = rowView.findViewById(R.id.event_club_logo) as ImageView
+        val clubName = rowView.findViewById(R.id.event_club_name) as TextView
+        val eventDate = rowView.findViewById(R.id.event_date) as TextView
 
-        var organization : Organization? = null
+        event?.orgId?.let { it1 -> studentEventListViewModel.getOrganization(it1) }
         studentEventListViewModel.organization.observe(context, Observer {
-            event?.orgId?.let { it1 -> studentEventListViewModel.getOrganization(it1) }
-            organization = it ?: return@Observer
+            val organization = it ?: return@Observer
+            clubLogo.setImageResource(rowView.resources.getIdentifier(organization.logo, "drawable", context.packageName))
+            clubName.text = organization.name
         })
 
-        val clubLogo = rowView.findViewById(R.id.event_club_logo) as ImageView
-        clubLogo.setImageResource(rowView.resources.getIdentifier(organization?.logo, "drawable", context.packageName))
-
-        val clubName = rowView.findViewById(R.id.event_club_name) as TextView
-        clubName.text = organization?.name
-
-        val eventDate = rowView.findViewById(R.id.event_date) as TextView
         eventDate.text = event?.date
 
 //        rowView.findViewById<Button>(R.id.view_button).setOnClickListener {

@@ -35,18 +35,20 @@ class SendPassFragment : Fragment() {
 
         // Take the person's input in the invited field
         guestNameAutoCompleteTextView = view.findViewById(R.id.guest_name)
-        var studentList : MutableList<Student> = ArrayList()
-        sendPassViewModel.studentList.observe(context as FragmentActivity, Observer {
-            sendPassViewModel.getStudentList()
-            studentList = (it ?: return@Observer) as MutableList<Student>
+        sendPassViewModel.getStudentList()
+
+        sendPassViewModel.studentList.observe(context as FragmentActivity, Observer { it ->
+            val studentList = (it ?: return@Observer)
+            // change this to eliminate studentStringList and use custom adapter
+            val studentStringList : MutableList<String> = ArrayList()
+            studentList.forEach{
+                if (it != null) {
+                    studentStringList.add(it.netid)
+                }
+            }
+            val adapter = activity?.let {ArrayAdapter<String>(it, android.R.layout.simple_dropdown_item_1line, studentStringList)}
+            guestNameAutoCompleteTextView.setAdapter(adapter)
         })
-        // change this to eliminate studentStringList and use custom adapter
-        val studentStringList : MutableList<String> = ArrayList()
-        studentList.forEach{
-            studentStringList.add(it.netid)
-        }
-        val adapter = activity?.let {ArrayAdapter<String>(it, android.R.layout.simple_dropdown_item_1line, studentStringList)}
-        guestNameAutoCompleteTextView.setAdapter(adapter)
 
         // Send the pass to them and navigate back to passbook
         view.findViewById<Button>(R.id.send_button_2).setOnClickListener {

@@ -26,14 +26,13 @@ class PassbookFragment : Fragment() {
 
         passesListView = root.findViewById<ListView>(R.id.student_passes_list_view)
 
-        var passList : MutableList<Pass?> = ArrayList()
-        passbookViewModel.passes.observe(context as FragmentActivity, Observer {
-            passbookViewModel.getPasses(MyStudent.id)
-            passList = (it ?: return@Observer) as MutableList<Pass?>
-        })
+        passbookViewModel.getPasses(MyStudent.id)
 
-        val adapter = activity?.let { StudentPassListAdapter(it, passList) }
-        passesListView.adapter = adapter
+        passbookViewModel.passes.observe(context as FragmentActivity, Observer { it ->
+            val passList = (it ?: return@Observer) as MutableList<Pass?>
+            val adapter = activity?.let { StudentPassListAdapter(it, passList) }
+            passesListView.adapter = adapter
+        })
 
         return root
     }
