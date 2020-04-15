@@ -45,8 +45,6 @@ class CreateEventFragment : Fragment() {
             invitedAutoCompleteTextView.setAdapter(adapter)
         })
 
-
-
         view.findViewById<Button>(R.id.submit).setOnClickListener {
             // Create event
             val eventTitle = view.findViewById<EditText>(R.id.event_title)
@@ -55,26 +53,29 @@ class CreateEventFragment : Fragment() {
             val endTime = view.findViewById<EditText>(R.id.end_time)
             val location = view.findViewById<EditText>(R.id.location)
             val description = view.findViewById<EditText>(R.id.description)
-            var event = Event(MyOrganization.id, eventTitle.text.toString(), description.text.toString(),
+            val event = Event(MyOrganization.id, eventTitle.text.toString(), description.text.toString(),
                 date.text.toString(), startTime.text.toString(), endTime.text.toString(), location.text.toString(), false, false, false, false) // replace false values with switch values
-            createEventViewModel.event.observe(viewLifecycleOwner, Observer {
-                createEventViewModel.createEvent(event)
-                event = (it ?: return@Observer)
-            })
+            createEventViewModel.createEvent(event)
 
             // Distribute passes
             val numberPasses = view.findViewById<EditText>(R.id.number).text.toString().toInt()
-            var memberList : MutableList<Student> = ArrayList()
-            createEventViewModel.memberList.observe(context as FragmentActivity, Observer {
+            var memberList : List<Student?> = ArrayList()
+            createEventViewModel.memberList.observe(context as FragmentActivity, Observer { it1 ->
                 createEventViewModel.getMemberList(MyOrganization.id)
-                memberList = (it ?: return@Observer) as MutableList<Student>
-            })
-            memberList.forEach {
-                for (i in 0 until numberPasses) {
-                    val pass = Pass(MyOrganization.id, it.id, event.id, event.name, false) //replcae false with transferability switch
-                    createEventViewModel.createPass(pass)
+                memberList = (it1 ?: return@Observer)
+                memberList.forEach {
+                    for (i in 0 until numberPasses) {
+                        val pass = it?.id?.let { it1 ->
+                            Pass(MyOrganization.id,
+                                it1, event.id, event.name, false)
+                        } // replace false with transferability switch
+                        if (pass != null) {
+                            createEventViewModel.createPass(pass)
+                        }
+                    }
                 }
-            }
+
+            })
 
             // Head back home
             findNavController().navigate(R.id.navigation_home)

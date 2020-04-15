@@ -1,5 +1,7 @@
 package com.example.digitalpassbook2.organization.home
 
+import android.os.Bundle
+import androidx.core.os.bundleOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -24,15 +26,6 @@ class HomeViewModel : ViewModel() {
     fun getEventList(id: Int) {
         viewModelScope.launch {
             _eventList.value = organizationServe.getEvents(id)
-        }
-    }
-
-    private val _organization = MutableLiveData<Organization>()
-    val organization: LiveData<Organization> = _organization
-
-    fun getOrganization(id: Int) {
-        viewModelScope.launch {
-            _organization.value = organizationServe.get(id)
         }
     }
 
