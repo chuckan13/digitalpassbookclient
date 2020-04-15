@@ -22,19 +22,19 @@ class PassbookFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         passbookViewModel = ViewModelProviders.of(this).get(PassbookViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_passbook, container, false)
+        return inflater.inflate(R.layout.fragment_passbook, container, false)
+    }
 
-        passesListView = root.findViewById<ListView>(R.id.student_passes_list_view)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        passesListView = view.findViewById<ListView>(R.id.student_passes_list_view)
 
         passbookViewModel.getPasses(MyStudent.id)
-
         passbookViewModel.passes.observe(context as FragmentActivity, Observer { it ->
             val passList = (it ?: return@Observer) as MutableList<Pass?>
             val adapter = activity?.let { StudentPassListAdapter(it, passList) }
             passesListView.adapter = adapter
         })
-
-        return root
     }
 
 }

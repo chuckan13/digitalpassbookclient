@@ -30,15 +30,6 @@ class EventbookViewModel : ViewModel() {
         StudentService.create()
     }
 
-    private val _student = MutableLiveData<Student>()
-    val student: LiveData<Student> = _student
-
-    fun getStudent(id: Int) {
-        viewModelScope.launch {
-            _student.value = studentServe.get(id)
-        }
-    }
-
     private val _memberEventList = MutableLiveData<List<Event?>>()
     val memberEventList: LiveData<List<Event?>> = _memberEventList
 
@@ -60,7 +51,9 @@ class EventbookViewModel : ViewModel() {
             val guestEvents : MutableList<Event?> = ArrayList()
             passList?.forEach {
                 val guestEvent = it?.eventId?.let { it1 -> eventServe.get(it1) }
-                guestEvents.add(guestEvent)
+                if (guestEvent !in guestEvents) {
+                    guestEvents.add(guestEvent)
+                }
             }
             _guestEventList.value = guestEvents
         }

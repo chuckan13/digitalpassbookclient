@@ -30,34 +30,29 @@ class EventbookFragment : Fragment() {
 
         eventsListView = view.findViewById<ListView>(R.id.student_events_list_view)
 
-        eventbookViewModel.getStudent(MyStudent.id)
-        eventbookViewModel.getMemberEventList(MyStudent.id)
+//        eventbookViewModel.getMemberEventList(MyStudent.id)
+//        eventbookViewModel.memberEventList.observe(context as FragmentActivity, Observer { it1 ->
+//            val memberEventList = ((it1 ?: return@Observer) as MutableList<Event?>)
+////            val sortedEventList : MutableList<Event?> = memberEventList.sortedWith(compareBy {it?.date}) as MutableList<Event?>
+//            val adapter = activity?.let { StudentEventListAdapter(it, memberEventList) }
+//            eventsListView.adapter = adapter
+//        })
+
         eventbookViewModel.getGuestEventList(MyStudent.id)
-
-        val eventList : MutableList<Event?> = ArrayList()
-        val eventIdList: MutableList<Int> = ArrayList()
-
-        eventbookViewModel.memberEventList.observe(context as FragmentActivity, Observer { it1 ->
-            val memberEventList = ((it1 ?: return@Observer) as MutableList<Event?>)
-            memberEventList.forEach {
-                eventList.add(it)
-                eventIdList.add(it!!.id)
-            }
-        })
-
         eventbookViewModel.guestEventList.observe(context as FragmentActivity, Observer { it1 ->
             val guestEventList = ((it1 ?: return@Observer) as MutableList<Event?>)
-            guestEventList.forEach {
-                if (it?.id !in eventIdList) {
-                    eventList.add(it)
-                    eventIdList.add(it!!.id)
-                }
-            }
+//            val sortedEventList : MutableList<Event?> = guestEventList.sortedWith(compareBy {it?.date}) as MutableList<Event?>
+            val adapter = activity?.let { StudentEventListAdapter(it, guestEventList) }
+            eventsListView.adapter = adapter
         })
 
-//        val sortedEventList : MutableList<Event?> = eventList.sortedWith(compareBy {it?.date}) as MutableList<Event?>
-        val adapter = activity?.let { StudentEventListAdapter(it, eventList) }
-        eventsListView.adapter = adapter
+//        eventbookViewModel.getFullEventList(MyStudent.id)
+//        eventbookViewModel.fullEventList.observe(context as FragmentActivity, Observer { it1 ->
+//            val fullEventList = ((it1 ?: return@Observer) as MutableList<Event?>)
+////            val sortedFullEventList : MutableList<Event?> = fullEventList.sortedWith(compareBy {it?.date}) as MutableList<Event?>
+//            val adapter = activity?.let { StudentEventListAdapter(it, fullEventList) }
+//            eventsListView.adapter = adapter
+//        })
 
     }
 
