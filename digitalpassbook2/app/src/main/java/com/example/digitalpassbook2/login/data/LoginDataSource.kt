@@ -6,8 +6,7 @@ import com.example.digitalpassbook2.server.OrganizationService
 import com.example.digitalpassbook2.server.Student
 import com.example.digitalpassbook2.server.StudentService
 import com.example.digitalpassbook2.login.data.model.LoggedInUser
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -27,18 +26,24 @@ class LoginDataSource {
     }
 
     private suspend fun getOrgVar(username: String): Organization? {
+        Log.d("Check 2", "getOrgVar")
         val organizationsList = organizationServe.getall()
         organizationsList?.forEach {
-            if (username.equals(it?.signin, true)) {
+            if (username.equals(it?.signin, true))
                 return it
-            }
         }
         return null
     }
 
     private suspend fun getStudentVar(username: String): Student? {
         // call to Student section of database
-        return studentServe.getByNetId(username)
+        Log.d("Check 1", "getStudentVar")
+        val studentsList = studentServe.getall()
+        studentsList?.forEach {
+            if (username.equals(it?.netid, true))
+                return it
+        }
+            return null
     }
 
     private fun handleAuthentication(username: String, password: String, student: Student?, organization: Organization?): Result<LoggedInUser> {
@@ -65,10 +70,10 @@ class LoginDataSource {
 
     suspend fun login(username: String, password: String): Result<LoggedInUser> {
         return try {
-            coroutineScope {
+            supervisorScope {
                 val student = async { getStudentVar(username) }
                 val organization = async { getOrgVar(username) }
-                handleAuthentication(username, password, student.await(), organization.await())
+                handleAuthentication(username, password, student?.await(), organization?.await())
             }
         } catch (e: Throwable) {
             Result.Error(IOException("Error connecting to database", e))
