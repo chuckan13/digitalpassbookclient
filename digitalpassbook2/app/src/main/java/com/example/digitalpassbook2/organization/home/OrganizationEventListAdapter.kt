@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.findNavController
 import com.example.digitalpassbook2.R
 import com.example.digitalpassbook2.server.*
 
@@ -42,11 +44,11 @@ class OrganizationEventListAdapter (private val context: Context,
         val event = getItem(position)
         eventDate.text = event?.date
 
-//        rowView.findViewById<Button>(R.id.view_button).setOnClickListener {
-//            val action =
-//                HomeFragmentDirections.actionNavigationHomeToNavigationEditEvent(getItemId(position))
-//            rowView.findNavController().navigate(action)
-//        }
+        rowView.findViewById<Button>(R.id.details_button).setOnClickListener {
+            val action =
+                HomeFragmentDirections.actionNavigationHomeToNavigationEventDetails(getItemId(position))
+            rowView.findNavController().navigate(action)
+        }
 
         return rowView
     }

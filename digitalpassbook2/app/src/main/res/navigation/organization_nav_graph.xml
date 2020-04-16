@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_navigation_home_to_navigation_create_event"
             app:destination="@id/navigation_create_event" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_event_details"
+            app:destination="@id/navigation_event_details" />
     </fragment>
 
     <fragment
@@ -23,6 +26,16 @@
         <action
             android:id="@+id/action_navigation_create_event_to_navigation_home"
             app:destination="@id/navigation_home" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_event_details"
+        android:name="com.example.digitalpassbook2.organization.event_details.EventDetailsFragment"
+        android:label="@string/title_event_details"
+        tools:layout="@layout/fragment_event_details" >
+        <argument
+            android:name="eventArg"
+            app:argType="long" />
     </fragment>
 
 </navigation>

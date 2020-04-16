@@ -63,25 +63,25 @@ class CreateEventFragment : Fragment() {
             val description = view.findViewById<EditText>(R.id.description)
             val event = Event(MyOrganization.id, eventTitle.text.toString(), description.text.toString(),
                 date.text.toString(), startTime.text.toString(), endTime.text.toString(), location.text.toString(), false, false, false, false) // replace false values with switch values
-            createEventViewModel.createEvent(event)
-
-            // Member passes
-            val numberPasses = view.findViewById<EditText>(R.id.number).text.toString().toInt()
-            createEventViewModel.getMemberList(MyOrganization.id)
-            createEventViewModel.memberList.observe(context as FragmentActivity, Observer { it1 ->
-                val memberList = (it1 ?: return@Observer)
-                memberList.forEach {
-                    for (i in 0 until numberPasses) {
-                        makePass(it, event)
-                    }
-                }
-            })
-            // Invited field passes
-            createEventViewModel.getStudentFromInvited(invitedAutoCompleteTextView.text.toString())
-            createEventViewModel.student.observe(context as FragmentActivity, Observer { it1 ->
-                val student = (it1 ?: return@Observer)
-                makePass(student, event)
-            })
+//            createEventViewModel.createEvent(event)
+//
+//            // Member passes
+//            val numberPasses = view.findViewById<EditText>(R.id.number).text.toString().toInt()
+//            createEventViewModel.getMemberList(MyOrganization.id)
+//            createEventViewModel.memberList.observe(context as FragmentActivity, Observer { it1 ->
+//                val memberList = (it1 ?: return@Observer)
+//                memberList.forEach {
+//                    for (i in 0 until numberPasses) {
+//                        makePass(it, event)
+//                    }
+//                }
+//            })
+//            // Invited field passes
+//            createEventViewModel.getStudentFromInvited(invitedAutoCompleteTextView.text.toString())
+//            createEventViewModel.student.observe(context as FragmentActivity, Observer { it1 ->
+//                val student = (it1 ?: return@Observer)
+//                makePass(student, event)
+//            })
 
             findNavController().navigate(R.id.navigation_home)
         }

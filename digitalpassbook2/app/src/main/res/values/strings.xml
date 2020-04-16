@@ -36,6 +36,7 @@
     <string name="number_hint">Passes per member</string>
     <string name="title_eventbook">Events</string>
     <string name="title_passbook">Passbook</string>
-    <string name="edit_button">Edit</string>
+    <string name="details_button">Details</string>
+    <string name="title_event_details">Event Details</string>
 
 </resources>

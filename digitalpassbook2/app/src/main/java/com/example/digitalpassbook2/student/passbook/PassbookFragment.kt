@@ -32,7 +32,10 @@ class PassbookFragment : Fragment() {
         passbookViewModel.getPasses(MyStudent.id)
         passbookViewModel.passes.observe(context as FragmentActivity, Observer { it ->
             val passList = (it ?: return@Observer) as MutableList<Pass?>
-            val sortedPassList = passList.sortedWith(compareBy {it?.date}) as MutableList<Pass?>
+            var sortedPassList : MutableList<Pass?> = ArrayList()
+            if (passList.isNotEmpty()) {
+                sortedPassList = passList.sortedWith(compareBy {it?.date}) as MutableList<Pass?>
+            }
             val adapter = activity?.let { StudentPassListAdapter(it, sortedPassList) }
             passesListView.adapter = adapter
         })

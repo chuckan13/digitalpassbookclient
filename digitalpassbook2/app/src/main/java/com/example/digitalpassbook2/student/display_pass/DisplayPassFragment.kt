@@ -12,7 +12,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import com.example.digitalpassbook2.R
-import com.example.digitalpassbook2.server.*
 
 
 class DisplayPassFragment() : Fragment() {
