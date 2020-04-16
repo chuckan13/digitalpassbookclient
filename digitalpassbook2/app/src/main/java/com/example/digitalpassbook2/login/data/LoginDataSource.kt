@@ -1,6 +1,9 @@
 package com.example.digitalpassbook2.login.data
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import com.example.digitalpassbook2.server.Organization
 import com.example.digitalpassbook2.server.OrganizationService
 import com.example.digitalpassbook2.server.Student
@@ -12,6 +15,10 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
 import com.example.digitalpassbook2.server.StudentService.Companion.student
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.withContext
 
 /**
  * Class that handles authentication w/ login credentials and retrieves user information.
@@ -26,90 +33,43 @@ class LoginDataSource {
         OrganizationService.create()
     }
 
-    private fun updateOrganizationVar(username: String) {
-        val createOrganizationCall: Call<List<Organization?>?>? = organizationServe.getall()
-        // connect to database to find check if student with given username exists
-        Log.d("RQ Started", "call enqueued")
-        createOrganizationCall?.enqueue(object : Callback<List<Organization?>?> {
-            override fun onResponse(call: Call<List<Organization?>?>?,  response: Response<List<Organization?>?>?)
-            {
-                Log.d("RQ Inside", "executing body")
-                val organizationsList = response?.body()!!
-                organizationsList.forEach {
-                    if (username.equals(it?.signin, true)) {
-                        organization = it
-                    }
-                }
-                Log.d("Data Username", organization?.signin.toString())
-            }
-            override fun onFailure(call: Call<List<Organization?>?>?, t: Throwable?) {
-                println(t?.message)
-            }
-        })
+    private suspend fun verifyOrg(username: String, password: String): Boolean? {
+        return organizationServe.checkPasswordOfOrg(username, password)
     }
 
-    private fun updateStudentVar(username: String) {
-        // call to Student section of database
-        val createStudentCall: Call<List<Student?>?>? = studentServe.getall()
-        // connect to database to find check if student with given username exists
-
-        Log.d("RQ Started", "call enqueued")
-        createStudentCall?.enqueue(object : Callback<List<Student?>?> {
-            override fun onResponse(call: Call<List<Student?>?>?,  response: Response<List<Student?>?>?)
-            {
-                Log.d("RQ Inside", "executing body")
-                val studentsList = response?.body()!!
-                studentsList.forEach {
-                    if (username.equals(it?.netid, true)) {
-                        student = it
-                    }
-                }
-                Log.d("Data Username", student?.netid.toString())
-            }
-            override fun onFailure(call: Call<List<Student?>?>?, t: Throwable?) {
-                println(t?.message)
-            }
-        })
+    private suspend fun verifyStudent(username: String, password: String): Boolean? {
+        return studentServe.checkStudentPassword(username, password)
     }
 
-    private fun handleAuthentication(username: String, password: String): Result<LoggedInUser> {
-        return if (username.equals(student?.netid.toString(), true)) {
-            if (password.equals(student?.password.toString())) {
-                val user = LoggedInUser(student?.id, student?.netid.toString(), false)
+    private fun studentOrOrg (isOrg: Boolean?, isStudent: Boolean?, username: String): Result<LoggedInUser> {
+        return when {
+            isOrg!! -> {
+                val user = LoggedInUser(username, isOrg = true)
                 Result.Success(user)
             }
-            else {
-                Result.Error(IOException("Incorrect password"))
-            }
-        } else if (username.equals(organization?.signin.toString(), true)){
-            if (password.equals(organization?.password.toString())) {
-                val user = LoggedInUser(organization?.id, organization?.signin.toString(), true)
+            isStudent!! -> {
+                val user = LoggedInUser(username, isOrg = false)
                 Result.Success(user)
             }
-            else {
-                Result.Error(IOException("Incorrect password"))
+            else -> {
+                Result.Error(IOException("Invalid Username or Password"))
             }
-        } else {
-            Result.Error(IOException("Username not found. To create account, click 'create account' below"))
         }
     }
 
-    fun login(username: String, password: String): Result<LoggedInUser> {
+    suspend fun login(username: String, password: String): Result<LoggedInUser> {
         return try {
-            Log.d("RQ Student Username Pre", student?.netid.toString())
-            updateStudentVar(username)
-            Log.d("RQ Stdent Username Post", student?.netid.toString())
-            Log.d("RQ Username", username)
-            Log.d("RQ Org Username Pre", organization?.signin.toString())
-            updateOrganizationVar(username)
-            Log.d("RQ Org Username Post", organization?.signin.toString())
-            handleAuthentication(username, password)
+                coroutineScope {
+                    val deferredOrg =
+                        async { verifyOrg(username, password) }
+                    val deferredStudent =
+                        async { verifyStudent(username, password) }
+
+                    studentOrOrg(deferredOrg.await(), deferredStudent.await(), username)
+            }
         } catch (e: Throwable) {
             Result.Error(
-                IOException(
-                    "Error connecting to database",
-                    e
-                )
+                IOException(e.message)
             )
         }
     }

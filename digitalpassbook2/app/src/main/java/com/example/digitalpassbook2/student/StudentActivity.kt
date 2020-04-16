@@ -28,19 +28,19 @@ class StudentActivity : AppCompatActivity() {
         val navView: BottomNavigationView = findViewById(R.id.student_nav_view)
 
         val user = intent.getParcelableExtra<LoggedInUserView>("EXTRA_PARCEL")
-        MyStudent.id = user.id!!
 
-//        val studentCall = studentServe[user.id!!]
-//        studentCall?.enqueue(object : Callback<Student?> {
-//            override fun onResponse(call: Call<Student?>?, response: Response<Student?>?) {
-//                MyStudent.student = response?.body()
-//            }
-//
-//            override fun onFailure(call: Call<Student?>?, t: Throwable?) {
-//                println("failure")
-//            }
-//
-//        })
+        val studentCall = studentServe.getByNetId(user.username)
+        studentCall?.enqueue(object : Callback<Student?> {
+            override fun onResponse(call: Call<Student?>?, response: Response<Student?>?) {
+                val student = response?.body()
+                MyStudent.id = student?.id!!
+            }
+
+            override fun onFailure(call: Call<Student?>?, t: Throwable?) {
+                println("failure")
+            }
+
+        })
 
         val navController = findNavController(R.id.student_nav_host_fragment)
         // Passing each menu ID as a set of Ids because each

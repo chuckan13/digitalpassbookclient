@@ -27,19 +27,19 @@ class OrganizationActivity : AppCompatActivity() {
         val navView: BottomNavigationView = findViewById(R.id.organization_nav_view)
 
         val user = intent.getParcelableExtra<LoggedInUserView>("EXTRA_PARCEL")
-        MyOrganization.id = user.id!!
 
-//        val organizationCall = organizationServe[user.id!!]
-//        organizationCall?.enqueue(object : Callback<Organization?> {
-//            override fun onResponse(call: Call<Organization?>?, response: Response<Organization?>?) {
-//                MyOrganization.organization = response?.body()
-//            }
-//
-//            override fun onFailure(call: Call<Organization?>?, t: Throwable?) {
-//                println("failure")
-//            }
-//
-//        })
+        val organizationCall = organizationServe.getOrgBySignin(user.username)
+        organizationCall?.enqueue(object : Callback<Organization?> {
+            override fun onResponse(call: Call<Organization?>?, response: Response<Organization?>?) {
+                val organization = response?.body()!!
+                MyOrganization.id = organization.id
+            }
+
+            override fun onFailure(call: Call<Organization?>?, t: Throwable?) {
+                println("failure")
+            }
+
+        })
 
         val navController = findNavController(R.id.organization_nav_host_fragment)
         // Passing each menu ID as a set of Ids because each

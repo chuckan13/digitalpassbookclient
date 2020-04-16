@@ -1,6 +1,7 @@
 package com.example.digitalpassbook2.server
 
 import com.google.gson.annotations.SerializedName
+import java.util.*
 
 class Event {
     @SerializedName("id")

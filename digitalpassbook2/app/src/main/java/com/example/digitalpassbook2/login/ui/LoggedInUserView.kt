@@ -8,7 +8,6 @@ import kotlinx.android.parcel.Parcelize
  */
 @Parcelize
 data class LoggedInUserView(
-    val id: Int?,
-    val displayName: String,
-    val isClub: Boolean// data fields accessible to UI
+    val username: String,
+    val isOrg: Boolean// data fields accessible to UI
 ): Parcelable

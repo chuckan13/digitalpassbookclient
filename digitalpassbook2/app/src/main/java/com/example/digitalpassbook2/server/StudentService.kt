@@ -50,10 +50,10 @@ interface StudentService {
 
 //    Check if {password} matches the password of student of {netid}
     @GET("students/passwordcorrectness/{netid}/{password}")
-    fun checkStudentPassword(
+    suspend fun checkStudentPassword(
         @Path("netid") netId: String,
         @Path("password") password: String
-    ): Call<Boolean?>?
+    ): Boolean?
 
     companion object {
         var student: Student? = null

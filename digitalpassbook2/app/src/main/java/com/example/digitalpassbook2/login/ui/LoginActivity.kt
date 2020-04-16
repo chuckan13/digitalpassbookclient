@@ -58,7 +58,7 @@ class LoginActivity : AppCompatActivity() {
                 showLoginFailed(loginResult.error)
             }
             if (loginResult.success != null) {
-                val intent: Intent = if (loginResult.success.isClub)
+                val intent: Intent = if (loginResult.success.isOrg)
                     Intent(this, OrganizationActivity::class.java)
                 else
                     Intent(this, StudentActivity::class.java)

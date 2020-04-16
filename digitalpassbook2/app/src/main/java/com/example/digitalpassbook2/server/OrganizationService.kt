@@ -38,6 +38,9 @@ interface OrganizationService {
     @GET("organizations/events/{id}")
     fun getEvents(@Path("id") id: Int): Call<List<Event?>?>?
 
+    @GET("organizations/signin/{signin}")
+    fun getOrgBySignin(@Path("signin") signin: String): Call<Organization?>?
+
 //    Checks if an organization with {name} exists
     @GET("organizations/existance/{name}")
     fun checkOrganizationExist(
@@ -46,10 +49,10 @@ interface OrganizationService {
 
 //    Checks if {password} matches the password of {name} organization
     @GET("organizations/passwordcorrectness/{name}/{password}")
-    fun checkPasswordOfOrg(
+    suspend fun checkPasswordOfOrg(
         @Path("name") name: String,
         @Path("password") password: String
-    ): Call<Boolean?>?
+    ):  Boolean?
 
     companion object {
         var organization: Organization? = null
