@@ -33,10 +33,10 @@ class OrganizationEventListAdapter (private val context: Context,
         val rowView = inflater.inflate(R.layout.adapter_organization_event_list, parent, false)
 
 //        val clubLogo = rowView.findViewById(R.id.event_club_logo) as ImageView
-//        clubLogo.setImageResource(rowView.resources.getIdentifier(organization?.logo, "drawable", context.packageName))
+//        clubLogo.setImageResource(rowView.resources.getIdentifier(MyOrganization.logo, "drawable", context.packageName))
 
 //        val clubName = rowView.findViewById(R.id.event_club_name) as TextView
-//        clubName.text = organization?.name
+//        clubName.text = MyOrganization.name
 
         val eventDate = rowView.findViewById(R.id.event_date) as TextView
         val event = getItem(position)

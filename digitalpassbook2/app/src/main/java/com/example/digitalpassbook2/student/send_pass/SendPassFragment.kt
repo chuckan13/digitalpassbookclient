@@ -14,7 +14,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.digitalpassbook2.*
-import com.example.digitalpassbook2.server.Student
 
 class SendPassFragment : Fragment() {
 
@@ -33,12 +32,12 @@ class SendPassFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val passId = args.passArg.toInt()
 
-        // Take the person's input in the invited field
         guestNameAutoCompleteTextView = view.findViewById(R.id.guest_name)
-        sendPassViewModel.getStudentList()
 
-        sendPassViewModel.studentList.observe(context as FragmentActivity, Observer { it ->
-            val studentList = (it ?: return@Observer)
+        sendPassViewModel.getStudentList()
+        sendPassViewModel.studentList.observe(context as FragmentActivity, Observer { it1 ->
+            val studentList = (it1 ?: return@Observer)
+
             // change this to eliminate studentStringList and use custom adapter
             val studentStringList : MutableList<String> = ArrayList()
             studentList.forEach{
@@ -52,7 +51,7 @@ class SendPassFragment : Fragment() {
 
         // Send the pass to them and navigate back to passbook
         view.findViewById<Button>(R.id.send_button_2).setOnClickListener {
-            sendPassViewModel.updatePass(passId, view.findViewById<AutoCompleteTextView>(R.id.guest_name).text.toString())
+            sendPassViewModel.updatePass(passId, guestNameAutoCompleteTextView.text.toString())
             findNavController().navigate(R.id.navigation_passbook)
         }
     }

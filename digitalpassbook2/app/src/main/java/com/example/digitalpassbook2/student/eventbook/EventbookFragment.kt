@@ -30,29 +30,13 @@ class EventbookFragment : Fragment() {
 
         eventsListView = view.findViewById<ListView>(R.id.student_events_list_view)
 
-//        eventbookViewModel.getMemberEventList(MyStudent.id)
-//        eventbookViewModel.memberEventList.observe(context as FragmentActivity, Observer { it1 ->
-//            val memberEventList = ((it1 ?: return@Observer) as MutableList<Event?>)
-////            val sortedEventList : MutableList<Event?> = memberEventList.sortedWith(compareBy {it?.date}) as MutableList<Event?>
-//            val adapter = activity?.let { StudentEventListAdapter(it, memberEventList) }
-//            eventsListView.adapter = adapter
-//        })
-
-        eventbookViewModel.getGuestEventList(MyStudent.id)
-        eventbookViewModel.guestEventList.observe(context as FragmentActivity, Observer { it1 ->
-            val guestEventList = ((it1 ?: return@Observer) as MutableList<Event?>)
-//            val sortedEventList : MutableList<Event?> = guestEventList.sortedWith(compareBy {it?.date}) as MutableList<Event?>
-            val adapter = activity?.let { StudentEventListAdapter(it, guestEventList) }
+        eventbookViewModel.getEventList(MyStudent.id)
+        eventbookViewModel.eventList.observe(context as FragmentActivity, Observer { it1 ->
+            val eventList = (it1 ?: return@Observer)
+            val sortedEventList = eventList.sortedWith(compareBy {it?.date}) as MutableList<Event?>
+            val adapter = activity?.let { StudentEventListAdapter(it, sortedEventList) }
             eventsListView.adapter = adapter
         })
-
-//        eventbookViewModel.getFullEventList(MyStudent.id)
-//        eventbookViewModel.fullEventList.observe(context as FragmentActivity, Observer { it1 ->
-//            val fullEventList = ((it1 ?: return@Observer) as MutableList<Event?>)
-////            val sortedFullEventList : MutableList<Event?> = fullEventList.sortedWith(compareBy {it?.date}) as MutableList<Event?>
-//            val adapter = activity?.let { StudentEventListAdapter(it, fullEventList) }
-//            eventsListView.adapter = adapter
-//        })
 
     }
 

@@ -31,6 +31,15 @@ class CreateEventViewModel : ViewModel() {
         StudentService.create()
     }
 
+    private val _student = MutableLiveData<Student?>()
+    val student: LiveData<Student?> = _student
+
+    fun getStudentFromInvited(netid : String) {
+        viewModelScope.launch {
+            _student.value = studentServe.getByNetId(netid)
+        }
+    }
+
     private val _studentList = MutableLiveData<List<Student?>>()
     val studentList: LiveData<List<Student?>> = _studentList
 
@@ -54,8 +63,9 @@ class CreateEventViewModel : ViewModel() {
 
     fun getMemberList(id : Int) {
         viewModelScope.launch {
-            val deferredMembers = async {organizationServe.getMembers(id)}
-            _memberList.value = deferredMembers.await()
+//            val deferredMembers = async {organizationServe.getMembers(id)}
+//            _memberList.value = deferredMembers.await()
+            _memberList.value = organizationServe.getMembers(id)
         }
     }
 
@@ -64,8 +74,9 @@ class CreateEventViewModel : ViewModel() {
 
     fun createPass(localPass : Pass) {
         viewModelScope.launch {
-            val deferredPass = async {passServe.create(localPass)}
-            _pass.value = deferredPass.await()
+//            val deferredPass = async {passServe.create(localPass)}
+//            _pass.value = deferredPass.await()
+            _pass.value = passServe.create(localPass)
         }
     }
 

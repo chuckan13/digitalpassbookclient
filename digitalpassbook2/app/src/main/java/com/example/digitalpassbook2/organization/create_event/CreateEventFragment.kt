@@ -20,6 +20,13 @@ class CreateEventFragment : Fragment() {
 
     private lateinit var invitedAutoCompleteTextView : AutoCompleteTextView
 
+    private fun makePass(student : Student?, event: Event) {
+        val pass = student?.id?.let { it2 -> Pass(MyOrganization.id, it2, event.id, event.name, false, null, null) }
+        if (pass != null) {
+            createEventViewModel.createPass(pass)
+        }
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         createEventViewModel = ViewModelProviders.of(this).get(CreateEventViewModel::class.java)
         return inflater.inflate(R.layout.fragment_create_event, container, false)
@@ -28,23 +35,24 @@ class CreateEventFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        createEventViewModel.getStudentList()
-        // Take the person's input in the invited field
+        // Get input from invited field
         invitedAutoCompleteTextView = view.findViewById(R.id.invited)
-
-        createEventViewModel.studentList.observe(context as FragmentActivity, Observer {
-            val studentList = (it?: return@Observer)
+        createEventViewModel.getStudentList()
+        createEventViewModel.studentList.observe(context as FragmentActivity, Observer { it1 ->
+            val studentList = (it1 ?: return@Observer)
 
             // change this to eliminate studentStringList and use custom adapter
             val studentStringList : MutableList<String> = ArrayList()
             studentList.forEach{
-                studentStringList.add(it?.netid.toString())
+                if (it != null) {
+                    studentStringList.add(it.netid)
+                }
             }
-
             val adapter = activity?.let {ArrayAdapter<String>(it, android.R.layout.simple_dropdown_item_1line, studentStringList)}
             invitedAutoCompleteTextView.setAdapter(adapter)
         })
 
+        // Submit form
         view.findViewById<Button>(R.id.submit).setOnClickListener {
             // Create event
             val eventTitle = view.findViewById<EditText>(R.id.event_title)
@@ -57,27 +65,24 @@ class CreateEventFragment : Fragment() {
                 date.text.toString(), startTime.text.toString(), endTime.text.toString(), location.text.toString(), false, false, false, false) // replace false values with switch values
             createEventViewModel.createEvent(event)
 
-            // Distribute passes
+            // Member passes
             val numberPasses = view.findViewById<EditText>(R.id.number).text.toString().toInt()
-            var memberList : List<Student?> = ArrayList()
+            createEventViewModel.getMemberList(MyOrganization.id)
             createEventViewModel.memberList.observe(context as FragmentActivity, Observer { it1 ->
-                createEventViewModel.getMemberList(MyOrganization.id)
-                memberList = (it1 ?: return@Observer)
+                val memberList = (it1 ?: return@Observer)
                 memberList.forEach {
                     for (i in 0 until numberPasses) {
-                        val pass = it?.id?.let { it1 ->
-                            Pass(MyOrganization.id,
-                                it1, event.id, event.name, false)
-                        } // replace false with transferability switch
-                        if (pass != null) {
-                            createEventViewModel.createPass(pass)
-                        }
+                        makePass(it, event)
                     }
                 }
-
+            })
+            // Invited field passes
+            createEventViewModel.getStudentFromInvited(invitedAutoCompleteTextView.text.toString())
+            createEventViewModel.student.observe(context as FragmentActivity, Observer { it1 ->
+                val student = (it1 ?: return@Observer)
+                makePass(student, event)
             })
 
-            // Head back home
             findNavController().navigate(R.id.navigation_home)
         }
     }

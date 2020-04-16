@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.digitalpassbook2.R
 import com.example.digitalpassbook2.organization.MyOrganization
+import com.example.digitalpassbook2.server.*
 
 
 class HomeFragment : Fragment() {
@@ -30,10 +31,10 @@ class HomeFragment : Fragment() {
         eventsListView = view.findViewById<ListView>(R.id.events_list_view)
 
         homeViewModel.getEventList(MyOrganization.id)
-
         homeViewModel.eventList.observe(context as FragmentActivity, Observer { it ->
             val eventList = (it ?: return@Observer)
-            val adapter = activity?.let { OrganizationEventListAdapter(it, eventList) }
+            val sortedEventList = eventList.sortedWith(compareBy {it?.date}) as MutableList<Event?>
+            val adapter = activity?.let { OrganizationEventListAdapter(it, sortedEventList) }
             eventsListView.adapter = adapter
         })
     }

@@ -38,7 +38,10 @@ class SendPassViewModel : ViewModel() {
         viewModelScope.launch {
             val pass = passServe.get(passId)
             val student = studentServe.getByNetId(netid)
-            passServe.update(student?.id!!, pass)
+            if (pass != null && student != null) {
+                pass.userId = student.id
+                passServe.update(pass.id, pass)
+            }
         }
     }
 }

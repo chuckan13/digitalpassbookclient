@@ -10,14 +10,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.example.digitalpassbook2.R
 import com.example.digitalpassbook2.server.*
 
 class StudentEventListAdapter (private val context: Context,
                                private val studentEventList: MutableList<Event?>) : BaseAdapter() {
-
-    private lateinit var studentEventListViewModel: StudentEventListViewModel
 
     private val inflater: LayoutInflater =
         context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -35,7 +32,7 @@ class StudentEventListAdapter (private val context: Context,
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        studentEventListViewModel = ViewModelProviders.of(context as FragmentActivity).get(StudentEventListViewModel::class.java)
+        val studentEventListViewModel = StudentEventListViewModel()
         val rowView = inflater.inflate(R.layout.adapter_student_event_list, parent, false)
 
         val event = getItem(position)
@@ -44,17 +41,19 @@ class StudentEventListAdapter (private val context: Context,
         val eventDate = rowView.findViewById(R.id.event_date) as TextView
 
         event?.orgId?.let { it1 -> studentEventListViewModel.getOrganization(it1) }
-        studentEventListViewModel.organization.observe(context, Observer {
+        studentEventListViewModel.organization.observe(context as FragmentActivity, Observer {
             val organization = it ?: return@Observer
             clubLogo.setImageResource(rowView.resources.getIdentifier(organization.logo, "drawable", context.packageName))
             clubName.text = organization.name
+            eventDate.text = event?.date
+
+//            rowView.findViewById<Button>(R.id.view_button).setOnClickListener {
+//                val action =
+//                    EventbookFragmentDirections.actionNavigationEventbookToNavigationViewEvent(passId, orgId)
+//                rowView.findNavController().navigate(action)
+//            }
+
         })
-
-        eventDate.text = event?.date
-
-//        rowView.findViewById<Button>(R.id.view_button).setOnClickListener {
-//            // fill this in
-//        }
 
         return rowView
     }
