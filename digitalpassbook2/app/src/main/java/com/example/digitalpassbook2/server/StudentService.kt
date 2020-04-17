@@ -30,27 +30,27 @@ interface StudentService {
 
 //    Update a student by its {id} with @body student
     @PATCH("students/{id}")
-    fun update(
+    suspend fun update(
         @Path("id") id: Int,
         @Body student: Student?
     ): Student?
 
 //    Update/edit a student's password
     @PATCH("students/{id}/password")
-    fun editPassword(
+    suspend fun editPassword(
         @Path("id") id: Int,
         @Body password: String
     ): Student?
 
 //    Check if a student with {netid} exists
     @GET("students/existance/{netid}")
-    fun checkStudentExist(
+    suspend fun checkStudentExist(
         @Path("netid") netId: String
     ): Boolean?
 
 //    Check if {password} matches the password of student of {netid}
     @GET("students/passwordcorrectness/{netid}/{password}")
-    fun checkStudentPassword(
+    suspend fun checkStudentPassword(
         @Path("netid") netId: String,
         @Path("password") password: String
     ): Boolean?

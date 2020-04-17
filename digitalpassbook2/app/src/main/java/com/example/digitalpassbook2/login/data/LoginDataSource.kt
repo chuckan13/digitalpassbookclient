@@ -25,58 +25,51 @@ class LoginDataSource {
         OrganizationService.create()
     }
 
-    private suspend fun getOrgVar(username: String): Organization? {
-        Log.d("Check 2", "getOrgVar")
-        val organizationsList = organizationServe.getall()
-        organizationsList?.forEach {
-            if (username.equals(it?.signin, true))
-                return it
-        }
-        return null
+    private suspend fun verifyOrg(username: String, password: String): Boolean? {
+        return organizationServe.checkPasswordOfOrg(username, password)
     }
 
-    private suspend fun getStudentVar(username: String): Student? {
-        // call to Student section of database
-        Log.d("Check 1", "getStudentVar")
-        val studentsList = studentServe.getall()
-        studentsList?.forEach {
-            if (username.equals(it?.netid, true))
-                return it
-        }
-            return null
+    private suspend fun verifyStudent(username: String, password: String): Boolean? {
+        return studentServe.checkStudentPassword(username, password)
     }
 
-    private fun handleAuthentication(username: String, password: String, student: Student?, organization: Organization?): Result<LoggedInUser> {
-        return if (username.equals(student?.netid.toString(), true)) {
-            if (password.equals(student?.password.toString())) {
-                val user = LoggedInUser(student?.id, student?.netid.toString(), false)
-                Result.Success(user)
+    private suspend fun studentOrOrg (isOrg: Boolean?, isStudent: Boolean?, username: String): Result<LoggedInUser> {
+        Log.d("isOrg", isOrg.toString())
+        return when {
+            isOrg!! -> {
+                Log.d("IsOrg works", "here we are")
+                coroutineScope {
+                    val org = async { organizationServe.getOrganizationBySignin(username) }
+                    val user = LoggedInUser(username, org.await()!!.id, isOrg = true)
+                    Result.Success(user)
+                }
             }
-            else {
-                Result.Error(IOException("Incorrect password"))
+            isStudent!! -> {
+                coroutineScope {
+                    val student = async { studentServe.getByNetId(username) }
+                    val user = LoggedInUser(username, student.await()!!.id, isOrg = false)
+                    Result.Success(user)
+                }
             }
-        } else if (username.equals(organization?.signin.toString(), true)){
-            if (password.equals(organization?.password.toString())) {
-                val user = LoggedInUser(organization?.id, organization?.signin.toString(), true)
-                Result.Success(user)
+            else -> {
+                Result.Error(IOException("Invalid Username or Password"))
             }
-            else {
-                Result.Error(IOException("Incorrect password"))
-            }
-        } else {
-            Result.Error(IOException("Username not found. To create account, click 'create account' below"))
         }
     }
 
     suspend fun login(username: String, password: String): Result<LoggedInUser> {
         return try {
-            supervisorScope {
-                val student = async { getStudentVar(username) }
-                val organization = async { getOrgVar(username) }
-                handleAuthentication(username, password, student?.await(), organization?.await())
+            coroutineScope {
+                val deferredOrg =
+                    async { verifyOrg(username, password) }
+                val deferredStudent =
+                    async { verifyStudent(username, password) }
+                studentOrOrg(deferredOrg.await(), deferredStudent.await(), username)
             }
         } catch (e: Throwable) {
-            Result.Error(IOException("Error connecting to database", e))
+            Result.Error(
+                IOException(e.message)
+            )
         }
     }
 
