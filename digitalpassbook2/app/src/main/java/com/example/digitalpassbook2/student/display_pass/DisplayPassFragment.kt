@@ -12,6 +12,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import com.example.digitalpassbook2.R
+import com.example.digitalpassbook2.student.MyStudent
+import org.w3c.dom.Text
 
 
 class DisplayPassFragment() : Fragment() {
@@ -32,6 +34,9 @@ class DisplayPassFragment() : Fragment() {
 
         val orgName = view.findViewById(R.id.pass_club_name) as TextView
         val orgLogo = view.findViewById(R.id.pass_club_logo) as ImageView
+        val studentName = view.findViewById(R.id.user_name) as TextView
+
+        studentName.text = "Justin Curl"
 
         displayPassViewModel.getPass(passId)
         displayPassViewModel.pass.observe(context as FragmentActivity, Observer {

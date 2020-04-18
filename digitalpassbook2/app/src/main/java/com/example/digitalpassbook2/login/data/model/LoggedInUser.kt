@@ -6,5 +6,6 @@ package com.example.digitalpassbook2.login.data.model
 data class LoggedInUser(
     val username: String,
     val userId: Int,
+    val name: String,
     val isOrg: Boolean
 )

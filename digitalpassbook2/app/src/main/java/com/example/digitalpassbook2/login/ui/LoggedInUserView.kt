@@ -10,5 +10,6 @@ import kotlinx.android.parcel.Parcelize
 data class LoggedInUserView(
     val username: String,
     val userId: Int,
+    val name: String,
     val isOrg: Boolean// data fields accessible to UI
 ): Parcelable

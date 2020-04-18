@@ -17,6 +17,7 @@ class StudentActivity : AppCompatActivity() {
         val user = intent.getParcelableExtra<LoggedInUserView>("EXTRA_PARCEL")
         MyStudent.username = user.username
         MyStudent.id = user.userId
+        MyStudent.name = user.name
 
         setContentView(R.layout.activity_student)
 

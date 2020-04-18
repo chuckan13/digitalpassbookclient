@@ -52,5 +52,5 @@
     <string name="number_text">Passes</string>
     <string name="closing_date_visible">End Date Visible to Guests</string>
     <string name="public_event">Event Visible to All Students</string>
-
+    <string name="club_logo">Club Logo</string>
 </resources>
