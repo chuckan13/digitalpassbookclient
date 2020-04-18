@@ -16,10 +16,14 @@ class OrganizationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         val user = intent.getParcelableExtra<LoggedInUserView>("EXTRA_PARCEL")
-        MyOrganization.id = user.id!!
+        MyOrganization.id = user!!.userId
+        MyOrganization.username = user.username
 
         setContentView(R.layout.activity_organization)
         val navView: BottomNavigationView = findViewById(R.id.organization_nav_view)
+
+        val actionBar = supportActionBar
+        actionBar?.setDisplayHomeAsUpEnabled(true)
 
         val navController = findNavController(R.id.organization_nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
@@ -30,6 +34,11 @@ class OrganizationActivity : AppCompatActivity() {
         ))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
 }
