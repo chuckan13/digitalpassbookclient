@@ -6,13 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".student.display_pass.DisplayPassFragment">
 
-    <TextView
-        android:id="@+id/pass_club_name"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
     <ImageView
-        android:id="@+id/pass_club_logo"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:id="@+id/pass_qr"
+        android:layout_width="505dp"
+        android:layout_height="505dp"
+        android:src="@android:drawable/ic_menu_gallery"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.749" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
