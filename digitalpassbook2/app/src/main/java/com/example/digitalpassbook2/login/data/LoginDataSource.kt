@@ -40,14 +40,14 @@ class LoginDataSource {
                 Log.d("IsOrg works", "here we are")
                 coroutineScope {
                     val org = async { organizationServe.getOrganizationBySignin(username) }
-                    val user = LoggedInUser(username, org.await()!!.id, isOrg = true)
+                    val user = LoggedInUser(username, org.await()!!.id, org.await()!!.name, isOrg = true)
                     Result.Success(user)
                 }
             }
             isStudent!! -> {
                 coroutineScope {
                     val student = async { studentServe.getByNetId(username) }
-                    val user = LoggedInUser(username, student.await()!!.id, isOrg = false)
+                    val user = LoggedInUser(username, student.await()!!.id, student.await()!!.name, isOrg = false)
                     Result.Success(user)
                 }
             }
