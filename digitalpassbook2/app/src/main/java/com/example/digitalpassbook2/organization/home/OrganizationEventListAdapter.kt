@@ -42,7 +42,7 @@ class OrganizationEventListAdapter (private val context: Context,
 
         val eventDate = rowView.findViewById(R.id.event_date) as TextView
         val event = getItem(position)
-        eventDate.text = event?.date
+        eventDate.text = event?.startDate.toString()
 
         rowView.findViewById<Button>(R.id.details_button).setOnClickListener {
             val action =

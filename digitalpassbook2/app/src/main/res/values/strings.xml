@@ -38,5 +38,20 @@
     <string name="title_passbook">Passbook</string>
     <string name="details_button">Details</string>
     <string name="title_event_details">Event Details</string>
+    <string name="permanent_guest_list_invited">Permanent List</string>
+    <string name="transferability_text">Single Transfer</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+    <string name="create_event_button">Create Event</string>
+    <string name="set_date_time">Set</string>
+    <string name="doors_open_text">Open</string>
+    <string name="doors_close_text">Close</string>
+    <string name="dash_between_date_time">——</string>
+    <string name="advanced_options">Advanced Options</string>
+    <string name="closing_visible">End Time Visible to Guests</string>
+    <string name="opening_visible">Start Time Visible to Guests</string>
+    <string name="number_text">Passes</string>
+    <string name="closing_date_visible">End Date Visible to Guests</string>
+    <string name="public_event">Event Visible to All Students</string>
 
 </resources>

@@ -50,7 +50,8 @@ class EventDetailsViewModel : ViewModel() {
         viewModelScope.launch {
             val student = studentServe.getByNetId(netid)
             val event = eventServe.get(eventId)
-            val pass = student?.id?.let { Pass(MyOrganization.id, it, eventId, "", false, null, event?.date) }
+            val pass = student?.id?.let { event?.startDate?.let { it1 ->
+                Pass(MyOrganization.id, it, eventId, it1) } }
             if (pass != null) {
                 passServe.create(pass)
             }

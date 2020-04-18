@@ -35,7 +35,7 @@ class EventbookFragment : Fragment() {
             val eventList = (it1 ?: return@Observer)
             var sortedEventList : MutableList<Event?> = ArrayList()
             if (eventList.isNotEmpty()) {
-                sortedEventList = eventList.sortedWith(compareBy {it?.date}) as MutableList<Event?>
+                sortedEventList = eventList.sortedWith(compareBy {it?.startDate}) as MutableList<Event?>
             }
             val adapter = activity?.let { StudentEventListAdapter(it, sortedEventList) }
             eventsListView.adapter = adapter
