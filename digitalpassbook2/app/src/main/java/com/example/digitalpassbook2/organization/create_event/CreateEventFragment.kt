@@ -1,6 +1,5 @@
 package com.example.digitalpassbook2.organization.create_event
 
-import android.R.attr.startYear
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Build
@@ -22,7 +21,7 @@ import com.example.digitalpassbook2.server.Pass
 import com.example.digitalpassbook2.server.Student
 import kotlinx.android.synthetic.main.fragment_create_event.*
 import java.sql.Time
-import java.time.LocalDate
+import java.text.DecimalFormat
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.util.*
@@ -33,18 +32,6 @@ class CreateEventFragment : Fragment() {
     private lateinit var createEventViewModel: CreateEventViewModel
 
     private lateinit var invitedAutoCompleteTextView : AutoCompleteTextView
-
-//    private fun DatePickerDialog.getDate(): Date {
-//        val datePicker = datePicker
-//        val calendar = Calendar.getInstance()
-//        calendar.set(datePicker.year, datePicker.month, datePicker.dayOfMonth)
-//        return calendar.time
-//    }
-//
-//    @RequiresApi(Build.VERSION_CODES.M)
-//    private fun TimePicker.getTime(): Time {
-//        return Time(hour, minute, 0)
-//    }
 
     // function for switching an element's visibility between VISIBLE and INVISIBLE
     private fun View.toggleVisibility() {
@@ -70,9 +57,34 @@ class CreateEventFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        fun handleDateTime(button : Button, date : Date, time : Time) {
+            val formatter = DecimalFormat("00")
+            var dateText = formatter.format(date.month) + "/" + formatter.format(date.date) + "/" + formatter.format(1900+date.year) + ", "
+            var timeText = "${time.hours}:" + formatter.format(time.minutes)
+            button.text = "$dateText$timeText"
+            button.setOnClickListener {
+                val datePickerDialog = DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+                    date.year = year
+                    date.month = month
+                    date.date = dayOfMonth
+                    dateText = formatter.format(date.month) + "/" + formatter.format(date.date) + "/" + formatter.format(date.year) + ", "
+                    button.text = "$dateText$timeText"
+                    val timePickerDialog = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
+                        time.hours = hourOfDay
+                        time.minutes = minute
+                        timeText = "${time.hours}:" + formatter.format(time.minutes)
+                        button.text = "$dateText$timeText"
+                    }, time.hours, time.minutes, false)
+                    timePickerDialog.show()
+                }, date.year, date.month, date.day)
+                datePickerDialog.datePicker.minDate = System.currentTimeMillis()
+                datePickerDialog.show()
+            }
+        }
+
         val doorsOpen = view.findViewById<Button>(R.id.doors_open_date_time_button)
         val doorsClose = view.findViewById<Button>(R.id.doors_close_date_time_button)
-        val toggleButton = view.findViewById<Switch>(R.id.option_toggle)
+        val toggleButton = view.findViewById<Button>(R.id.option_toggle)
         val eventTitle = view.findViewById<EditText>(R.id.event_title)
         val description = view.findViewById<EditText>(R.id.description)
         val location = view.findViewById<EditText>(R.id.location)
@@ -89,60 +101,26 @@ class CreateEventFragment : Fragment() {
         // Doors open and close
         val startDate = Date()
         val startTime = Time(System.currentTimeMillis())
-        var doorsOpenDateText = "${startDate.month}/${startDate.date}/${startDate.year}, "
-        var doorsOpenTimeText = "${startTime.hours}:${startTime.minutes}"
-        doorsOpen.text = "$doorsOpenDateText$doorsOpenTimeText"
-        doorsOpen.setOnClickListener {
-            val datePickerDialog = DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-                startDate.year = year
-                startDate.month = month
-                startDate.date = dayOfMonth
-                doorsOpenDateText = "$month/$dayOfMonth/$year, "
-                val timePickerDialog = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
-                    startTime.hours = hourOfDay
-                    startTime.minutes = minute
-                    doorsOpenTimeText = "$hourOfDay:$minute"
-                }, startTime.hours, startTime.minutes, false)
-                timePickerDialog.show()
-            }, startDate.year, startDate.month, startDate.day)
-            datePickerDialog.show()
-            doorsOpen.text = "$doorsOpenDateText$doorsOpenTimeText"
-        }
         val endDate = Date()
         val endTime = Time(System.currentTimeMillis())
-        var doorsCloseDateText = "${endDate.month}/${endDate.date}/${endDate.year}, "
-        var doorsCloseTimeText = "${endTime.hours}:${endTime.minutes}"
-        doorsClose.text = "$doorsCloseDateText$doorsCloseTimeText"
-        doorsClose.setOnClickListener {
-            val datePickerDialog = DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-                endDate.year = year
-                endDate.month = month
-                endDate.date = dayOfMonth
-                doorsCloseDateText = "$month/$dayOfMonth/$year, "
-                val timePickerDialog = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
-                    endTime.hours = hourOfDay
-                    endTime.minutes = minute
-                    doorsCloseTimeText = "$hourOfDay:$minute"
-                }, endTime.hours, endTime.minutes, false)
-                timePickerDialog.show()
-            }, endDate.year, endDate.month, endDate.day)
-            datePickerDialog.show()
-            doorsClose.text = "$doorsCloseDateText$doorsCloseTimeText"
-        }
+        handleDateTime(doorsOpen, startDate, startTime)
+        handleDateTime(doorsClose, endDate, endTime)
 
         // Toggle visibility
         toggleButton.setOnClickListener{
             eventTitle.toggleVisibility()
             description.toggleVisibility()
             location.toggleVisibility()
-            numberPasses.toggleVisibility()
-            transferability.toggleVisibility()
-            invitedAutoCompleteTextView.toggleVisibility()
-            permGuestList.toggleVisibility()
+            pass_options.toggleVisibility()
+            guests_options.toggleVisibility()
             viewableOpeningTime.toggleVisibility()
             viewableClosingDate.toggleVisibility()
             viewableClosingTime.toggleVisibility()
             publicEvent.toggleVisibility()
+            if (toggleButton.text == getString(R.string.see_more)) {
+                toggleButton.text = getString(R.string.see_less)
+            }
+            else toggleButton.text = getString(R.string.see_more)
         }
 
         // Get input from invited field
@@ -182,7 +160,7 @@ class CreateEventFragment : Fragment() {
 //                    }
 //                }
 //            })
-
+//
 //            // Invited field passes
 //            createEventViewModel.getStudentFromInvited(invitedAutoCompleteTextView.text.toString())
 //            createEventViewModel.student.observe(context as FragmentActivity, Observer { it ->

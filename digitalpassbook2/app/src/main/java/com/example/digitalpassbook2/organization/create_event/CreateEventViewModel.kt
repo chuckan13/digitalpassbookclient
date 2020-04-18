@@ -49,12 +49,9 @@ class CreateEventViewModel : ViewModel() {
         }
     }
 
-    private val _event = MutableLiveData<Event>()
-    val event: LiveData<Event> = _event
-
     fun createEvent(localEvent : Event) {
         viewModelScope.launch {
-            _event.value = eventServe.create(localEvent)
+            eventServe.create(localEvent)
         }
     }
 
@@ -69,14 +66,11 @@ class CreateEventViewModel : ViewModel() {
         }
     }
 
-    private val _pass = MutableLiveData<Pass>()
-    val pass: LiveData<Pass> = _pass
-
     fun createPass(localPass : Pass) {
         viewModelScope.launch {
 //            val deferredPass = async {passServe.create(localPass)}
 //            _pass.value = deferredPass.await()
-            _pass.value = passServe.create(localPass)
+            passServe.create(localPass)
         }
     }
 

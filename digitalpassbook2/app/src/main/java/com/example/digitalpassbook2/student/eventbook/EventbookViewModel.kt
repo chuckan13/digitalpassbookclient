@@ -1,5 +1,6 @@
 package com.example.digitalpassbook2.student.eventbook
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -64,14 +65,20 @@ class EventbookViewModel : ViewModel() {
 
     fun getEventList(id: Int) {
         viewModelScope.launch {
-            var events : MutableList<Event?> = ArrayList()
             val student = studentServe.get(id)
-            events = student?.orgId?.let { organizationServe.getEvents(it) } as MutableList<Event?>
+            val events = student?.orgId?.let { organizationServe.getEvents(it) } as MutableList<Event?>
             val passList = passServe.getByUserId(id)
             passList?.forEach {
-                val guestEvent = it?.eventId?.let { it1 -> eventServe.get(it1) }
-                if (guestEvent != null && guestEvent.orgId != student.orgId && guestEvent !in events) {
-                    events.add(guestEvent)
+                if (it != null) {
+                    try {
+                        val guestEvent = it.eventId.let { it1 -> eventServe.get(it1) }
+                        if (guestEvent != null) {
+                            if (guestEvent.orgId != student.orgId && guestEvent !in events) {
+                                events.add(guestEvent)
+                            }
+                        }
+                    }
+                    catch (exception : Exception) {}
                 }
             }
             _eventList.value = events

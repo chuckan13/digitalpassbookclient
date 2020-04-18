@@ -96,9 +96,9 @@ class Event {
         this.startTime = Time(System.currentTimeMillis())
         this.endDate = Date()
         this.endTime = Time(System.currentTimeMillis())
-        this.name = ""
-        this.description = ""
-        this.location = ""
+        this.name = " "
+        this.description = " "
+        this.location = " "
         this.transferability = false
         this.openTimeVisibility = false
         this.closeDateVisibility = false

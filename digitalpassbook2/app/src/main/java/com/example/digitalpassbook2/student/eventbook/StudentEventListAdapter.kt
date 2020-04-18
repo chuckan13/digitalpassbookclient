@@ -49,7 +49,7 @@ class StudentEventListAdapter (private val context: Context,
 
 //            rowView.findViewById<Button>(R.id.view_button).setOnClickListener {
 //                val action =
-//                    EventbookFragmentDirections.actionNavigationEventbookToNavigationViewEvent(passId, orgId)
+//                    EventbookFragmentDirections.actionNavigationEventbookToNavigationViewEvent(event?.id, event?.orgId)
 //                rowView.findNavController().navigate(action)
 //            }
 

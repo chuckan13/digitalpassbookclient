@@ -10,7 +10,7 @@
     <string name="date_hint">Date</string>
     <string name="start_time_hint">Start Time</string>
     <string name="end_time_hint">End Time</string>
-    <string name="description_hint">Description (optional)</string>
+    <string name="description_hint">Description</string>
     <string name="title_activity_login">Sign in</string>
     <string name="signout_btn">Sign Out</string>
     <string name="prompt_username">Username</string>
@@ -44,10 +44,9 @@
     <string name="time">Time</string>
     <string name="create_event_button">Create Event</string>
     <string name="set_date_time">Set</string>
-    <string name="doors_open_text">Open</string>
-    <string name="doors_close_text">Close</string>
-    <string name="dash_between_date_time">——</string>
-    <string name="advanced_options">Advanced Options</string>
+    <string name="doors_text">to</string>
+    <string name="see_more">See More</string>
+    <string name="see_less">See Less</string>
     <string name="closing_visible">End Time Visible to Guests</string>
     <string name="opening_visible">Start Time Visible to Guests</string>
     <string name="number_text">Passes</string>
