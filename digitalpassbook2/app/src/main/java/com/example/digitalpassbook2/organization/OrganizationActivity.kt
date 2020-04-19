@@ -18,6 +18,8 @@ class OrganizationActivity : AppCompatActivity() {
         val user = intent.getParcelableExtra<LoggedInUserView>("EXTRA_PARCEL")
         MyOrganization.id = user!!.userId
         MyOrganization.username = user.username
+        MyOrganization.name = user.name
+        MyOrganization.logo = user.logoId
 
         setContentView(R.layout.activity_organization)
         val navView: BottomNavigationView = findViewById(R.id.organization_nav_view)

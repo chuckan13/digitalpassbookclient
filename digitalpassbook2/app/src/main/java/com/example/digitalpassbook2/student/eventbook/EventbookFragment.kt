@@ -40,6 +40,7 @@ class EventbookFragment : Fragment() {
             }
             val adapter = activity?.let { StudentEventListAdapter(it, sortedEventList) }
             eventsListView.adapter = adapter
+            eventsListView.visibility = View.VISIBLE
         })
 
     }
