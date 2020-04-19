@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
+import android.widget.ProgressBar
 import androidx.appcompat.widget.ButtonBarLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -29,6 +30,7 @@ class PassbookFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         passesListView = view.findViewById<ListView>(R.id.student_passes_list_view)
+        val progressBar = view.findViewById<ProgressBar>(R.id.loading_spinner)
 
         passbookViewModel.getPasses(MyStudent.id)
         passbookViewModel.passes.observe(context as FragmentActivity, Observer { it ->
@@ -39,6 +41,7 @@ class PassbookFragment : Fragment() {
             }
             val adapter = activity?.let { StudentPassListAdapter(it, sortedPassList) }
             passesListView.adapter = adapter
+            passesListView.visibility = View.VISIBLE
         })
     }
 

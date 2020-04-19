@@ -40,6 +40,7 @@ class HomeFragment : Fragment() {
             }
             val adapter = activity?.let { OrganizationEventListAdapter(it, sortedEventList) }
             eventsListView.adapter = adapter
+            eventsListView.visibility = View.VISIBLE
         })
     }
 
