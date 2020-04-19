@@ -53,4 +53,5 @@
     <string name="closing_date_visible">End Date Visible to Guests</string>
     <string name="public_event">Event Visible to All Students</string>
     <string name="club_logo">Club Logo</string>
+    <string name="pass_qr">Pass QR Code</string>
 </resources>

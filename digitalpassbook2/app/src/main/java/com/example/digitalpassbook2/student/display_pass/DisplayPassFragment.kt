@@ -6,8 +6,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewStub
 import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.TextClock
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
@@ -31,11 +35,13 @@ class DisplayPassFragment() : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         displayPassViewModel = ViewModelProviders.of(this).get(DisplayPassViewModel::class.java)
+
         return inflater.inflate(R.layout.fragment_display_pass, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         val passId = args.passArg.toInt()
         val orgId = args.clubArg
 
@@ -43,6 +49,8 @@ class DisplayPassFragment() : Fragment() {
         val orgName = view.findViewById(R.id.pass_club_name) as TextView
         val orgLogo = view.findViewById(R.id.pass_club_logo) as ImageView
         val studentName = view.findViewById(R.id.user_name) as TextView
+        val progress = view.findViewById(R.id.loading_spinner) as ProgressBar
+        val clock = view.findViewById(R.id.clock) as TextClock
 
         studentName.text = MyStudent.name
 
@@ -54,6 +62,14 @@ class DisplayPassFragment() : Fragment() {
         displayPassViewModel.getOrganization(orgId)
         displayPassViewModel.organization.observe(context as FragmentActivity, Observer {
             val organization = (it ?: return@Observer)
+            orgName.text = organization.name
+            orgLogo.setImageResource(resources.getIdentifier(organization.logo, "drawable", context?.packageName))
+            orgQR.visibility = View.VISIBLE
+            orgName.visibility = View.VISIBLE
+            orgLogo.visibility = View.VISIBLE
+            studentName.visibility = View.VISIBLE
+            clock.visibility = View.VISIBLE
+            progress.visibility = View.INVISIBLE
             try {
                 val qrText = ""+organization.name+passId
                 val bitmap = TextToImageEncode(qrText)
