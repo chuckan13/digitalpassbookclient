@@ -18,6 +18,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import com.example.digitalpassbook2.R
+import com.example.digitalpassbook2.organization.MyOrganization
 import com.example.digitalpassbook2.student.MyStudent
 import org.w3c.dom.Text
 
@@ -43,42 +44,53 @@ class DisplayPassFragment() : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val passId = args.passArg.toInt()
-        val orgId = args.clubArg
 
         val orgQR = view.findViewById(R.id.pass_qr) as ImageView
         val orgName = view.findViewById(R.id.pass_club_name) as TextView
         val orgLogo = view.findViewById(R.id.pass_club_logo) as ImageView
         val studentName = view.findViewById(R.id.user_name) as TextView
-        val progress = view.findViewById(R.id.loading_spinner) as ProgressBar
-        val clock = view.findViewById(R.id.clock) as TextClock
+//        val progress = view.findViewById(R.id.loading_spinner) as ProgressBar
+//        val clock = view.findViewById(R.id.clock) as TextClock
 
         studentName.text = MyStudent.name
 
-        displayPassViewModel.getPass(passId)
-        displayPassViewModel.pass.observe(context as FragmentActivity, Observer {
-            val pass = (it ?: return@Observer)
-        })
+//        displayPassViewModel.getPass(passId)
+//        displayPassViewModel.pass.observe(context as FragmentActivity, Observer {
+//            val pass = (it ?: return@Observer)
+//        })
 
-        displayPassViewModel.getOrganization(orgId)
-        displayPassViewModel.organization.observe(context as FragmentActivity, Observer {
-            val organization = (it ?: return@Observer)
-            orgName.text = organization.name
-            orgLogo.setImageResource(resources.getIdentifier(organization.logo, "drawable", context?.packageName))
-            orgQR.visibility = View.VISIBLE
-            orgName.visibility = View.VISIBLE
-            orgLogo.visibility = View.VISIBLE
-            studentName.visibility = View.VISIBLE
-            clock.visibility = View.VISIBLE
-            progress.visibility = View.INVISIBLE
-            try {
-                val qrText = ""+organization.name+passId
-                val bitmap = TextToImageEncode(qrText)
-                orgQR!!.setImageBitmap(bitmap)
-            } catch (e: WriterException) {
+        orgName.text = args.clubNameArg
+        orgLogo.setImageResource(resources.getIdentifier(args.clubLogoArg, "drawable", context?.packageName))
+
+        try {
+            val qrText = ""+args.clubNameArg+passId
+            val bitmap = TextToImageEncode(qrText)
+            orgQR.setImageBitmap(bitmap)
+        }
+        catch (e: WriterException) {
                 e.printStackTrace()
             }
-//            orgQR.setImageResource(resources.getIdentifier(organization.logo, "drawable", context?.packageName))
-        })
+
+//        orgQR.visibility = View.VISIBLE
+//        progress.visibility = View.INVISIBLE
+
+//        displayPassViewModel.organization.observe(context as FragmentActivity, Observer {
+//            val organization = (it ?: return@Observer)
+//            orgQR.visibility = View.VISIBLE
+//            orgName.visibility = View.VISIBLE
+//            orgLogo.visibility = View.VISIBLE
+//            studentName.visibility = View.VISIBLE
+//            clock.visibility = View.VISIBLE
+//            progress.visibility = View.INVISIBLE
+//            try {
+//                val qrText = ""+organization.name+passId
+//                val bitmap = TextToImageEncode(qrText)
+//                orgQR!!.setImageBitmap(bitmap)
+//            } catch (e: WriterException) {
+//                e.printStackTrace()
+//            }
+////            orgQR.setImageResource(resources.getIdentifier(organization.logo, "drawable", context?.packageName))
+//        })
     }
 
     // code to create QR code image
