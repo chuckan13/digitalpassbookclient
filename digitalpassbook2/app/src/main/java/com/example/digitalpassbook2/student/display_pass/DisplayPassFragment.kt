@@ -1,5 +1,6 @@
 package com.example.digitalpassbook2.student.display_pass
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,6 +16,11 @@ import androidx.navigation.fragment.navArgs
 import com.example.digitalpassbook2.R
 import com.example.digitalpassbook2.student.MyStudent
 import org.w3c.dom.Text
+
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.MultiFormatWriter
+import com.google.zxing.WriterException
+import com.google.zxing.common.BitMatrix
 
 
 class DisplayPassFragment() : Fragment() {
@@ -33,6 +39,7 @@ class DisplayPassFragment() : Fragment() {
         val passId = args.passArg.toInt()
         val orgId = args.clubArg
 
+        val orgQR = view.findViewById(R.id.pass_qr) as ImageView
         val orgName = view.findViewById(R.id.pass_club_name) as TextView
         val orgLogo = view.findViewById(R.id.pass_club_logo) as ImageView
         val studentName = view.findViewById(R.id.user_name) as TextView
@@ -47,8 +54,45 @@ class DisplayPassFragment() : Fragment() {
         displayPassViewModel.getOrganization(orgId)
         displayPassViewModel.organization.observe(context as FragmentActivity, Observer {
             val organization = (it ?: return@Observer)
-            orgName.text = organization.name
-            orgLogo.setImageResource(resources.getIdentifier(organization.logo, "drawable", context?.packageName))
+            try {
+                val qrText = ""+organization.name+passId
+                val bitmap = TextToImageEncode(qrText)
+                orgQR!!.setImageBitmap(bitmap)
+            } catch (e: WriterException) {
+                e.printStackTrace()
+            }
+//            orgQR.setImageResource(resources.getIdentifier(organization.logo, "drawable", context?.packageName))
         })
+    }
+
+    // code to create QR code image
+    @Throws(WriterException::class)
+    private fun TextToImageEncode(Value: String): Bitmap? {
+        val qrCodeWidth = 500
+        val bitMatrix: BitMatrix
+        try {
+            bitMatrix = MultiFormatWriter().encode(
+                Value,
+                BarcodeFormat.QR_CODE,
+                qrCodeWidth, qrCodeWidth, null
+            )
+        } catch (IllegalArgumentException: IllegalArgumentException) {
+            return null
+        }
+        val bitMatrixWidth = bitMatrix.getWidth()
+        val bitMatrixHeight = bitMatrix.getHeight()
+        val pixels = IntArray(bitMatrixWidth * bitMatrixHeight)
+        for (y in 0 until bitMatrixHeight) {
+            val offset = y * bitMatrixWidth
+            for (x in 0 until bitMatrixWidth) {
+                pixels[offset + x] = if (bitMatrix.get(x, y))
+                    resources.getColor(R.color.black)
+                else
+                    resources.getColor(R.color.white)
+            }
+        }
+        val bitmap = Bitmap.createBitmap(bitMatrixWidth, bitMatrixHeight, Bitmap.Config.ARGB_4444)
+        bitmap.setPixels(pixels, 0, 500, 0, 0, bitMatrixWidth, bitMatrixHeight)
+        return bitmap
     }
 }
