@@ -46,7 +46,9 @@ class OrganizationEventListAdapter (private val context: Context,
         val event = getItem(position)
         val format1 = SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSSZ")
         val format2 = SimpleDateFormat("MM/dd")
-        eventDate.text = format2.format(format1.parse(event?.startDate))
+        val dateStart = event?.startDate
+        val formatDateStart = dateStart?.substring(5,10)
+        eventDate.text = formatDateStart
 
         rowView.findViewById<Button>(R.id.details_button).setOnClickListener {
             val action =
