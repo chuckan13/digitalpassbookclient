@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -14,7 +15,7 @@
         android:typeface="serif"
         android:format12Hour="hh:mm:ss a"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="0.85"
+        app:layout_constraintVertical_bias="0.845"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -46,7 +47,7 @@
         android:gravity="center"
         android:typeface="serif"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="0.06"
+        app:layout_constraintVertical_bias="0.062"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toRightOf="@id/pass_club_logo"

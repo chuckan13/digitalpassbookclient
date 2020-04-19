@@ -1,6 +1,7 @@
 package com.example.digitalpassbook2.student.display_pass
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,7 +37,7 @@ class DisplayPassFragment() : Fragment() {
         val orgLogo = view.findViewById(R.id.pass_club_logo) as ImageView
         val studentName = view.findViewById(R.id.user_name) as TextView
 
-        studentName.text = "Justin Curl"
+        studentName.text = MyStudent.name
 
         displayPassViewModel.getPass(passId)
         displayPassViewModel.pass.observe(context as FragmentActivity, Observer {
