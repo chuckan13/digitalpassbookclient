@@ -71,22 +71,42 @@
     <EditText
         android:id="@+id/event_title"
         android:visibility="invisible"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:ems="10"
         android:hint="@string/event_title_hint"
         android:importantForAutofill="no"
         android:inputType="text"
         android:maxLength="30"
         android:textSize="18sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintTop_toBottomOf="@id/date_time_picker_buttons"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintEnd_toStartOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"
-        app:layout_constraintTop_toBottomOf="@id/date_time_picker_buttons" />
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <EditText
+        android:id="@+id/location"
+        android:visibility="invisible"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/location_hint"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:maxLength="30"
+        android:textSize="18sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintTop_toBottomOf="@id/date_time_picker_buttons"
+        app:layout_constraintStart_toEndOf="@id/event_title"
+        app:layout_constraintLeft_toRightOf="@id/event_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <EditText
         android:id="@+id/description"
@@ -94,30 +114,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:gravity="start|bottom"
         android:hint="@string/description_hint"
-        android:importantForAutofill="no"
-        android:inputType="textMultiLine"
-        android:maxLength="140"
-        android:maxLines="2"
-        android:minLines="2"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintEnd_toStartOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"
-        app:layout_constraintTop_toBottomOf="@+id/event_title" />
-
-    <EditText
-        android:id="@+id/location"
-        android:visibility="invisible"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/location_hint"
         android:importantForAutofill="no"
         android:inputType="text"
         android:maxLength="30"
@@ -128,13 +125,13 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"
-        app:layout_constraintTop_toBottomOf="@+id/description" />
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/event_title" />
 
-    <LinearLayout
-        android:id="@+id/pass_options"
+    <GridLayout
+        android:id="@+id/options_grid"
         android:visibility="invisible"
-        app:layout_constraintTop_toBottomOf="@id/location"
+        app:layout_constraintTop_toBottomOf="@id/description"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="fill_parent"
@@ -142,139 +139,153 @@
         android:gravity="center"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="16dp"
+        android:columnCount="4"
+        android:rowCount="4"
         android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/number"
+            android:textColor="#FFFFFF"
+            android:text="@string/number_passes"
+            android:background="@drawable/button_one"
+            android:shadowColor="#000000"
+            android:layout_gravity="start|center"
+            android:layout_marginEnd="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_width="35dp"
+            android:layout_height="25dp" />
 
         <TextView
-            android:id="@+id/number_text"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:textSize="18sp"
-            android:text="@string/number_text"
-            android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"/>
+            android:id="@+id/textview7"
+            android:layout_gravity="start|center"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:text="@string/passes_per_member"
+            android:textSize="18sp" />
 
-        <NumberPicker
-            android:id="@+id/number"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:ems="10"
-            android:inputType="number"
-            android:textSize="18sp"
-            android:importantForAutofill="no"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin" />
-
-        <Switch
-            android:id="@+id/transferability"
+        <ImageButton
+            android:id="@+id/add_invited"
+            android:layout_gravity="start|center"
+            android:layout_marginEnd="2dp"
+            android:layout_marginRight="2dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/transferability_text"
-            android:textSize="18sp"
-            android:ems="10"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/guests_options"
-        android:visibility="invisible"
-        app:layout_constraintTop_toBottomOf="@id/pass_options"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"
-        android:orientation="horizontal" >
+            android:contentDescription="@string/add_invited"
+            android:src="@drawable/ic_add_icon"/>
 
         <AutoCompleteTextView
             android:id="@+id/invited"
-            android:layout_width="wrap_content"
+            android:layout_gravity="start|center"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/invited_hint"
+            android:hint="@string/invite_a_guest"
             android:inputType="text"
-            android:textSize="18sp"
-            android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin" />
+            android:textSize="18sp" />
+
+        <Switch
+            android:id="@+id/transferability"
+            android:layout_gravity="start|center"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginEnd="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/textview1"
+            android:layout_gravity="start|center"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:text="@string/transferability_text"
+            android:textSize="18sp" />
 
         <Switch
             android:id="@+id/perm_guest_list"
+            android:layout_gravity="start|center"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginEnd="2dp"
+            android:layout_marginRight="2dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/textview2"
+            android:layout_gravity="start|center"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
             android:text="@string/permanent_guest_list_invited"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin" />
+            android:textSize="18sp" />
 
-    </LinearLayout>
+        <Switch
+            android:id="@+id/public_event"
+            android:layout_gravity="start|center"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-    <Switch
-        android:id="@+id/viewable_opening_time"
-        android:visibility="invisible"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/guests_options"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"
-        android:text="@string/opening_visible" />
+        <TextView
+            android:id="@+id/textview3"
+            android:layout_gravity="start|center"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:text="@string/public_event"
+            android:textSize="18sp" />
 
-    <Switch
-        android:id="@+id/viewable_closing_date"
-        android:visibility="invisible"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/viewable_opening_time"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"
-        android:text="@string/closing_date_visible" />
+        <Switch
+            android:id="@+id/viewable_opening_time"
+            android:layout_gravity="start|center"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-    <Switch
-        android:id="@+id/viewable_closing_time"
-        android:visibility="invisible"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:gravity="center"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"
-        app:layout_constraintTop_toBottomOf="@id/viewable_closing_date"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="@string/closing_visible" />
+        <TextView
+            android:id="@+id/textview4"
+            android:layout_gravity="start|center"
+            android:layout_marginTop="16dp"
+            android:text="@string/opening_visible"
+            android:textSize="18sp" />
 
-    <Switch
-        android:id="@+id/public_event"
-        android:visibility="invisible"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:gravity="center"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"
-        app:layout_constraintTop_toBottomOf="@id/viewable_closing_time"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="@string/public_event" />
+        <Switch
+            android:id="@+id/viewable_closing_date"
+            android:layout_gravity="start|center"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/textview5"
+            android:layout_gravity="start|center"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:text="@string/closing_date_visible"
+            android:textSize="18sp" />
+
+        <Switch
+            android:id="@+id/viewable_closing_time"
+            android:layout_gravity="start|center"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/textview6"
+            android:layout_gravity="start|center"
+            android:layout_marginTop="16dp"
+            android:text="@string/closing_visible"
+            android:textSize="18sp" />
+
+    </GridLayout>
 
     <Button
         android:id="@+id/option_toggle"
@@ -300,7 +311,22 @@
         android:layout_marginTop="@dimen/activity_horizontal_margin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/organization_nav_view"
         />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/organization_nav_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:isScrollContainer="false"
+        android:visibility="visible"
+        app:itemIconTint="@android:color/white"
+        app:itemTextColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/organization_bottom_nav_menu"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

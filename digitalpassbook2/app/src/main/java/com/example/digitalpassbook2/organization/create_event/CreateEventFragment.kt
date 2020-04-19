@@ -1,14 +1,13 @@
 package com.example.digitalpassbook2.organization.create_event
 
 import android.app.DatePickerDialog
+import android.app.Dialog
 import android.app.TimePickerDialog
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
@@ -20,24 +19,77 @@ import com.example.digitalpassbook2.server.Event
 import com.example.digitalpassbook2.server.Pass
 import com.example.digitalpassbook2.server.Student
 import kotlinx.android.synthetic.main.fragment_create_event.*
-import java.sql.Time
-import java.text.DecimalFormat
-import java.time.LocalDateTime
-import java.time.ZoneId
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class CreateEventFragment : Fragment() {
+class CreateEventFragment : Fragment(), NumberPicker.OnValueChangeListener {
+
+    private lateinit var startDateFormatted : String
+    private lateinit var endDateFormatted : String
 
     private lateinit var createEventViewModel: CreateEventViewModel
 
     private lateinit var invitedAutoCompleteTextView : AutoCompleteTextView
+
+    private fun handleDateTime(button : Button, date : Date, startDate : Date, endButton : Button, endDate : Date, formatter : SimpleDateFormat) {
+        val format = SimpleDateFormat("M/d/yy, h:mm a", Locale.US)
+        format.timeZone = TimeZone.getTimeZone("EST")
+        button.text = format.format(date)
+        button.setOnClickListener {
+            val datePickerDialog = DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+                val timePickerDialog = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
+                    date.year = year
+                    date.month = month
+                    date.date = dayOfMonth
+                    date.hours = hourOfDay
+                    date.minutes = minute
+                    button.text = format.format(date)
+                    if (endDate.before(startDate)) {
+                        endDate.time = startDate.time
+                        endButton.text = format.format(endDate)
+                    }
+                    startDateFormatted = formatter.format(startDate)
+                    endDateFormatted = formatter.format(endDate)
+                }, date.hours, date.minutes, false)
+                timePickerDialog.updateTime(date.hours, date.minutes)
+                timePickerDialog.show()
+            }, date.year, date.month, date.day)
+            datePickerDialog.datePicker.minDate = System.currentTimeMillis()
+            datePickerDialog.updateDate(date.year, date.month, date.date)
+            datePickerDialog.show()
+        }
+    }
 
     // function for switching an element's visibility between VISIBLE and INVISIBLE
     private fun View.toggleVisibility() {
         visibility = when {
             (visibility == View.VISIBLE) -> View.INVISIBLE
             else -> View.VISIBLE
+        }
+    }
+
+    private fun passesNumber(button: Button) {
+        val number = button.text.toString().toInt()
+        button.setOnClickListener {
+            val dialog = context?.let { it1 -> Dialog(it1) }
+            dialog?.setTitle("Number of Passes per Member")
+            dialog?.setContentView(R.layout.number_picker_dialog)
+            val cancelButton = dialog?.findViewById<Button>(R.id.cancel_button)
+            val setButton = dialog?.findViewById<Button>(R.id.set_button)
+            val numberPicker = dialog?.findViewById<NumberPicker>(R.id.number_picker)
+            numberPicker?.maxValue = 3
+            numberPicker?.minValue = 0
+            numberPicker?.wrapSelectorWheel = false
+            numberPicker?.setOnValueChangedListener(this)
+            cancelButton?.setOnClickListener {
+                dialog.dismiss()
+            }
+            setButton?.setOnClickListener {
+                button.text = numberPicker?.value.toString()
+                dialog.dismiss()
+            }
+            dialog?.show()
         }
     }
 
@@ -53,34 +105,8 @@ class CreateEventFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_create_event, container, false)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        fun handleDateTime(button : Button, date : Date, time : Time) {
-            val formatter = DecimalFormat("00")
-            var dateText = formatter.format(date.month) + "/" + formatter.format(date.date) + "/" + formatter.format(1900+date.year) + ", "
-            var timeText = "${time.hours}:" + formatter.format(time.minutes)
-            button.text = "$dateText$timeText"
-            button.setOnClickListener {
-                val datePickerDialog = DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-                    date.year = year
-                    date.month = month
-                    date.date = dayOfMonth
-                    dateText = formatter.format(date.month) + "/" + formatter.format(date.date) + "/" + formatter.format(date.year) + ", "
-                    button.text = "$dateText$timeText"
-                    val timePickerDialog = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
-                        time.hours = hourOfDay
-                        time.minutes = minute
-                        timeText = "${time.hours}:" + formatter.format(time.minutes)
-                        button.text = "$dateText$timeText"
-                    }, time.hours, time.minutes, false)
-                    timePickerDialog.show()
-                }, date.year, date.month, date.day)
-                datePickerDialog.datePicker.minDate = System.currentTimeMillis()
-                datePickerDialog.show()
-            }
-        }
 
         val doorsOpen = view.findViewById<Button>(R.id.doors_open_date_time_button)
         val doorsClose = view.findViewById<Button>(R.id.doors_close_date_time_button)
@@ -88,9 +114,8 @@ class CreateEventFragment : Fragment() {
         val eventTitle = view.findViewById<EditText>(R.id.event_title)
         val description = view.findViewById<EditText>(R.id.description)
         val location = view.findViewById<EditText>(R.id.location)
-        val numberPasses = view.findViewById<NumberPicker>(R.id.number)
+        val passesNumber = view.findViewById<Button>(R.id.number)
         val transferability = view.findViewById<Switch>(R.id.transferability)
-        invitedAutoCompleteTextView = view.findViewById(R.id.invited)
         val permGuestList = view.findViewById<Switch>(R.id.perm_guest_list)
         val viewableOpeningTime = view.findViewById<Switch>(R.id.viewable_opening_time)
         val viewableClosingDate = view.findViewById<Switch>(R.id.viewable_closing_date)
@@ -100,23 +125,19 @@ class CreateEventFragment : Fragment() {
 
         // Doors open and close
         val startDate = Date()
-        val startTime = Time(System.currentTimeMillis())
         val endDate = Date()
-        val endTime = Time(System.currentTimeMillis())
-        handleDateTime(doorsOpen, startDate, startTime)
-        handleDateTime(doorsClose, endDate, endTime)
+        val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+        startDateFormatted = formatter.format(startDate)
+        endDateFormatted = formatter.format(endDate)
+        handleDateTime(doorsOpen, startDate, startDate, doorsClose, endDate, formatter)
+        handleDateTime(doorsClose, endDate, startDate, doorsClose, endDate, formatter)
 
         // Toggle visibility
         toggleButton.setOnClickListener{
             eventTitle.toggleVisibility()
-            description.toggleVisibility()
             location.toggleVisibility()
-            pass_options.toggleVisibility()
-            guests_options.toggleVisibility()
-            viewableOpeningTime.toggleVisibility()
-            viewableClosingDate.toggleVisibility()
-            viewableClosingTime.toggleVisibility()
-            publicEvent.toggleVisibility()
+            description.toggleVisibility()
+            options_grid.toggleVisibility()
             if (toggleButton.text == getString(R.string.see_more)) {
                 toggleButton.text = getString(R.string.see_less)
             }
@@ -124,6 +145,7 @@ class CreateEventFragment : Fragment() {
         }
 
         // Get input from invited field
+        invitedAutoCompleteTextView = view.findViewById(R.id.invited)
         createEventViewModel.getStudentList()
         createEventViewModel.studentList.observe(context as FragmentActivity, Observer { it1 ->
             val studentList = (it1 ?: return@Observer)
@@ -139,41 +161,74 @@ class CreateEventFragment : Fragment() {
             invitedAutoCompleteTextView.setAdapter(adapter)
         })
 
+        // Handle passes number
+        val numberButton = view.findViewById<Button>(R.id.number)
+        passesNumber(numberButton)
+
+        // Invited field passes
+        val guestList : MutableList<Student?> = ArrayList()
+        view.findViewById<ImageButton>(R.id.add_invited).setOnClickListener {
+            createEventViewModel.doesStudentExist(invitedAutoCompleteTextView.text.toString())
+            createEventViewModel.studentExists.observe(
+                context as FragmentActivity,
+                Observer { it1 ->
+                    val studentExists = (it1 ?: return@Observer)
+                    if (studentExists) {
+                        createEventViewModel.getStudentFromInvited(invitedAutoCompleteTextView.text.toString())
+                        createEventViewModel.student.observe(
+                            context as FragmentActivity,
+                            Observer { it2 ->
+                                val student = (it2 ?: return@Observer)
+                                guestList.add(student)
+                            })
+                        invitedAutoCompleteTextView.setText("")
+                    }
+                    else {
+                        Toast.makeText(context, "The NetID " + invitedAutoCompleteTextView.text.toString() + " does not match any user", Toast.LENGTH_LONG).show()
+                    }
+                })
+        }
+
         // Submit form
         view.findViewById<Button>(R.id.submit).setOnClickListener {
             // Create event
-            val event = Event(MyOrganization.id, startDate, startTime,
-                endDate, endTime, eventTitle.text.toString(),
+            val numberPasses = numberButton.text.toString().toInt()
+            val localEvent = Event(MyOrganization.id, startDateFormatted, endDateFormatted, eventTitle.text.toString(),
                 description.text.toString(), location.text.toString(), transferability.isChecked,
-                viewableOpeningTime.isChecked, viewableClosingDate.isChecked, viewableClosingTime.isChecked,
-                LocalDateTime.of(endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), endTime.toInstant().atZone(ZoneId.systemDefault()).toLocalTime()),
-                publicEvent.isChecked)
-            createEventViewModel.createEvent(event)
+                viewableOpeningTime.isChecked, viewableClosingDate.isChecked,
+                viewableClosingTime.isChecked, endDateFormatted, publicEvent.isChecked)
+            createEventViewModel.createEvent(localEvent)
 
-//            // Member passes
-//            createEventViewModel.getMemberList(MyOrganization.id)
-//            createEventViewModel.memberList.observe(context as FragmentActivity, Observer { it1 ->
-//                val memberList = (it1 ?: return@Observer)
-//                memberList.forEach {
-//                    for (i in 0 until numberPasses.value) {
-//                        makePass(it, event)
-//                    }
-//                }
-//            })
-//
-//            // Invited field passes
-//            createEventViewModel.getStudentFromInvited(invitedAutoCompleteTextView.text.toString())
-//            createEventViewModel.student.observe(context as FragmentActivity, Observer { it ->
-//                val student = (it ?: return@Observer)
-//                makePass(student, event)
-//            })
-//
-//            // Permanent guest list passes
-//            if (permGuestList.isChecked) {
-//                TODO()
-//            }
+            createEventViewModel.event.observe(context as FragmentActivity, Observer { it2 ->
+                val event = (it2 ?: return@Observer)
+
+                // Member passes
+                createEventViewModel.getMemberList(MyOrganization.id)
+                createEventViewModel.memberList.observe(context as FragmentActivity, Observer { it1 ->
+                    val memberList = (it1 ?: return@Observer)
+                    memberList.forEach {
+                        for (i in 0 until numberPasses) {
+                            makePass(it, event)
+                        }
+                    }
+                })
+
+                for (student in guestList) {
+                    makePass(student, event)
+                }
+
+    //            // Permanent guest list passes
+    //            if (permGuestList.isChecked) {
+    //                TODO()
+    //            }
+
+            })
 
             findNavController().navigate(R.id.navigation_home)
         }
+    }
+
+    override fun onValueChange(picker: NumberPicker?, oldVal: Int, newVal: Int) {
+        TODO("Not yet implemented")
     }
 }

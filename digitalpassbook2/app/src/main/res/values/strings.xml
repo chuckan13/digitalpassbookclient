@@ -28,7 +28,8 @@
     <string name="title_display_pass">Display Pass</string>
     <string name="title_send_pass">Send Pass</string>
     <string name="location_hint">Location</string>
-    <string name="invited_hint">Invited</string>
+    <string name="invited_hint">Invite</string>
+    <string name="invite_a_guest">Invite Guest</string>
     <string name="message_hint">Message (optional)</string>
     <string name="guest_name">Guest Name</string>
     <string name="submit_button">Submit</string>
@@ -47,10 +48,15 @@
     <string name="doors_text">to</string>
     <string name="see_more">See More</string>
     <string name="see_less">See Less</string>
-    <string name="closing_visible">End Time Visible to Guests</string>
-    <string name="opening_visible">Start Time Visible to Guests</string>
+    <string name="closing_visible">Show End Time</string>
+    <string name="opening_visible">Show Start Time</string>
     <string name="number_text">Passes</string>
-    <string name="closing_date_visible">End Date Visible to Guests</string>
-    <string name="public_event">Event Visible to All Students</string>
+    <string name="closing_date_visible">Show End Date</string>
+    <string name="public_event">Show to Campus</string>
+    <string name="passes_per_member">Passes/Member</string>
+    <string name="add_invited">Add</string>
+    <string name="number_passes">2</string>
+    <string name="set_button">Set</string>
+    <string name="cancel_button">Cancel</string>
 
 </resources>

@@ -45,7 +45,7 @@ class StudentEventListAdapter (private val context: Context,
             val organization = it ?: return@Observer
             clubLogo.setImageResource(rowView.resources.getIdentifier(organization.logo, "drawable", context.packageName))
             clubName.text = organization.name
-            eventDate.text = event?.startDate.toString()
+            eventDate.text = event?.startDate
 
 //            rowView.findViewById<Button>(R.id.view_button).setOnClickListener {
 //                val action =

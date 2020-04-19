@@ -1,5 +1,6 @@
 package com.example.digitalpassbook2.organization.create_event
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -31,12 +32,31 @@ class CreateEventViewModel : ViewModel() {
         StudentService.create()
     }
 
+    private val _studentExists = MutableLiveData<Boolean?>()
+    val studentExists: LiveData<Boolean?> = _studentExists
+
+    fun doesStudentExist(netid : String) {
+        viewModelScope.launch {
+            try {
+                _studentExists.value = studentServe.checkStudentExist(netid)
+            }
+            catch (exception : Exception) {
+                println("doesStudentExist")
+            }
+        }
+    }
+
     private val _student = MutableLiveData<Student?>()
     val student: LiveData<Student?> = _student
 
     fun getStudentFromInvited(netid : String) {
         viewModelScope.launch {
-            _student.value = studentServe.getByNetId(netid)
+            try {
+                _student.value = studentServe.getByNetId(netid)
+            }
+            catch (exception : Exception) {
+                println("getStudentFromInvited")
+            }
         }
     }
 
@@ -45,13 +65,26 @@ class CreateEventViewModel : ViewModel() {
 
     fun getStudentList() {
         viewModelScope.launch {
-            _studentList.value = studentServe.getall()
+            try {
+                _studentList.value = studentServe.getall()
+            }
+            catch (exception : Exception) {
+                println("getStudentList")
+            }
         }
     }
 
+    private val _event = MutableLiveData<Event?>()
+    val event: LiveData<Event?> = _event
+
     fun createEvent(localEvent : Event) {
         viewModelScope.launch {
-            eventServe.create(localEvent)
+            try {
+                _event.value = eventServe.create(localEvent)
+            }
+            catch (exception : Exception) {
+                println("createEvent")
+            }
         }
     }
 
@@ -62,7 +95,12 @@ class CreateEventViewModel : ViewModel() {
         viewModelScope.launch {
 //            val deferredMembers = async {organizationServe.getMembers(id)}
 //            _memberList.value = deferredMembers.await()
-            _memberList.value = organizationServe.getMembers(id)
+            try {
+                _memberList.value = organizationServe.getMembers(id)
+            }
+            catch (exception : Exception) {
+                println("getMemberList")
+            }
         }
     }
 
@@ -70,7 +108,13 @@ class CreateEventViewModel : ViewModel() {
         viewModelScope.launch {
 //            val deferredPass = async {passServe.create(localPass)}
 //            _pass.value = deferredPass.await()
-            passServe.create(localPass)
+            try {
+                passServe.create(localPass)
+            }
+            catch (exception : Exception) {
+                println("createPass")
+                println(exception)
+            }
         }
     }
 

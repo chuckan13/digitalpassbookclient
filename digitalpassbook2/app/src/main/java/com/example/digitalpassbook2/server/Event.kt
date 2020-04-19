@@ -1,10 +1,6 @@
 package com.example.digitalpassbook2.server
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.google.gson.annotations.SerializedName
-import java.sql.Time
-import java.time.LocalDateTime
 import java.util.*
 
 class Event {
@@ -16,19 +12,11 @@ class Event {
         private set
 
     @SerializedName("date")
-    var startDate: Date
-        private set
-
-    @SerializedName("startTime")
-    var startTime: Time
+    var startDate: String
         private set
 
     @SerializedName("endDate")
-    var endDate: Date
-        private set
-
-    @SerializedName("endTime")
-    var endTime: Time
+    var endDate: String
         private set
 
     @SerializedName("eventName")
@@ -60,24 +48,20 @@ class Event {
         private set
 
     @SerializedName("cutoff")
-    var cutoff: LocalDateTime
+    var cutoff: String
         private set
 
     @SerializedName("allStudentsVisibility")
     var allStudentsVisibility: Boolean
         private set
 
-    constructor(
-        orgID: Int, startDate: Date, startTime: Time, endDate: Date, endTime: Time,
-        eventName: String, description: String, location: String, transferability: Boolean,
-        openTimeVisibility: Boolean, closeDateVisibility: Boolean, closeTimeVisibility: Boolean,
-        cutoff : LocalDateTime, allStudentsVisibility: Boolean
-    ) {
+    constructor(orgID: Int, startDate: String, endDate: String, eventName: String, description: String,
+                location: String, transferability: Boolean, openTimeVisibility: Boolean,
+                closeDateVisibility: Boolean, closeTimeVisibility: Boolean, cutoff : String,
+                allStudentsVisibility: Boolean) {
         this.orgId = orgID
         this.startDate = startDate
-        this.startTime = startTime
         this.endDate = endDate
-        this.endTime = endTime
         this.name = eventName
         this.description = description
         this.location = location
@@ -89,22 +73,18 @@ class Event {
         this.allStudentsVisibility = allStudentsVisibility
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     constructor(orgID: Int) {
         this.orgId = orgID
-        this.startDate = Date()
-        this.startTime = Time(System.currentTimeMillis())
-        this.endDate = Date()
-        this.endTime = Time(System.currentTimeMillis())
-        this.name = " "
-        this.description = " "
-        this.location = " "
+        this.startDate = Date().toString()
+        this.endDate = Date().toString()
+        this.name = ""
+        this.description = ""
+        this.location = ""
         this.transferability = false
         this.openTimeVisibility = false
         this.closeDateVisibility = false
         this.closeTimeVisibility = false
-        this.cutoff = LocalDateTime.of(this.endDate.year, this.endDate.month, this.endDate.day,
-            this.endTime.hours, this.endTime.minutes, this.endTime.seconds)
+        this.cutoff = Date().toString()
         this.allStudentsVisibility = false
     }
 
