@@ -49,8 +49,8 @@ class DisplayPassFragment() : Fragment() {
         val orgName = view.findViewById(R.id.pass_club_name) as TextView
         val orgLogo = view.findViewById(R.id.pass_club_logo) as ImageView
         val studentName = view.findViewById(R.id.user_name) as TextView
-//        val progress = view.findViewById(R.id.loading_spinner) as ProgressBar
-//        val clock = view.findViewById(R.id.clock) as TextClock
+        val progress = view.findViewById(R.id.loading_spinner) as ProgressBar
+        val clock = view.findViewById(R.id.clock) as TextClock
 
         studentName.text = MyStudent.name
 
@@ -71,26 +71,26 @@ class DisplayPassFragment() : Fragment() {
                 e.printStackTrace()
             }
 
-//        orgQR.visibility = View.VISIBLE
-//        progress.visibility = View.INVISIBLE
+        orgQR.visibility = View.VISIBLE
+        progress.visibility = View.INVISIBLE
 
-//        displayPassViewModel.organization.observe(context as FragmentActivity, Observer {
-//            val organization = (it ?: return@Observer)
-//            orgQR.visibility = View.VISIBLE
-//            orgName.visibility = View.VISIBLE
-//            orgLogo.visibility = View.VISIBLE
-//            studentName.visibility = View.VISIBLE
-//            clock.visibility = View.VISIBLE
-//            progress.visibility = View.INVISIBLE
-//            try {
-//                val qrText = ""+organization.name+passId
-//                val bitmap = TextToImageEncode(qrText)
-//                orgQR!!.setImageBitmap(bitmap)
-//            } catch (e: WriterException) {
-//                e.printStackTrace()
-//            }
-////            orgQR.setImageResource(resources.getIdentifier(organization.logo, "drawable", context?.packageName))
-//        })
+        displayPassViewModel.organization.observe(context as FragmentActivity, Observer {
+            val organization = (it ?: return@Observer)
+            orgQR.visibility = View.VISIBLE
+            orgName.visibility = View.VISIBLE
+            orgLogo.visibility = View.VISIBLE
+            studentName.visibility = View.VISIBLE
+            clock.visibility = View.VISIBLE
+            progress.visibility = View.INVISIBLE
+            try {
+                val qrText = ""+organization.name+passId
+                val bitmap = TextToImageEncode(qrText)
+                orgQR!!.setImageBitmap(bitmap)
+            } catch (e: WriterException) {
+                e.printStackTrace()
+            }
+            orgQR.setImageResource(resources.getIdentifier(organization.logo, "drawable", context?.packageName))
+        })
     }
 
     // code to create QR code image

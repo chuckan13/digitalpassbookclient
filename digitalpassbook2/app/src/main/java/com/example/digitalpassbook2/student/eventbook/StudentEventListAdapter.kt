@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import com.example.digitalpassbook2.R
 import com.example.digitalpassbook2.server.*
+import java.text.SimpleDateFormat
 
 class StudentEventListAdapter (private val context: Context,
                                private val studentEventList: MutableList<Event?>) : BaseAdapter() {
@@ -45,7 +46,9 @@ class StudentEventListAdapter (private val context: Context,
             val organization = it ?: return@Observer
             clubLogo.setImageResource(rowView.resources.getIdentifier(organization.logo, "drawable", context.packageName))
             clubName.text = organization.name
-            eventDate.text = event?.startDate
+            val format1 = SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSSZ")
+            val format2 = SimpleDateFormat("MM/dd")
+            eventDate.text = format2.format(format1.parse(event?.startDate))
 
 //            rowView.findViewById<Button>(R.id.view_button).setOnClickListener {
 //                val action =
