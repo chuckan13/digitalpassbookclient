@@ -64,13 +64,13 @@
         android:format12Hour="hh:mm:ss a"
         android:visibility="visible"
         android:typeface="serif"
-        app:layout_constraintVertical_bias="0.91"
+        app:layout_constraintVertical_bias="0.3"
         app:layout_constraintBottom_toTopOf="@id/student_nav_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/pass_qr" />
 
     <ImageView
         android:id="@+id/pass_qr"

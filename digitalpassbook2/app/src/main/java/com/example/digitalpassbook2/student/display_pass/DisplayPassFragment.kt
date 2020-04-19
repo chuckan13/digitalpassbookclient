@@ -1,27 +1,22 @@
 package com.example.digitalpassbook2.student.display_pass
 
 import android.graphics.Bitmap
+import android.graphics.ColorMatrixColorFilter
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewStub
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextClock
 import android.widget.TextView
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import com.example.digitalpassbook2.R
-import com.example.digitalpassbook2.organization.MyOrganization
 import com.example.digitalpassbook2.student.MyStudent
-import org.w3c.dom.Text
-
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.google.zxing.WriterException
@@ -66,6 +61,13 @@ class DisplayPassFragment() : Fragment() {
             val qrText = ""+args.clubNameArg+passId
             val bitmap = TextToImageEncode(qrText)
             orgQR.setImageBitmap(bitmap)
+            val negative = floatArrayOf(
+                -1.0f, 0f, 0f, 0f, 255f,
+                0f, -1.0f, 0f, 0f, 255f,
+                0f, 0f, -1.0f, 0f, 255f,
+                0f, 0f, 0f, 1.0f, 0f
+            )
+            orgQR.colorFilter = ColorMatrixColorFilter(negative)
         }
         catch (e: WriterException) {
                 e.printStackTrace()
@@ -74,23 +76,23 @@ class DisplayPassFragment() : Fragment() {
         orgQR.visibility = View.VISIBLE
         progress.visibility = View.INVISIBLE
 
-        displayPassViewModel.organization.observe(context as FragmentActivity, Observer {
-            val organization = (it ?: return@Observer)
-            orgQR.visibility = View.VISIBLE
-            orgName.visibility = View.VISIBLE
-            orgLogo.visibility = View.VISIBLE
-            studentName.visibility = View.VISIBLE
-            clock.visibility = View.VISIBLE
-            progress.visibility = View.INVISIBLE
-            try {
-                val qrText = ""+organization.name+passId
-                val bitmap = TextToImageEncode(qrText)
-                orgQR!!.setImageBitmap(bitmap)
-            } catch (e: WriterException) {
-                e.printStackTrace()
-            }
-            orgQR.setImageResource(resources.getIdentifier(organization.logo, "drawable", context?.packageName))
-        })
+//        displayPassViewModel.organization.observe(context as FragmentActivity, Observer {
+//            val organization = (it ?: return@Observer)
+//            orgQR.visibility = View.VISIBLE
+//            orgName.visibility = View.VISIBLE
+//            orgLogo.visibility = View.VISIBLE
+//            studentName.visibility = View.VISIBLE
+//            clock.visibility = View.VISIBLE
+//            progress.visibility = View.INVISIBLE
+//            try {
+//                val qrText = ""+organization.name+passId
+//                val bitmap = TextToImageEncode(qrText)
+//                orgQR!!.setImageBitmap(bitmap)
+//            } catch (e: WriterException) {
+//                e.printStackTrace()
+//            }
+//            orgQR.setImageResource(resources.getIdentifier(organization.logo, "drawable", context?.packageName))
+//        })
     }
 
     // code to create QR code image
