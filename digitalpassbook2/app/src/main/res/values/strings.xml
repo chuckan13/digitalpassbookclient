@@ -29,7 +29,7 @@
     <string name="title_send_pass">Send Pass</string>
     <string name="location_hint">Location</string>
     <string name="invited_hint">Invite</string>
-    <string name="invite_a_guest">Invite Guest</string>
+    <string name="invite_a_guest">Invite by netID</string>
     <string name="message_hint">Message (optional)</string>
     <string name="guest_name">Guest Name</string>
     <string name="submit_button">Submit</string>
@@ -58,5 +58,8 @@
     <string name="number_passes">2</string>
     <string name="set_button">Set</string>
     <string name="cancel_button">Cancel</string>
+    <string name="doors_open_text">Doors Open:</string>
+    <string name="doors_close_text">Doors Close:</string>
+    <string name="dash">-</string>
 
 </resources>

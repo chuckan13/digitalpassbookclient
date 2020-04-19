@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.TimePickerDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,6 +36,9 @@ class CreateEventFragment : Fragment(), NumberPicker.OnValueChangeListener {
     private fun handleDateTime(button : Button, date : Date, startDate : Date, endButton : Button, endDate : Date, formatter : SimpleDateFormat) {
         val format = SimpleDateFormat("M/d/yy, h:mm a", Locale.US)
         format.timeZone = TimeZone.getTimeZone("EST")
+        var initialDate = date
+        initialDate.hours = date.hours
+        initialDate.year = date.year+1900
         button.text = format.format(date)
         button.setOnClickListener {
             val datePickerDialog = DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
@@ -80,6 +84,7 @@ class CreateEventFragment : Fragment(), NumberPicker.OnValueChangeListener {
             val numberPicker = dialog?.findViewById<NumberPicker>(R.id.number_picker)
             numberPicker?.maxValue = 3
             numberPicker?.minValue = 0
+            numberPicker?.value = button.text.toString().toInt()
             numberPicker?.wrapSelectorWheel = false
             numberPicker?.setOnValueChangedListener(this)
             cancelButton?.setOnClickListener {
@@ -217,10 +222,10 @@ class CreateEventFragment : Fragment(), NumberPicker.OnValueChangeListener {
                     makePass(student, event)
                 }
 
-    //            // Permanent guest list passes
-    //            if (permGuestList.isChecked) {
-    //                TODO()
-    //            }
+                // Permanent guest list passes
+//                if (permGuestList.isChecked) {
+//                    TODO()
+//                }
 
             })
 
@@ -229,6 +234,6 @@ class CreateEventFragment : Fragment(), NumberPicker.OnValueChangeListener {
     }
 
     override fun onValueChange(picker: NumberPicker?, oldVal: Int, newVal: Int) {
-        TODO("Not yet implemented")
+        Log.i("value is",""+newVal)
     }
 }
