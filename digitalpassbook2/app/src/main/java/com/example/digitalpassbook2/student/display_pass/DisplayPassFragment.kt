@@ -61,13 +61,6 @@ class DisplayPassFragment() : Fragment() {
             val qrText = ""+args.clubNameArg+passId
             val bitmap = TextToImageEncode(qrText)
             orgQR.setImageBitmap(bitmap)
-            val negative = floatArrayOf(
-                -1.0f, 0f, 0f, 0f, 255f,
-                0f, -1.0f, 0f, 0f, 255f,
-                0f, 0f, -1.0f, 0f, 255f,
-                0f, 0f, 0f, 1.0f, 0f
-            )
-            orgQR.colorFilter = ColorMatrixColorFilter(negative)
         }
         catch (e: WriterException) {
                 e.printStackTrace()
@@ -116,9 +109,9 @@ class DisplayPassFragment() : Fragment() {
             val offset = y * bitMatrixWidth
             for (x in 0 until bitMatrixWidth) {
                 pixels[offset + x] = if (bitMatrix.get(x, y))
-                    resources.getColor(R.color.black)
-                else
                     resources.getColor(R.color.white)
+                else
+                    resources.getColor(R.color.black)
             }
         }
         val bitmap = Bitmap.createBitmap(bitMatrixWidth, bitMatrixHeight, Bitmap.Config.ARGB_4444)
