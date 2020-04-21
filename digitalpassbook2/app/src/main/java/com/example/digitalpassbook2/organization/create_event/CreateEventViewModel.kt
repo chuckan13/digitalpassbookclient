@@ -1,10 +1,12 @@
 package com.example.digitalpassbook2.organization.create_event
 
 import android.util.Log
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.digitalpassbook2.organization.MyOrganization
 import com.example.digitalpassbook2.server.*
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -60,6 +62,22 @@ class CreateEventViewModel : ViewModel() {
         }
     }
 
+    fun guestListPasses(guestList : MutableList<String?>, event : Event) {
+        viewModelScope.launch {
+            try {
+                guestList.forEach {
+                    if (it != null) {
+                        val student = studentServe.getByNetId(it)
+                        makePass(student, event)
+                    }
+                }
+            }
+            catch (exception : Exception) {
+                println("getStudentFromInvited")
+            }
+        }
+    }
+
     private val _studentList = MutableLiveData<List<Student?>>()
     val studentList: LiveData<List<Student?>> = _studentList
 
@@ -104,7 +122,7 @@ class CreateEventViewModel : ViewModel() {
         }
     }
 
-    fun createPass(localPass : Pass) {
+    private fun createPass(localPass : Pass) {
         viewModelScope.launch {
 //            val deferredPass = async {passServe.create(localPass)}
 //            _pass.value = deferredPass.await()
@@ -115,6 +133,13 @@ class CreateEventViewModel : ViewModel() {
                 println("createPass")
                 println(exception)
             }
+        }
+    }
+
+    fun makePass(student : Student?, event: Event) {
+        val pass = student?.id?.let { it -> Pass(MyOrganization.id, it, event.id, event.startDate) }
+        if (pass != null) {
+            createPass(pass)
         }
     }
 
