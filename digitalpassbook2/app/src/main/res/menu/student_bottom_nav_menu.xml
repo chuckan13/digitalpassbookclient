@@ -3,12 +3,12 @@
 
     <item
         android:id="@+id/navigation_passbook"
-        android:icon="@drawable/ic_passbook_24dp"
+        android:icon="@drawable/ic_passbook"
         android:title="@string/title_passbook" />
 
     <item
         android:id="@+id/navigation_eventbook"
-        android:icon="@drawable/ic_eventbook_24dp"
+        android:icon="@drawable/ic_eventbook"
         android:title="@string/title_eventbook" />
 
 </menu>

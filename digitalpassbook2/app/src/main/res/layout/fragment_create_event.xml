@@ -7,9 +7,13 @@
     android:layout_height="match_parent"
     tools:context=".organization.create_event.CreateEventFragment">
 
+    <include layout="@layout/toolbar_organization"
+        android:id="@+id/toolbar"
+        app:logo="@drawable/ic_menu"/>
+
     <LinearLayout
         android:id="@+id/date_time_picker_buttons"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="fill_parent"
