@@ -119,17 +119,12 @@ class CreateEventFragment : Fragment(), NumberPicker.OnValueChangeListener, Frag
             context as FragmentActivity,
             R.id.organization_nav_host_fragment
         )
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        val appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.navigation_home,
-            R.id.navigation_create_event
-        ))
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
         (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
         (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-//        (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayShowHomeEnabled(true)
-        toolbar.setupWithNavController(navController, appBarConfiguration)
+        (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayShowHomeEnabled(true)
+        (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayShowTitleEnabled(false)
+        toolbar.setupWithNavController(navController)
         setHasOptionsMenu(true)
         //Listen for changes in the back stack
         fragmentManager?.addOnBackStackChangedListener(this)
@@ -231,7 +226,7 @@ class CreateEventFragment : Fragment(), NumberPicker.OnValueChangeListener, Frag
     // Menu icons are inflated just as they were with actionbar
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        inflater.inflate(R.menu.organization_bottom_nav_menu, menu)
+        inflater.inflate(R.menu.organization_toolbar_nav_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 

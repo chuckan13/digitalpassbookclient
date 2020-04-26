@@ -1,4 +1,4 @@
-package com.example.digitalpassbook2.organization.event_details
+package com.example.digitalpassbook2.organization.edit_event
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -14,22 +14,21 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 
 import com.example.digitalpassbook2.R
 
-class EventDetailsFragment : Fragment(), FragmentManager.OnBackStackChangedListener {
+class EditEventFragment : Fragment(), FragmentManager.OnBackStackChangedListener {
 
-    private lateinit var eventDetailsViewModel: EventDetailsViewModel
+    private lateinit var editEventViewModel: EditEventViewModel
 
     private lateinit var guestNameAutoCompleteTextView : AutoCompleteTextView
 
-    private val args: EventDetailsFragmentArgs by navArgs()
+    private val args: EditEventFragmentArgs by navArgs()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        eventDetailsViewModel = ViewModelProviders.of(this).get(EventDetailsViewModel::class.java)
-        return inflater.inflate(R.layout.fragment_event_details, container, false)
+        editEventViewModel = ViewModelProviders.of(this).get(EditEventViewModel::class.java)
+        return inflater.inflate(R.layout.fragment_edit_event, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,17 +38,12 @@ class EventDetailsFragment : Fragment(), FragmentManager.OnBackStackChangedListe
             context as FragmentActivity,
             R.id.organization_nav_host_fragment
         )
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        val appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.navigation_home,
-            R.id.navigation_create_event
-        ))
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
         (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
         (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-//        (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayShowHomeEnabled(true)
-        toolbar.setupWithNavController(navController, appBarConfiguration)
+        (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayShowHomeEnabled(true)
+        (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayShowTitleEnabled(false)
+        toolbar.setupWithNavController(navController)
         setHasOptionsMenu(true)
         //Listen for changes in the back stack
         fragmentManager?.addOnBackStackChangedListener(this)
@@ -59,14 +53,14 @@ class EventDetailsFragment : Fragment(), FragmentManager.OnBackStackChangedListe
 
         val eventId = args.eventArg.toInt()
 
-        eventDetailsViewModel.getEvent(eventId)
-        eventDetailsViewModel.event.observe(context as FragmentActivity, Observer {
+        editEventViewModel.getEvent(eventId)
+        editEventViewModel.event.observe(context as FragmentActivity, Observer {
             val event = (it ?: return@Observer)
         })
 
         guestNameAutoCompleteTextView = view.findViewById(R.id.guest_name)
-        eventDetailsViewModel.getStudentList()
-        eventDetailsViewModel.studentList.observe(context as FragmentActivity, Observer { it1 ->
+        editEventViewModel.getStudentList()
+        editEventViewModel.studentList.observe(context as FragmentActivity, Observer { it1 ->
             val studentList = (it1 ?: return@Observer)
 
             // change this to eliminate studentStringList and use custom adapter
@@ -83,7 +77,7 @@ class EventDetailsFragment : Fragment(), FragmentManager.OnBackStackChangedListe
 
         // Send the pass to them and navigate back to passbook
         view.findViewById<Button>(R.id.send_button).setOnClickListener {
-            eventDetailsViewModel.createPass(eventId, guestNameAutoCompleteTextView.text.toString())
+            editEventViewModel.createPass(eventId, guestNameAutoCompleteTextView.text.toString())
             guestNameAutoCompleteTextView.setText("")
         }
 
@@ -92,7 +86,7 @@ class EventDetailsFragment : Fragment(), FragmentManager.OnBackStackChangedListe
     // Menu icons are inflated just as they were with actionbar
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        inflater.inflate(R.menu.organization_bottom_nav_menu, menu)
+        inflater.inflate(R.menu.organization_toolbar_nav_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 

@@ -22,10 +22,10 @@ class OrganizationActivity : AppCompatActivity() {
         MyOrganization.logo = user.logoId
 
         setContentView(R.layout.activity_organization)
-        val navView: BottomNavigationView = findViewById(R.id.organization_nav_view)
+//        val navView: BottomNavigationView = findViewById(R.id.organization_nav_view)
 
-        val navController = findNavController(R.id.organization_nav_host_fragment)
-        navView.setupWithNavController(navController)
+//        val navController = findNavController(R.id.organization_nav_host_fragment)
+//        navView.setupWithNavController(navController)
     }
 
     override fun onSupportNavigateUp(): Boolean {

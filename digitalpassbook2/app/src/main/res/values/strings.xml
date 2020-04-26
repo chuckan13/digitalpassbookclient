@@ -15,7 +15,7 @@
     <string name="signout_btn">Sign Out</string>
     <string name="prompt_username">Username</string>
     <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in">Sign in</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must have characters</string>
@@ -63,4 +63,14 @@
     <string name="dash">-</string>
     <string name="club_logo">Club Logo</string>
     <string name="pass_qr">Pass QR Code</string>
+    <string name="title_logout">Logout</string>
+    <string name="title_preferences">Preferences</string>
+    <string name="menu_title">menu</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="events">Events</string>
+    <string name="edit_event">Edit Event</string>
+    <string name="text_image">Text Image</string>
+    <string name="invited_text">Invited</string>
+    <string name="spots_text">Spots</string>
+    <string name="arrived_text">Arrived</string>
 </resources>

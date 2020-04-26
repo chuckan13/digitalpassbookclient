@@ -8,7 +8,6 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.digitalpassbook2.organization.home.HomeFragment"
-        android:label="@string/title_home"
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_navigation_home_to_navigation_create_event"
@@ -21,7 +20,6 @@
     <fragment
         android:id="@+id/navigation_create_event"
         android:name="com.example.digitalpassbook2.organization.create_event.CreateEventFragment"
-        android:label="@string/title_create_event"
         tools:layout="@layout/fragment_create_event" >
         <action
             android:id="@+id/action_navigation_create_event_to_navigation_home"
@@ -30,9 +28,8 @@
 
     <fragment
         android:id="@+id/navigation_event_details"
-        android:name="com.example.digitalpassbook2.organization.event_details.EventDetailsFragment"
-        android:label="@string/title_event_details"
-        tools:layout="@layout/fragment_event_details" >
+        android:name="com.example.digitalpassbook2.organization.edit_event.EditEventFragment"
+        tools:layout="@layout/fragment_edit_event" >
         <argument
             android:name="eventArg"
             app:argType="long" />

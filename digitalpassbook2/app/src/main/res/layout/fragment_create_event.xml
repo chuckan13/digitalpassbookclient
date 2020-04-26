@@ -5,11 +5,28 @@
     android:layout_gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:label=""
     tools:context=".organization.create_event.CreateEventFragment">
 
-    <include layout="@layout/toolbar_organization"
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        app:logo="@drawable/ic_menu"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:title=""
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_create_event"
+            android:textAppearance="@style/Toolbar.TitleText"
+            android:layout_gravity="center"
+            android:id="@+id/toolbar_title" />
+
+    </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
         android:id="@+id/date_time_picker_buttons"
@@ -380,22 +397,7 @@
         android:layout_marginTop="@dimen/activity_horizontal_margin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/organization_nav_view"
-        />
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/organization_nav_view"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:isScrollContainer="false"
-        android:visibility="visible"
-        app:itemIconTint="@android:color/white"
-        app:itemTextColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:menu="@menu/organization_bottom_nav_menu"
-        tools:visibility="visible" />
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

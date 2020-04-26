@@ -1,4 +1,4 @@
-package com.example.digitalpassbook2.organization.event_details
+package com.example.digitalpassbook2.organization.edit_event
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,7 +8,7 @@ import com.example.digitalpassbook2.organization.MyOrganization
 import com.example.digitalpassbook2.server.*
 import kotlinx.coroutines.launch
 
-class EventDetailsViewModel : ViewModel() {
+class EditEventViewModel : ViewModel() {
 
     private val eventServe by lazy {
         EventService.create()
@@ -23,7 +23,7 @@ class EventDetailsViewModel : ViewModel() {
     }
 
     private val _text = MutableLiveData<String>().apply {
-        value = "Event Details"
+        value = "Edit Event"
     }
 
     val text: LiveData<String> = _text

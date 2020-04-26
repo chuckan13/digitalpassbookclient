@@ -13,7 +13,6 @@ import androidx.lifecycle.Observer
 import com.example.digitalpassbook2.R
 import com.example.digitalpassbook2.server.*
 import java.text.SimpleDateFormat
-import java.util.*
 
 class StudentEventListAdapter (private val context: Context,
                                private val studentEventList: MutableList<Event?>) : BaseAdapter() {

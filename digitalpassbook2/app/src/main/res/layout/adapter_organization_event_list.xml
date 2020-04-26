@@ -3,52 +3,145 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/event_club_logo"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:paddingLeft="8dp"
-        android:paddingStart="8dp"
-        tools:ignore="RtlSymmetry" />
+        android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/event_club_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/event_club_logo"
-        android:layout_toEndOf="@id/event_club_logo"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        tools:ignore="RtlSymmetry" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:gravity="start|top"
+            tools:ignore="RtlSymmetry" >
 
-    <TextView
-        android:id="@+id/event_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/details_button"
-        android:layout_toStartOf="@id/details_button"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="10dp"
-        android:layout_marginEnd="10dp"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        tools:ignore="RtlSymmetry" />
+            <ImageView
+                android:id="@+id/event_club_logo"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:contentDescription="@string/club_logo"
+                android:layout_marginEnd="8dp"
+                tools:ignore="RtlSymmetry" />
 
-    <Button
-        android:id="@+id/details_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="5dp"
-        android:layout_marginEnd="5dp"
-        android:text="@string/details_button" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="start"
+                tools:ignore="RtlSymmetry" >
+
+                <TextView
+                    android:id="@+id/event_club_name"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:typeface="serif"
+                    tools:ignore="RtlSymmetry" />
+
+                <TextView
+                    android:id="@+id/event_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="16sp"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:typeface="serif"
+                    tools:ignore="RtlSymmetry" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/details_button"
+            android:contentDescription="@string/edit_event"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="5dp"
+            android:text="@string/details_button"
+            android:textStyle="bold"
+            android:typeface="serif"
+            android:src="@drawable/ic_edit"
+            android:background="#000000"/>
+
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:columnCount="3"
+            android:rowCount="2"
+            android:layout_gravity="center"
+            >
+
+            <include layout="@layout/text_image"
+                android:id="@+id/number_invited"
+                android:gravity="center"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_height="80dp"
+                android:layout_width="80dp" />
+
+            <include layout="@layout/text_image"
+                android:id="@+id/number_spots"
+                android:gravity="center"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_height="80dp"
+                android:layout_width="80dp"
+                />
+
+            <include layout="@layout/text_image"
+                android:id="@+id/number_arrived"
+                android:gravity="center"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_height="80dp"
+                android:layout_width="80dp"
+                />
+
+            <TextView
+                android:id="@+id/number_invited_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:typeface="serif"
+                android:text="@string/invited_text" />
+
+            <TextView
+                android:id="@+id/number_spots_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:typeface="serif"
+                android:text="@string/spots_text" />
+
+            <TextView
+                android:id="@+id/number_arrived_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:typeface="serif"
+                android:text="@string/arrived_text" />
+
+        </GridLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>
