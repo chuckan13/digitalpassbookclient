@@ -31,6 +31,8 @@ class ScannerFragment : Fragment() {
 
         scanner.setOnClickListener {
             // put scanner code here
+            val intent = Intent(activity, ScanActivity::class.java)
+            startActivity(intent)
         }
 
         done.setOnClickListener {
