@@ -10,10 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import com.example.digitalpassbook2.MainActivity
 
 import com.example.digitalpassbook2.R
-import com.example.digitalpassbook2.login.login.ui.LoggedInUserView
-import com.example.digitalpassbook2.student.StudentActivity
 
 class ScannerFragment : Fragment() {
 
@@ -36,7 +35,7 @@ class ScannerFragment : Fragment() {
         }
 
         done.setOnClickListener {
-            val intent: Intent = Intent(activity, StudentActivity::class.java)
+            val intent: Intent = Intent(activity, MainActivity::class.java)
             intent.putExtra("EXTRA_PARCEL", RegisterActivity.globalUserData)
 //                Log.d("RegisterFragment", "start new activity")
             activity?.startActivity(intent)

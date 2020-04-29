@@ -8,7 +8,6 @@
     <fragment
         android:id="@+id/navigation_passbook"
         android:name="com.example.digitalpassbook2.student.passbook.PassbookFragment"
-        android:label="@string/title_passbook"
         tools:layout="@layout/fragment_passbook" >
         <action
             android:id="@+id/action_navigation_passbook_to_navigation_eventbook"
@@ -24,7 +23,6 @@
     <fragment
         android:id="@+id/navigation_eventbook"
         android:name="com.example.digitalpassbook2.student.eventbook.EventbookFragment"
-        android:label="@string/title_eventbook"
         tools:layout="@layout/fragment_eventbook" >
         <action
             android:id="@+id/action_navigation_eventbook_to_navigation_passbook"
@@ -32,9 +30,14 @@
     </fragment>
 
     <fragment
+        android:id="@+id/navigation_notifications"
+        android:name="com.example.digitalpassbook2.notifications.NotificationsFragment"
+        tools:layout="@layout/fragment_notifications" >
+    </fragment>
+
+    <fragment
         android:id="@+id/navigation_display_pass"
         android:name="com.example.digitalpassbook2.student.display_pass.DisplayPassFragment"
-        android:label="@string/title_display_pass"
         tools:layout="@layout/fragment_display_pass" >
         <action
             android:id="@+id/action_navigation_display_pass_to_navigation_passbook"
@@ -56,7 +59,6 @@
     <fragment
         android:id="@+id/navigation_send_pass"
         android:name="com.example.digitalpassbook2.student.send_pass.SendPassFragment"
-        android:label="@string/title_send_pass"
         tools:layout="@layout/fragment_send_pass" >
         <action
             android:id="@+id/action_navigation_send_pass_to_navigation_passbook"

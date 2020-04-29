@@ -1,14 +1,14 @@
-package com.example.digitalpassbook2.organization.event_details
+package com.example.digitalpassbook2.organization.edit_event
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.digitalpassbook2.organization.MyOrganization
+import com.example.digitalpassbook2.MyUser
 import com.example.digitalpassbook2.server.*
 import kotlinx.coroutines.launch
 
-class EventDetailsViewModel : ViewModel() {
+class EditEventViewModel : ViewModel() {
 
     private val eventServe by lazy {
         EventService.create()
@@ -23,7 +23,7 @@ class EventDetailsViewModel : ViewModel() {
     }
 
     private val _text = MutableLiveData<String>().apply {
-        value = "Event Details"
+        value = "Edit Event"
     }
 
     val text: LiveData<String> = _text
@@ -34,6 +34,18 @@ class EventDetailsViewModel : ViewModel() {
     fun getEvent(eventId : Int) {
         viewModelScope.launch {
             _event.value = eventServe.get(eventId)
+        }
+    }
+
+    fun updateEvent(eventId : Int, localEvent : Event) {
+        viewModelScope.launch {
+            eventServe.update(eventId, localEvent)
+        }
+    }
+
+    fun deleteEvent(eventId : Int) {
+        viewModelScope.launch {
+            eventServe.delete(eventId)
         }
     }
 
@@ -51,9 +63,27 @@ class EventDetailsViewModel : ViewModel() {
             val student = studentServe.getByNetId(netid)
             val event = eventServe.get(eventId)
             val pass = student?.id?.let { event?.startDate?.let { it1 ->
-                Pass(MyOrganization.id, it, eventId, it1) } }
+                Pass(MyUser.id, it, eventId, it1, arrayOf<String>()) } }
             if (pass != null) {
                 passServe.create(pass)
+            }
+        }
+    }
+
+    fun guestListPasses(guestList : MutableList<String?>, event : Event) {
+        viewModelScope.launch {
+            try {
+                guestList.forEach {
+                    if (it != null) {
+                        val student = studentServe.getByNetId(it)
+                        if (student != null) {
+                            createPass(event.id, student.netid)
+                        }
+                    }
+                }
+            }
+            catch (exception : Exception) {
+                println("getStudentFromInvited")
             }
         }
     }

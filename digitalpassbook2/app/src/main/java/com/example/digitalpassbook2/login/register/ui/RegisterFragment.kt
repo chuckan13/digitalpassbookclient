@@ -1,7 +1,5 @@
 package com.example.digitalpassbook2.login.register.ui
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -17,9 +15,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.example.digitalpassbook2.R
-import com.example.digitalpassbook2.server.StudentService
-import com.example.digitalpassbook2.student.StudentActivity
-import kotlinx.coroutines.coroutineScope
 
 class RegisterFragment : Fragment() {
 

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="member_passes">
+        <item>Same for all members</item>
+        <item>By graduating class</item>
+        <item>By member</item>
+    </string-array>
+</resources>

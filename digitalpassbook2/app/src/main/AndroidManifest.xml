@@ -24,7 +24,7 @@
         </activity>
         <activity
             android:name=".login.register.ui.RegisterActivity"
-            android:label="@string/register_activity">
+            android:label="@string/title_activity_register">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
 
@@ -34,19 +34,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".student.StudentActivity"
-            android:label="@string/student_activity">
-            <intent-filter>
-                <action android:name="android.intent.action.SEND" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data android:mimeType="text/plain" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".organization.OrganizationActivity"
-            android:label="@string/organization_activity">
+            android:name=".MainActivity"
+            android:label="@string/main_activity">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
 
