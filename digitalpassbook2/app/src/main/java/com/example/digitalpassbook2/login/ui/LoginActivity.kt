@@ -14,10 +14,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
-import com.example.digitalpassbook2.organization.OrganizationActivity
+import com.example.digitalpassbook2.MainActivity
 
 import com.example.digitalpassbook2.R
-import com.example.digitalpassbook2.student.StudentActivity
 
 class LoginActivity : AppCompatActivity() {
 
@@ -58,10 +57,7 @@ class LoginActivity : AppCompatActivity() {
                 showLoginFailed(loginResult.error)
             }
             if (loginResult.success != null) {
-                val intent: Intent = if (loginResult.success.isOrg)
-                    Intent(this, OrganizationActivity::class.java)
-                else
-                    Intent(this, StudentActivity::class.java)
+                val intent: Intent = Intent(this, MainActivity::class.java)
                 intent.putExtra("EXTRA_PARCEL", loginResult.success)
                 startActivity(intent)
                 setResult(Activity.RESULT_OK)

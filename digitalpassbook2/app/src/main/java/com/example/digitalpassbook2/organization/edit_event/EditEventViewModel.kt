@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.digitalpassbook2.organization.MyOrganization
+import com.example.digitalpassbook2.MyUser
 import com.example.digitalpassbook2.server.*
 import kotlinx.coroutines.launch
 
@@ -37,6 +37,18 @@ class EditEventViewModel : ViewModel() {
         }
     }
 
+    fun updateEvent(eventId : Int, localEvent : Event) {
+        viewModelScope.launch {
+            eventServe.update(eventId, localEvent)
+        }
+    }
+
+    fun deleteEvent(eventId : Int) {
+        viewModelScope.launch {
+            eventServe.delete(eventId)
+        }
+    }
+
     private val _studentList = MutableLiveData<List<Student?>>()
     val studentList: LiveData<List<Student?>> = _studentList
 
@@ -51,9 +63,27 @@ class EditEventViewModel : ViewModel() {
             val student = studentServe.getByNetId(netid)
             val event = eventServe.get(eventId)
             val pass = student?.id?.let { event?.startDate?.let { it1 ->
-                Pass(MyOrganization.id, it, eventId, it1) } }
+                Pass(MyUser.id, it, eventId, it1, arrayOf<String>()) } }
             if (pass != null) {
                 passServe.create(pass)
+            }
+        }
+    }
+
+    fun guestListPasses(guestList : MutableList<String?>, event : Event) {
+        viewModelScope.launch {
+            try {
+                guestList.forEach {
+                    if (it != null) {
+                        val student = studentServe.getByNetId(it)
+                        if (student != null) {
+                            createPass(event.id, student.netid)
+                        }
+                    }
+                }
+            }
+            catch (exception : Exception) {
+                println("getStudentFromInvited")
             }
         }
     }

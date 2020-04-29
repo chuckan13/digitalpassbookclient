@@ -11,4 +11,9 @@
         android:icon="@drawable/ic_eventbook"
         android:title="@string/title_eventbook" />
 
+    <item
+        android:id="@+id/navigation_notifications"
+        android:icon="@drawable/ic_notifications"
+        android:title="@string/title_notifications"/>
+
 </menu>

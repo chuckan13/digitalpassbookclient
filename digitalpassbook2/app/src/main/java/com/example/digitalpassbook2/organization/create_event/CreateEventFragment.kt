@@ -3,10 +3,12 @@ package com.example.digitalpassbook2.organization.create_event
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.TimePickerDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -14,13 +16,15 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.Navigation.findNavController
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.example.digitalpassbook2.R
-import com.example.digitalpassbook2.organization.MyOrganization
+import com.example.digitalpassbook2.MyUser
+import com.example.digitalpassbook2.Util
 import com.example.digitalpassbook2.server.Event
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.fragment_create_event.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -96,7 +100,7 @@ class CreateEventFragment : Fragment(), NumberPicker.OnValueChangeListener, Frag
     }
 
     private fun memberListPasses(numberPasses : Int, event : Event) {
-        createEventViewModel.getMemberList(MyOrganization.id)
+        createEventViewModel.getMemberList(MyUser.id)
         createEventViewModel.memberList.observe(context as FragmentActivity, Observer { it1 ->
             val memberList = (it1 ?: return@Observer)
             memberList.forEach {
@@ -114,22 +118,7 @@ class CreateEventFragment : Fragment(), NumberPicker.OnValueChangeListener, Frag
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val navController = findNavController(
-            context as FragmentActivity,
-            R.id.organization_nav_host_fragment
-        )
-        val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
-        (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
-        (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayShowHomeEnabled(true)
-        (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayShowTitleEnabled(false)
-        toolbar.setupWithNavController(navController)
-        setHasOptionsMenu(true)
-        //Listen for changes in the back stack
-        fragmentManager?.addOnBackStackChangedListener(this)
-        //Handle when activity is recreated like on orientation Change
-//        shouldDisplayHomeUp()
+        setNavigation(view)
 
         val eventTitle = view.findViewById<EditText>(R.id.event_title)
         val description = view.findViewById<EditText>(R.id.description)
@@ -198,24 +187,38 @@ class CreateEventFragment : Fragment(), NumberPicker.OnValueChangeListener, Frag
 
         // Submit form
         view.findViewById<Button>(R.id.submit).setOnClickListener {
-            val numberPasses = numberButton.text.toString().toInt()
-            val localEvent = Event(MyOrganization.id, startDateFormatted, endDateFormatted,
-                eventTitle.text.toString(), description.text.toString(), location.text.toString(),
-                transferability.isChecked, viewableOpeningTime.isChecked,
-                viewableClosingDate.isChecked, viewableClosingTime.isChecked, endDateFormatted,
-                publicEvent.isChecked)
+            val dialogClickListener =
+            DialogInterface.OnClickListener { _, which ->
+                when (which) {
+                    DialogInterface.BUTTON_POSITIVE -> {
+                        val numberPasses = numberButton.text.toString().toInt()
+                        val localEvent = Event(
+                            MyUser.id, startDateFormatted, endDateFormatted,
+                            eventTitle.text.toString(), description.text.toString(), location.text.toString(),
+                            transferability.isChecked, viewableOpeningTime.isChecked,
+                            viewableClosingDate.isChecked, viewableClosingTime.isChecked, endDateFormatted,
+                            publicEvent.isChecked, arrayOf())
+                        createEventViewModel.createEvent(localEvent)
+                        createEventViewModel.event.observe(context as FragmentActivity, Observer { it2 ->
+                            val event = (it2 ?: return@Observer)
+                            memberListPasses(numberPasses, event)
+                            createEventViewModel.guestListPasses(guestList, event)
+//                        if (permGuestList.isChecked) {
+//                            TODO()
+//                        }
+                        })
+                        findNavController().navigate(R.id.navigation_home)
+                    }
+                    DialogInterface.BUTTON_NEGATIVE -> {
+                    }
+                }
+            }
 
-            createEventViewModel.createEvent(localEvent)
-            createEventViewModel.event.observe(context as FragmentActivity, Observer { it2 ->
-                val event = (it2 ?: return@Observer)
-                memberListPasses(numberPasses, event)
-                createEventViewModel.guestListPasses(guestList, event)
-//                if (permGuestList.isChecked) {
-//                    TODO()
-//                }
-            })
-
-            findNavController().navigate(R.id.navigation_home)
+            val builder: AlertDialog.Builder = AlertDialog.Builder(context as FragmentActivity, android.R.style.Theme_Holo_Dialog)
+            builder.setMessage("Create this event?")
+            builder.setPositiveButton("Yes", dialogClickListener)
+            builder.setNegativeButton("No", dialogClickListener)
+            builder.show()
         }
     }
 
@@ -231,28 +234,30 @@ class CreateEventFragment : Fragment(), NumberPicker.OnValueChangeListener, Frag
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
-        val navigator = findNavController(
-            context as FragmentActivity,
-            R.id.organization_nav_host_fragment
-        )
-        if (id == R.id.navigation_home) {
-            navigator.navigate(R.id.action_navigation_create_event_to_navigation_home)
-        }
-        else if (id == R.id.navigation_create_event) {
-            navigator.navigate(R.id.navigation_create_event)
-        }
+        Util.onOptionsOrganization(item, context)
         return super.onOptionsItemSelected(item)
     }
 
     override fun onBackStackChanged() {
-//        (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-//        shouldDisplayHomeUp()
     }
-//
-//    private fun shouldDisplayHomeUp() {
-//        //Enable Up button only  if there are entries in the back stack
-//        val canGoBack = fragmentManager?.backStackEntryCount!! > 0
-//        (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayHomeAsUpEnabled(canGoBack)
-//    }
+
+    private fun setNavigation(view : View) {
+        val navController = Navigation.findNavController(
+            context as FragmentActivity,
+            R.id.organization_nav_host_fragment
+        )
+        val appBarConfiguration = AppBarConfiguration(setOf(
+            R.id.navigation_home, R.id.navigation_notifications, R.id.navigation_preferences))
+        val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
+        (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
+        (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayShowHomeEnabled(true)
+        (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayShowTitleEnabled(false)
+        toolbar.setupWithNavController(navController, appBarConfiguration)
+        setHasOptionsMenu(true)
+        fragmentManager?.addOnBackStackChangedListener(this)
+        val navView: BottomNavigationView = view.findViewById(R.id.organization_nav_view)
+        navView.setupWithNavController(navController)
+    }
+
 }

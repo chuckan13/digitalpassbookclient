@@ -2,25 +2,32 @@ package com.example.digitalpassbook2.student.display_pass
 
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextClock
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
+import com.example.digitalpassbook2.MyUser
 import com.example.digitalpassbook2.R
-import com.example.digitalpassbook2.student.MyStudent
+import com.example.digitalpassbook2.Util
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.google.zxing.WriterException
 import com.google.zxing.common.BitMatrix
 
 
-class DisplayPassFragment() : Fragment() {
+class DisplayPassFragment() : Fragment(), FragmentManager.OnBackStackChangedListener {
 
     private lateinit var displayPassViewModel: DisplayPassViewModel
 
@@ -33,6 +40,7 @@ class DisplayPassFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setNavigation(view)
 
         val passId = args.passArg.toInt()
         val clubName = args.clubNameArg
@@ -47,7 +55,7 @@ class DisplayPassFragment() : Fragment() {
 
         orgLogo.setImageResource(resources.getIdentifier(clubLogo, "drawable", context?.packageName))
         orgName.text = args.clubNameArg
-        studentName.text = MyStudent.name
+        studentName.text = MyUser.name
 
         try {
             val qrText = ""+clubName+passId
@@ -60,6 +68,38 @@ class DisplayPassFragment() : Fragment() {
 
         orgQR.visibility = View.VISIBLE
         progress.visibility = View.INVISIBLE
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.student_toolbar_nav_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        Util.onOptionsStudent(item, context)
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackStackChanged() {
+    }
+
+    private fun setNavigation(view : View) {
+        val navController = Navigation.findNavController(
+            context as FragmentActivity,
+            R.id.student_nav_host_fragment
+        )
+        val appBarConfiguration = AppBarConfiguration(setOf(
+            R.id.navigation_passbook, R.id.navigation_eventbook, R.id.navigation_notifications))
+        val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
+        (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
+        (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayShowHomeEnabled(true)
+        (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayShowTitleEnabled(false)
+        toolbar.setupWithNavController(navController, appBarConfiguration)
+        setHasOptionsMenu(true)
+        fragmentManager?.addOnBackStackChangedListener(this)
+        val navView: BottomNavigationView = view.findViewById(R.id.student_nav_view)
+        navView.setupWithNavController(navController)
     }
 
     // code to create QR code image

@@ -26,19 +26,176 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+    <LinearLayout
+        android:id="@+id/date_time_picker_buttons"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="24dp"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/doors_open_text"
+                android:textColor="#FFFFFF"
+                android:fontFamily="serif"
+                android:textSize="18sp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="16dp" >
+            </TextView>
+
+            <Button
+                android:id="@+id/doors_open_date_time_button"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textColor="#FFFFFF"
+                android:fontFamily="serif"
+                android:textSize="16sp"
+                android:layout_width="170dp"
+                android:layout_height="45dp"
+                android:background="@drawable/button_one"
+                android:shadowColor="#000000"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="5"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="16dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/doors_close_text"
+                android:textColor="#FFFFFF"
+                android:fontFamily="serif"
+                android:textSize="18sp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="10dp" >
+            </TextView>
+
+            <Button
+                android:id="@+id/doors_close_date_time_button"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textColor="#FFFFFF"
+                android:fontFamily="serif"
+                android:textSize="16sp"
+                android:layout_width="170dp"
+                android:layout_height="45dp"
+                android:background="@drawable/button_one"
+                android:shadowColor="#000000"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="5"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="10dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/event_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:textColor="#FFFFFF"
+        android:hint="@string/event_title_hint"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:maxLength="30"
+        android:textSize="16sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintTop_toBottomOf="@id/date_time_picker_buttons"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <EditText
+        android:id="@+id/location"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:textColor="#FFFFFF"
+        android:hint="@string/location_hint"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:maxLength="30"
+        android:textSize="16sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintTop_toBottomOf="@id/date_time_picker_buttons"
+        app:layout_constraintStart_toEndOf="@id/event_title"
+        app:layout_constraintLeft_toRightOf="@id/event_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <EditText
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:textColor="#FFFFFF"
+        android:hint="@string/description_hint"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:maxLength="30"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/event_title" />
+
     <AutoCompleteTextView
         android:id="@+id/guest_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:fontFamily="sans-serif"
-        android:hint="@string/guest_name_hint"
+        android:fontFamily="serif"
+        android:textColor="#FFFFFF"
+        android:hint="@string/invite_a_guest"
         android:inputType="text"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/send_button"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@id/description"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="@dimen/activity_horizontal_margin" />
 
     <Button
         android:id="@+id/send_button"
@@ -48,6 +205,136 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@id/description"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin" />
+
+    <GridLayout
+        android:id="@+id/options_grid"
+        app:layout_constraintTop_toBottomOf="@id/guest_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="16dp"
+        android:columnCount="4"
+        android:rowCount="2"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/textview3"
+            android:layout_gravity="start|center"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="2dp"
+            android:text="@string/public_event"
+            android:textSize="16sp"
+            android:fontFamily="serif"
+            android:textColor="#FFFFFF" />
+
+        <Switch
+            android:id="@+id/public_event"
+            android:layout_gravity="start|center"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/textview4"
+            android:layout_gravity="start|center"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="2dp"
+            android:text="@string/opening_visible"
+            android:textSize="16sp"
+            android:fontFamily="serif"
+            android:textColor="#FFFFFF" />
+
+        <Switch
+            android:id="@+id/viewable_opening_time"
+            android:layout_gravity="start|center"
+            android:layout_marginTop="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/textview5"
+            android:layout_gravity="start|center"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="2dp"
+            android:text="@string/closing_date_visible"
+            android:textSize="16sp"
+            android:fontFamily="serif"
+            android:textColor="#FFFFFF" />
+
+        <Switch
+            android:id="@+id/viewable_closing_date"
+            android:layout_gravity="start|center"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/textview6"
+            android:layout_gravity="start|center"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="2dp"
+            android:text="@string/closing_visible"
+            android:textSize="16sp"
+            android:fontFamily="serif"
+            android:textColor="#FFFFFF" />
+
+        <Switch
+            android:id="@+id/viewable_closing_time"
+            android:layout_gravity="start|center"
+            android:layout_marginTop="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </GridLayout>
+
+    <Button
+        android:id="@+id/delete_event"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_two"
+        android:text="@string/delete_event"
+        android:textSize="18sp"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/submit"
+        tools:ignore="InvalidId" />
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/save_changes"
+        android:background="@drawable/button_three"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/organization_nav_view"
+        />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/organization_nav_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:isScrollContainer="false"
+        android:visibility="visible"
+        app:itemIconTint="@android:color/white"
+        app:itemTextColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/organization_bottom_nav_menu"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

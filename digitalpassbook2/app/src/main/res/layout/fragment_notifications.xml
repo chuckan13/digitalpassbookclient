@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".student.send_pass.SendPassFragment">
+    android:label=""
+    tools:context=".notifications.NotificationsFragment" >
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -19,41 +21,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title_send_pass"
+            android:text="@string/title_notifications"
             android:textAppearance="@style/Toolbar.TitleText"
             android:layout_gravity="center"
             android:id="@+id/toolbar_title" />
 
     </androidx.appcompat.widget.Toolbar>
 
-    <AutoCompleteTextView
-        android:id="@+id/guest_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:fontFamily="serif"
-        android:hint="@string/guest_name_hint"
-        android:inputType="text"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        android:layout_margin="@dimen/activity_horizontal_margin"/>
-
-    <Button
-        android:id="@+id/send_button_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/submit_button"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@id/student_nav_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintVertical_bias="0.85" />
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/student_nav_view"
+        android:id="@+id/nav_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:isScrollContainer="false"
@@ -61,10 +37,8 @@
         app:itemIconTint="@android:color/white"
         app:itemTextColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:menu="@menu/student_bottom_nav_menu"
         tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

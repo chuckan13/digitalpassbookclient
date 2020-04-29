@@ -35,4 +35,16 @@
             app:argType="long" />
     </fragment>
 
+    <fragment
+        android:id="@+id/navigation_preferences"
+        android:name="com.example.digitalpassbook2.organization.preferences.PreferencesFragment"
+        tools:layout="@layout/fragment_preferences" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_notifications"
+        android:name="com.example.digitalpassbook2.notifications.NotificationsFragment"
+        tools:layout="@layout/fragment_notifications" >
+    </fragment>
+
 </navigation>

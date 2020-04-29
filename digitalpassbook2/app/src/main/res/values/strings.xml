@@ -29,7 +29,7 @@
     <string name="title_send_pass">Send Pass</string>
     <string name="location_hint">Location</string>
     <string name="invited_hint">Invite</string>
-    <string name="invite_a_guest">Invite by netID</string>
+    <string name="invite_a_guest">Invite by NetID</string>
     <string name="message_hint">Message (optional)</string>
     <string name="guest_name">Guest Name</string>
     <string name="submit_button">Submit</string>
@@ -73,4 +73,13 @@
     <string name="invited_text">Invited</string>
     <string name="spots_text">Spots</string>
     <string name="arrived_text">Arrived</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="delete_event">Delete Event</string>
+    <string name="main_activity">Main Activity</string>
+    <string name="members_section_text">Number of Spots per Member:</string>
+    <string name="passes_per_sophomore">2023:</string>
+    <string name="passes_per_junior">2022:</string>
+    <string name="passes_per_senior">2021:</string>
+    <string name="passes_by_member">Passes by Member:</string>
+    <string name="passes_by_member_desc">Passes by Member</string>
 </resources>
