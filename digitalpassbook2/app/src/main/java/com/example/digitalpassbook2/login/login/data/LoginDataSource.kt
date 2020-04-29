@@ -1,15 +1,10 @@
-package com.example.digitalpassbook2.login.data
+package com.example.digitalpassbook2.login.login.data
 
 import android.util.Log
-import com.example.digitalpassbook2.server.Organization
 import com.example.digitalpassbook2.server.OrganizationService
-import com.example.digitalpassbook2.server.Student
 import com.example.digitalpassbook2.server.StudentService
-import com.example.digitalpassbook2.login.data.model.LoggedInUser
+import com.example.digitalpassbook2.login.login.data.model.LoggedInUser
 import kotlinx.coroutines.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.io.IOException
 
 /**
@@ -49,7 +44,7 @@ class LoginDataSource {
                 coroutineScope {
                     val student = async { studentServe.getByNetId(username) }
                     val user = LoggedInUser(username = username, userId = student.await()!!.id,
-                        name = student.await()!!.name, isOrg = false)
+                        name = student.await()!!.name)
                     Result.Success(user)
                 }
             }

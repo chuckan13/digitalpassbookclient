@@ -2,6 +2,7 @@ package com.example.digitalpassbook2.student.eventbook
 
 import android.os.Bundle
 import android.view.*
+import android.util.Log
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -34,6 +35,7 @@ class EventbookFragment : Fragment(), FragmentManager.OnBackStackChangedListener
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setNavigation(view)
+        Log.d("EventbookFragment", "View Created")
 
         eventsListView = view.findViewById<ListView>(R.id.student_events_list_view)
 

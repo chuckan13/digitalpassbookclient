@@ -1,6 +1,6 @@
-package com.example.digitalpassbook2.login.data
+package com.example.digitalpassbook2.login.login.data
 
-import com.example.digitalpassbook2.login.data.model.LoggedInUser
+import com.example.digitalpassbook2.login.login.data.model.LoggedInUser
 
 /**
  * Class that requests authentication and user information from the remote data source and
