@@ -1,9 +1,9 @@
-package com.example.digitalpassbook2.login.ui
+package com.example.digitalpassbook2.login.login.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.digitalpassbook2.login.data.LoginDataSource
-import com.example.digitalpassbook2.login.data.LoginRepository
+import com.example.digitalpassbook2.login.login.data.LoginDataSource
+import com.example.digitalpassbook2.login.login.data.LoginRepository
 
 /**
  * ViewModel provider factory to instantiate LoginViewModel.

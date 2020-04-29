@@ -7,7 +7,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.digitalpassbook2.R
-import com.example.digitalpassbook2.login.ui.LoggedInUserView
+import com.example.digitalpassbook2.login.login.ui.LoggedInUserView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class StudentActivity : AppCompatActivity() {
@@ -25,7 +25,6 @@ class StudentActivity : AppCompatActivity() {
         actionBar?.setDisplayHomeAsUpEnabled(true)
 
         val navView: BottomNavigationView = findViewById(R.id.student_nav_view)
-
         val navController = findNavController(R.id.student_nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.

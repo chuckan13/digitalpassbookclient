@@ -1,4 +1,4 @@
-package com.example.digitalpassbook2.login.data
+package com.example.digitalpassbook2.login.register.data
 
 /**
  * A generic class that holds a value with its loading status.

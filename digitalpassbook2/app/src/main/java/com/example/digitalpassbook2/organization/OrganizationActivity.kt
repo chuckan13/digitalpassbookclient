@@ -8,7 +8,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.digitalpassbook2.R
-import com.example.digitalpassbook2.login.ui.LoggedInUserView
+import com.example.digitalpassbook2.login.login.ui.LoggedInUserView
 
 class OrganizationActivity : AppCompatActivity() {
 

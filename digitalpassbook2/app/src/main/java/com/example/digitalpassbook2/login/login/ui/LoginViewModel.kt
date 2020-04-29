@@ -1,18 +1,15 @@
-package com.example.digitalpassbook2.login.ui
+package com.example.digitalpassbook2.login.login.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import android.util.Patterns
 import androidx.lifecycle.viewModelScope
-import com.example.digitalpassbook2.login.data.LoginRepository
-import com.example.digitalpassbook2.login.data.Result
+import com.example.digitalpassbook2.login.login.data.LoginRepository
+import com.example.digitalpassbook2.login.login.data.Result
 
 import com.example.digitalpassbook2.R
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import okhttp3.Dispatcher
 
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
 
@@ -54,10 +51,6 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
 
     // A placeholder username validation check
     private fun isUserNameValid(username: String): Boolean {
-        return if (username.contains('@')) {
-            Patterns.EMAIL_ADDRESS.matcher(username).matches()
-        } else {
-            username.isNotBlank()
-        }
+        return username.isNotBlank()
     }
 }

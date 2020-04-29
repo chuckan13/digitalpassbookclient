@@ -1,4 +1,4 @@
-package com.example.digitalpassbook2.login.ui
+package com.example.digitalpassbook2.login.login.ui
 
 import android.app.Activity
 import android.content.Intent
@@ -10,13 +10,11 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ProgressBar
-import android.widget.Toast
+import android.widget.*
 import com.example.digitalpassbook2.organization.OrganizationActivity
 
 import com.example.digitalpassbook2.R
+import com.example.digitalpassbook2.login.register.ui.RegisterActivity
 import com.example.digitalpassbook2.student.StudentActivity
 
 class LoginActivity : AppCompatActivity() {
@@ -31,7 +29,8 @@ class LoginActivity : AppCompatActivity() {
         val username = findViewById<EditText>(R.id.username)
         val password = findViewById<EditText>(R.id.password)
         val login = findViewById<Button>(R.id.login)
-        val loading = findViewById<ProgressBar>(R.id.loading)
+        val register = findViewById<TextView>(R.id.register_action)
+        val loading = findViewById<ProgressBar>(R.id.loading_login)
 
         loginViewModel = ViewModelProviders.of(this, LoginViewModelFactory())
             .get(LoginViewModel::class.java)
@@ -60,8 +59,9 @@ class LoginActivity : AppCompatActivity() {
             if (loginResult.success != null) {
                 val intent: Intent = if (loginResult.success.isOrg)
                     Intent(this, OrganizationActivity::class.java)
-                else
+                else {
                     Intent(this, StudentActivity::class.java)
+                }
                 intent.putExtra("EXTRA_PARCEL", loginResult.success)
                 startActivity(intent)
                 setResult(Activity.RESULT_OK)
@@ -91,12 +91,17 @@ class LoginActivity : AppCompatActivity() {
                 }
                 false
             }
-
-            login.setOnClickListener {
-                loading.visibility = View.VISIBLE
-                loginViewModel.login(username.text.toString(), password.text.toString())
-            }
         }
+
+        login.setOnClickListener {
+            loading.visibility = View.VISIBLE
+            loginViewModel.login(username.text.toString(), password.text.toString())
+        }
+
+        register.setOnClickListener {
+            startActivity(Intent(this, RegisterActivity::class.java))
+        }
+
     }
 
     private fun showLoginFailed(errorString: String?) {
