@@ -2,7 +2,7 @@ package com.example.digitalpassbook2
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.digitalpassbook2.login.ui.LoggedInUserView
+import com.example.digitalpassbook2.login.login.ui.LoggedInUserView
 
 
 class MainActivity : AppCompatActivity() {

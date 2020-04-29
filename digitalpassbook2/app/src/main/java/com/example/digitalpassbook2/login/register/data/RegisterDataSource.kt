@@ -35,7 +35,7 @@ class RegisterDataSource {
     suspend fun register(first: String, last: String, email: String, username: String, password: String): Result<LoggedInUser> {
         return try {
             // register
-            val student = Student(name= "$first $last", email=email, netid=username, password=password, orgId=0)
+            val student = Student(name= "$first $last", email=email, netid=username, password=password, orgId=0, princetonStudent = false, defaultPasses = 0, barCodeNumber = 0, graduatingClass = 0)
             return createStudent(student)
         } catch (e: Throwable) {
             Result.Error(

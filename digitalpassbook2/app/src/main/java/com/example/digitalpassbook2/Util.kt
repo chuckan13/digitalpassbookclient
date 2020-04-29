@@ -5,7 +5,7 @@ import android.content.Intent
 import android.view.MenuItem
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.Navigation
-import com.example.digitalpassbook2.login.ui.LoginActivity
+import com.example.digitalpassbook2.login.login.ui.LoginActivity
 
 object Util {
 

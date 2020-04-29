@@ -21,6 +21,17 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".login.register.ui.RegisterActivity"
+            android:label="@string/title_activity_register">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".MainActivity"
             android:label="@string/main_activity">
             <intent-filter>
