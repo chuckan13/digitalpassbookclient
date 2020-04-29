@@ -1,6 +1,7 @@
 package com.example.digitalpassbook2.student.eventbook
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,6 +29,7 @@ class EventbookFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d("EventbookFragment", "View Created")
 
         eventsListView = view.findViewById<ListView>(R.id.student_events_list_view)
 

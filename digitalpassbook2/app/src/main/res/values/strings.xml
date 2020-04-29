@@ -52,6 +52,8 @@
     <string name="permanent_guest_list_invited">Permanent List</string>
     <string name="transferability_text">Single Transfer</string>
     <string name="date">Date</string>
+    <string name="done">Completed</string>
+    <string name="scan_here">Scan ID</string>
     <string name="time">Time</string>
     <string name="create_event_button">Create Event</string>
     <string name="set_date_time">Set</string>

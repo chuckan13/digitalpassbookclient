@@ -2,6 +2,7 @@ package com.example.digitalpassbook2.login.register.data
 
 import android.util.Log
 import com.example.digitalpassbook2.login.login.data.model.LoggedInUser
+import com.example.digitalpassbook2.login.login.data.Result
 
 /**
  * Class that requests authentication and user information from the remote data source and
