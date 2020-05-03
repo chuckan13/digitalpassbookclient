@@ -72,10 +72,7 @@ class RegisterFragment : Fragment() {
                 submit.isEnabled = true
             }
             if (registerResult.success != null) {
-//                Log.d("Register Fragment", "registerResult.success")
-//                RegisterActivity.globalUserData = registerResult.success
-//                findNavController().navigate(R.id.navigation_scanner)
-                val intent: Intent = Intent(activity, MainActivity::class.java)
+                val intent = Intent(activity, ScanActivity::class.java)
                 intent.putExtra("EXTRA_PARCEL", registerResult.success)
 //                Log.d("RegisterFragment", "start new activity")
                 activity?.startActivity(intent)
