@@ -1,6 +1,7 @@
 package com.example.digitalpassbook2.student.eventbook
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +14,9 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import com.example.digitalpassbook2.R
 import com.example.digitalpassbook2.server.*
+import kotlinx.android.synthetic.main.dialog_event_details.*
 import java.text.SimpleDateFormat
+import kotlinx.android.synthetic.main.dialog_event_details.view.*
 
 class StudentEventListAdapter (private val context: Context,
                                private val studentEventList: MutableList<Event?>) : BaseAdapter() {
@@ -54,11 +57,40 @@ class StudentEventListAdapter (private val context: Context,
             val formatDateStart = dateStart?.substring(5,10)
             eventDate.text = formatDateStart
 
-//            rowView.findViewById<Button>(R.id.view_button).setOnClickListener {
-//                val action =
-//                    EventbookFragmentDirections.actionNavigationEventbookToNavigationViewEvent(event?.id, event?.orgId)
-//                rowView.findNavController().navigate(action)
-//            }
+            // opens the event dialog when the row is clicked
+            rowView.setOnClickListener {
+                // inflate dialog with custom view
+                val eventDetailsDialogView = LayoutInflater.from(context).inflate(R.layout.dialog_event_details, null)
+                // build and show dialog
+                val builder = AlertDialog.Builder(context)
+                    .setView(eventDetailsDialogView)
+                    .setTitle("Event Details")
+                val alertDialog = builder.show()
+
+                // extracts the event detail widgets
+                // val toolbartext = eventDetailsDialogView.findViewbyId(R.id.toolbar_title) as TextView
+//                val doorsOpenTime = eventDetailsDialogView.findViewbyId(R.id.doors_open_date_time) as TextView
+//                val doorsCloseTime = eventDetailsDialogView.findViewbyId(R.id.doors_close_date_time) as TextView
+//                val eventTitle = eventDetailsDialogView.findViewbyId(R.id.event_title) as TextView
+//                val eventLocation = eventDetailsDialogView.findViewbyId(R.id.event_location) as TextView
+//                val eventDescription = eventDetailsDialogView.findViewbyId(R.id.event_description) as TextView
+
+                //val backButton = eventDetailsDialogView.findViewbyId(R.id.back_button) as TextView
+
+                // imports the event details
+                // toolbartext.text = organization.name
+                alertDialog.setTitle(organization.name)
+                eventDetailsDialogView.doors_open_date_time.text = event?.startDate?.substringBefore('T')?.substringAfter('-')
+                eventDetailsDialogView.doors_close_date_time.text = event?.startDate?.substringAfter('T')?.substringBefore('.')?.substringBeforeLast(':')
+                if (event?.name != "") eventDetailsDialogView.event_title.text = event?.name
+                if (event?.location != "") eventDetailsDialogView.event_location.text = event?.location
+                if (event?.description != "") eventDetailsDialogView.event_description.text = event?.description
+
+                // dismiss dialog when back button is clicked
+                alertDialog.back_button.setOnClickListener {
+                    alertDialog.dismiss()
+                }
+            }
 
         })
 

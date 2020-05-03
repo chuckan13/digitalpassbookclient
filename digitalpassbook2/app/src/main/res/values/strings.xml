@@ -108,4 +108,5 @@
     <string name="welcome">"Welcome !"</string>
     <string name="user_created">User Successfully Created</string>
     <string name="menu_refresh">Refresh</string>
+    <string name="Back">Back</string>
 </resources>
