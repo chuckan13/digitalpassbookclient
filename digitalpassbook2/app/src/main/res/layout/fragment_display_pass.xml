@@ -29,15 +29,15 @@
 
     <TextView
         android:id="@+id/user_name"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:visibility="visible"
         android:gravity="center"
+        android:layout_gravity="center_horizontal"
         android:textSize="32sp"
         android:typeface="serif"
         app:layout_constraintBottom_toTopOf="@id/student_nav_view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toRightOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,9 +57,9 @@
         app:layout_constraintVertical_bias="0.05" >
 
         <ImageView
-            android:id="@+id/pass_club_logo"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:id="@+id/pass_club_logo_small"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:gravity="center"
             android:visibility="visible"
             android:contentDescription="@string/club_logo"
@@ -72,16 +72,53 @@
             android:gravity="center"
             android:visibility="visible"
             android:textSize="28sp"
-            android:typeface="serif" />
+            android:typeface="serif"
+            android:textColor="@color/white" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/start_date"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:visibility="visible"
+        android:gravity="center"
+        android:textSize="32sp"
+        android:typeface="serif"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@id/student_nav_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.50" />
+
+    <TextView
+        android:id="@+id/start_time"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:gravity="center"
+        android:textSize="32sp"
+        android:typeface="serif"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@id/student_nav_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.60" />
 
     <TextClock
         android:id="@+id/clock"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:textSize="28sp"
-        android:format12Hour="hh:mm:ss a"
+        android:format12Hour="h:mm:ss a"
         android:visibility="visible"
         android:typeface="serif"
         app:layout_constraintVertical_bias="0.3"
@@ -90,7 +127,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pass_qr" />
+        app:layout_constraintTop_toBottomOf="@id/pass_qr_small" />
 
     <ImageView
         android:id="@+id/pass_qr"
@@ -105,6 +142,53 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintVertical_bias="0.58" />
+
+    <ImageView
+        android:id="@+id/pass_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:visibility="invisible"
+        android:contentDescription="@string/pass_qr"
+        android:src="@android:drawable/ic_menu_gallery"
+        android:alpha="0.5"
+        app:layout_constraintBottom_toTopOf="@id/student_nav_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.87" />
+
+    <ImageView
+        android:id="@+id/pass_qr_small"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:visibility="visible"
+        android:contentDescription="@string/pass_qr"
+        android:src="@android:drawable/ic_menu_gallery"
+        app:layout_constraintBottom_toTopOf="@id/student_nav_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.87" />
+
+    <ImageView
+        android:id="@+id/pass_club_logo"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:gravity="center"
+        android:visibility="visible"
+        android:alpha="0.1"
+        android:contentDescription="@string/club_logo"
+        app:layout_constraintBottom_toTopOf="@id/student_nav_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.58" />
 
     <ProgressBar android:id="@+id/loading_spinner"
