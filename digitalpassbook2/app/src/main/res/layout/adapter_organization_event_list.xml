@@ -3,54 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-<<<<<<< HEAD
-    <ImageView
-        android:id="@+id/event_club_logo"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:paddingLeft="8dp"
-        android:paddingStart="8dp"
-        tools:ignore="RtlSymmetry" />
-
-    <TextView
-        android:id="@+id/event_club_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/event_club_logo"
-        android:layout_toEndOf="@id/event_club_logo"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        tools:ignore="RtlSymmetry" />
-
-    <TextView
-        android:id="@+id/event_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/details_button"
-        android:layout_toStartOf="@id/details_button"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="10dp"
-        android:layout_marginEnd="10dp"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        tools:ignore="RtlSymmetry" />
-
-    <Button
-        android:id="@+id/details_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="5dp"
-        android:layout_marginEnd="5dp"
-        android:text="@string/details_button" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

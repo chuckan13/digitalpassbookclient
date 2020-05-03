@@ -13,14 +13,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
-=======
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
->>>>>>> 02c8677f29804067cf33d5477b048085d212853b
 import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.AppBarConfiguration
@@ -33,9 +27,6 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.google.zxing.WriterException
 import com.google.zxing.common.BitMatrix
-import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 
@@ -94,7 +85,7 @@ class DisplayPassFragment() : Fragment(), FragmentManager.OnBackStackChangedList
         orgLogo.setImageResource(resources.getIdentifier(clubLogo, "drawable", context?.packageName))
         orgLogosmall.setImageResource(resources.getIdentifier(clubLogo, "drawable", context?.packageName))
         // view.setBackgroundColor(resources.getIdentifier(clubLogo, "values", context?.packageName))
-        passImage.setImageResource(R.drawable.ic_passbook_24dp)
+        passImage.setImageResource(R.drawable.ic_passbook)
         orgName.text = args.clubNameArg
         studentName.text = MyUser.name
 
