@@ -1,5 +1,7 @@
 package com.example.digitalpassbook2.login.register.ui
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -14,6 +16,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import com.example.digitalpassbook2.MainActivity
 import com.example.digitalpassbook2.R
 
 class RegisterFragment : Fragment() {
@@ -32,14 +35,15 @@ class RegisterFragment : Fragment() {
         // finding the input fields
         val first = view.findViewById<EditText>(R.id.first_name)
         val last = view.findViewById<EditText>(R.id.last_name)
-        val email = view.findViewById<EditText>(R.id.email)
         val username = view.findViewById<EditText>(R.id.username)
         val password = view.findViewById<EditText>(R.id.password)
+        val classYear = view.findViewById<EditText>(R.id.class_year)
         val loading = view.findViewById<ProgressBar>(R.id.loading_register)
         val submit = view.findViewById<Button>(R.id.submit)
 
         registerViewModel.registerFormState.observe(context as FragmentActivity, Observer {
             val registerState = it ?: return@Observer
+            Log.d("RegisterFragment", "Observing Form State")
             // disable register button unless both username / password is valid
             submit.isEnabled = registerState.isDataValid
             if (registerState.firstError != null) {
@@ -48,8 +52,8 @@ class RegisterFragment : Fragment() {
             if (registerState.lastError != null) {
                 last.error = getString(registerState.lastError)
             }
-            if (registerState.emailError != null) {
-                email.error = getString(registerState.emailError)
+            if (registerState.classYearError != null) {
+                classYear.error = getString(registerState.classYearError)
             }
             if (registerState.usernameError != null) {
                 username.error = getString(registerState.usernameError)
@@ -69,51 +73,56 @@ class RegisterFragment : Fragment() {
             }
             if (registerResult.success != null) {
 //                Log.d("Register Fragment", "registerResult.success")
-                RegisterActivity.globalUserData = registerResult.success
-                findNavController().navigate(R.id.navigation_scanner)
-//                val intent: Intent = Intent(activity, StudentActivity::class.java)
-//                intent.putExtra("EXTRA_PARCEL", registerResult.success)
-////                Log.d("RegisterFragment", "start new activity")
-//                activity?.startActivity(intent)
-//                activity?.setResult(Activity.RESULT_OK)
+//                RegisterActivity.globalUserData = registerResult.success
+//                findNavController().navigate(R.id.navigation_scanner)
+                val intent: Intent = Intent(activity, MainActivity::class.java)
+                intent.putExtra("EXTRA_PARCEL", registerResult.success)
+//                Log.d("RegisterFragment", "start new activity")
+                activity?.startActivity(intent)
+                activity?.setResult(Activity.RESULT_OK)
             }
         })
 
         first.afterTextChanged {
+            Log.d("Register Fragment","First Text Changed")
             registerViewModel.registerDataChanged(
-                first.text.toString(), last.text.toString(), email.text.toString(),
+                first.text.toString(), last.text.toString(), classYear.text.toString(),
                 username.text.toString(), password.text.toString()
             )
         }
 
         last.afterTextChanged {
+            Log.d("Register Fragment","Last Text Changed")
             registerViewModel.registerDataChanged(
-                first.text.toString(), last.text.toString(), email.text.toString(),
-                username.text.toString(), password.text.toString()
-            )
-        }
-
-        email.afterTextChanged {
-            registerViewModel.registerDataChanged(
-                first.text.toString(), last.text.toString(), email.text.toString(),
+                first.text.toString(), last.text.toString(), classYear.text.toString(),
                 username.text.toString(), password.text.toString()
             )
         }
 
         username.afterTextChanged {
+            Log.d("Register Fragment","Username Changed")
             registerViewModel.registerDataChanged(
-                first.text.toString(), last.text.toString(), email.text.toString(),
+                first.text.toString(), last.text.toString(), classYear.text.toString(),
                 username.text.toString(), password.text.toString()
             )
         }
 
         password.apply {
+            Log.d("Register Fragment","Password Changed")
             afterTextChanged {
                 registerViewModel.registerDataChanged(
-                    first.text.toString(), last.text.toString(), email.text.toString(),
+                    first.text.toString(), last.text.toString(), classYear.text.toString(),
                     username.text.toString(), password.text.toString()
                 )
             }
+
+        classYear.afterTextChanged {
+            Log.d("Register Fragment","Class Year Changed")
+            registerViewModel.registerDataChanged(
+                first.text.toString(), last.text.toString(), classYear.text.toString(),
+                username.text.toString(), password.text.toString()
+            )
+        }
 
             setOnEditorActionListener { _, actionId, _ ->
                 when (actionId) {
@@ -121,7 +130,7 @@ class RegisterFragment : Fragment() {
                         registerViewModel.register(
                             first.text.toString(),
                             last.text.toString(),
-                            email.text.toString(),
+                            classYear.text.toString(),
                             username.text.toString(),
                             password.text.toString()
                         )
@@ -130,13 +139,13 @@ class RegisterFragment : Fragment() {
             }
         }
 
-        submit.setOnClickListener {
+       submit.setOnClickListener {
             Log.d("Register Fragment", "submit button clicked")
             loading.visibility = View.VISIBLE
             submit.isEnabled = false
             registerViewModel.register(
                 first.text.toString(), last.text.toString(),
-                email.text.toString(), username.text.toString(), password.text.toString())
+                classYear.text.toString(), username.text.toString(), password.text.toString())
             }
         }
 

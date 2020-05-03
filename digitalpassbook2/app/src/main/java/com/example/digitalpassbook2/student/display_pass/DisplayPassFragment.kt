@@ -1,6 +1,7 @@
 package com.example.digitalpassbook2.student.display_pass
 
 import android.graphics.Bitmap
+import android.os.Build
 import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
@@ -13,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.AppBarConfiguration
@@ -25,13 +27,24 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.google.zxing.WriterException
 import com.google.zxing.common.BitMatrix
+import java.util.*
 
 
 class DisplayPassFragment() : Fragment(), FragmentManager.OnBackStackChangedListener {
 
     private lateinit var displayPassViewModel: DisplayPassViewModel
 
+    private lateinit var startDateFormatted : String
+
     private val args: DisplayPassFragmentArgs by navArgs()
+
+    // function for switching an element's visibility between VISIBLE and INVISIBLE
+    private fun View.toggleVisibility() {
+        visibility = when {
+            (visibility == View.VISIBLE) -> View.INVISIBLE
+            else -> View.VISIBLE
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         displayPassViewModel = ViewModelProviders.of(this).get(DisplayPassViewModel::class.java)
@@ -48,12 +61,31 @@ class DisplayPassFragment() : Fragment(), FragmentManager.OnBackStackChangedList
 
         val progress = view.findViewById(R.id.loading_spinner) as ProgressBar
         val orgLogo = view.findViewById(R.id.pass_club_logo) as ImageView
+        val orgLogosmall = view.findViewById(R.id.pass_club_logo_small) as ImageView
         val orgName = view.findViewById(R.id.pass_club_name) as TextView
         val studentName = view.findViewById(R.id.user_name) as TextView
         val orgQR = view.findViewById(R.id.pass_qr) as ImageView
+        val orgQRsmall = view.findViewById(R.id.pass_qr_small) as ImageView
         val clock = view.findViewById(R.id.clock) as TextClock
+        val startDateDisplay = view.findViewById(R.id.start_date) as TextView
+        val startTimeDisplay = view.findViewById(R.id.start_time) as TextView
+        val passImage = view.findViewById(R.id.pass_image) as ImageView
+
+        // retrieves the pass object associated with this pass, sets date and time TextViews
+        val pass = displayPassViewModel.getPass(passId)
+        displayPassViewModel.pass.observe(context as FragmentActivity, Observer { it ->
+            val pass = (it ?: return@Observer)
+            // extracts date and time strings from pass.date, and sets TextViews in the xml
+            val date = pass.date.substringBefore('T').substringAfter('-')
+            val time = pass.date.substringAfter('T').substringBefore('.').substringBeforeLast(':')
+            startDateDisplay.text = date
+            startTimeDisplay.text = time
+        })
 
         orgLogo.setImageResource(resources.getIdentifier(clubLogo, "drawable", context?.packageName))
+        orgLogosmall.setImageResource(resources.getIdentifier(clubLogo, "drawable", context?.packageName))
+        // view.setBackgroundColor(resources.getIdentifier(clubLogo, "values", context?.packageName))
+        passImage.setImageResource(R.drawable.ic_passbook)
         orgName.text = args.clubNameArg
         studentName.text = MyUser.name
 
@@ -61,12 +93,30 @@ class DisplayPassFragment() : Fragment(), FragmentManager.OnBackStackChangedList
             val qrText = ""+clubName+passId
             val bitmap = textToImageEncode(qrText)
             orgQR.setImageBitmap(bitmap)
+            orgQRsmall.setImageBitmap(bitmap)
         }
         catch (e: WriterException) {
             e.printStackTrace()
         }
 
-        orgQR.visibility = View.VISIBLE
+        orgLogo.setOnClickListener{
+            orgLogo.toggleVisibility()
+            orgQR.toggleVisibility()
+            orgQRsmall.toggleVisibility()
+            passImage.toggleVisibility()
+            startDateDisplay.toggleVisibility()
+            startTimeDisplay.toggleVisibility()
+        }
+
+        orgQR.setOnClickListener{
+            orgLogo.toggleVisibility()
+            orgQR.toggleVisibility()
+            orgQRsmall.toggleVisibility()
+            passImage.toggleVisibility()
+            startDateDisplay.toggleVisibility()
+            startTimeDisplay.toggleVisibility()
+        }
+
         progress.visibility = View.INVISIBLE
     }
 

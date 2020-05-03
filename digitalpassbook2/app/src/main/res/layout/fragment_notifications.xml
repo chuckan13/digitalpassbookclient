@@ -24,6 +24,7 @@
             android:text="@string/title_notifications"
             android:textAppearance="@style/Toolbar.TitleText"
             android:layout_gravity="center"
+            android:typeface="serif"
             android:id="@+id/toolbar_title" />
 
     </androidx.appcompat.widget.Toolbar>

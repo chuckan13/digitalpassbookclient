@@ -14,6 +14,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.example.digitalpassbook2.MainActivity
 import com.example.digitalpassbook2.MyUser
 import com.example.digitalpassbook2.R
 import com.example.digitalpassbook2.Util
@@ -21,7 +23,7 @@ import com.example.digitalpassbook2.server.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
-class PassbookFragment : Fragment(), FragmentManager.OnBackStackChangedListener {
+class PassbookFragment : Fragment() {
 
     private lateinit var passbookViewModel: PassbookViewModel
 
@@ -35,20 +37,37 @@ class PassbookFragment : Fragment(), FragmentManager.OnBackStackChangedListener 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setNavigation(view)
+        val swipeRefreshLayout = view.findViewById<SwipeRefreshLayout>(R.id.swipe_refresh)
         passesListView = view.findViewById<ListView>(R.id.student_passes_list_view)
         val progressBar = view.findViewById<ProgressBar>(R.id.loading_spinner)
 
-        passbookViewModel.getPasses(MyUser.id)
-        passbookViewModel.passes.observe(context as FragmentActivity, Observer { it ->
-            val passList = (it ?: return@Observer) as MutableList<Pass?>
-            var sortedPassList : MutableList<Pass?> = ArrayList()
-            if (passList.isNotEmpty()) {
-                sortedPassList = passList.sortedWith(compareBy {it?.date}) as MutableList<Pass?>
-            }
-            val adapter = activity?.let { StudentPassListAdapter(it, sortedPassList) }
+        if (MainActivity.passUpdateBoolean) {
+            passbookViewModel.getPasses(MyUser.id)
+            passbookViewModel.passes.observe(context as FragmentActivity, Observer { it ->
+                MainActivity.studentPassList = (it ?: return@Observer) as MutableList<Pass?>
+                val adapter = activity?.let { StudentPassListAdapter(it, MainActivity.studentPassList!!) }
+                passesListView.adapter = adapter
+                passesListView.visibility = View.VISIBLE
+                MainActivity.passUpdateBoolean = false
+            })
+        }
+        else {
+            val adapter = activity?.let { StudentPassListAdapter(it, MainActivity.studentPassList!!) }
             passesListView.adapter = adapter
             passesListView.visibility = View.VISIBLE
-        })
+        }
+
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent)
+        swipeRefreshLayout.setOnRefreshListener {
+            passbookViewModel.getPasses(MyUser.id)
+            passbookViewModel.passes.observe(context as FragmentActivity, Observer { it ->
+                MainActivity.studentPassList = (it ?: return@Observer) as MutableList<Pass?>
+                val adapter = activity?.let { StudentPassListAdapter(it, MainActivity.studentPassList!!) }
+                passesListView.adapter = adapter
+                passesListView.visibility = View.VISIBLE
+                swipeRefreshLayout.isRefreshing = false
+            })
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -59,9 +78,6 @@ class PassbookFragment : Fragment(), FragmentManager.OnBackStackChangedListener 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         Util.onOptionsStudent(item, context)
         return super.onOptionsItemSelected(item)
-    }
-
-    override fun onBackStackChanged() {
     }
 
     private fun setNavigation(view : View) {
@@ -78,7 +94,6 @@ class PassbookFragment : Fragment(), FragmentManager.OnBackStackChangedListener 
         (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayShowTitleEnabled(false)
         toolbar.setupWithNavController(navController, appBarConfiguration)
         setHasOptionsMenu(true)
-        fragmentManager?.addOnBackStackChangedListener(this)
         val navView: BottomNavigationView = view.findViewById(R.id.student_nav_view)
         navView.setupWithNavController(navController)
     }

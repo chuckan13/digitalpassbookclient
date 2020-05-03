@@ -1,5 +1,6 @@
 package com.example.digitalpassbook2.student.eventbook
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -32,6 +33,7 @@ class StudentEventListAdapter (private val context: Context,
         return studentEventList[position]?.id?.toLong()!!
     }
 
+    @SuppressLint("ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val studentEventListViewModel = StudentEventListViewModel()
         val rowView = inflater.inflate(R.layout.adapter_student_event_list, parent, false)

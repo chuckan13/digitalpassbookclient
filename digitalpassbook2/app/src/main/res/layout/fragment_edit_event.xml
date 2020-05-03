@@ -22,6 +22,7 @@
             android:text="@string/edit_event"
             android:textAppearance="@style/Toolbar.TitleText"
             android:layout_gravity="center"
+            android:typeface="serif"
             android:id="@+id/toolbar_title" />
 
     </androidx.appcompat.widget.Toolbar>
@@ -52,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/doors_open_text"
                 android:textColor="#FFFFFF"
-                android:fontFamily="serif"
+                android:typeface="serif"
                 android:textSize="18sp"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="16dp" >
@@ -63,7 +64,7 @@
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:textColor="#FFFFFF"
-                android:fontFamily="serif"
+                android:typeface="serif"
                 android:textSize="16sp"
                 android:layout_width="170dp"
                 android:layout_height="45dp"
@@ -101,7 +102,7 @@
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:textColor="#FFFFFF"
-                android:fontFamily="serif"
+                android:typeface="serif"
                 android:textSize="16sp"
                 android:layout_width="170dp"
                 android:layout_height="45dp"
@@ -122,7 +123,7 @@
         android:id="@+id/event_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:fontFamily="serif"
+        android:typeface="serif"
         android:textColor="#FFFFFF"
         android:hint="@string/event_title_hint"
         android:importantForAutofill="no"
@@ -142,7 +143,7 @@
         android:id="@+id/location"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:fontFamily="serif"
+        android:typeface="serif"
         android:textColor="#FFFFFF"
         android:hint="@string/location_hint"
         android:importantForAutofill="no"
@@ -164,7 +165,7 @@
         android:id="@+id/description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="serif"
+        android:typeface="serif"
         android:textColor="#FFFFFF"
         android:hint="@string/description_hint"
         android:importantForAutofill="no"
@@ -185,7 +186,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:fontFamily="serif"
+        android:typeface="serif"
         android:textColor="#FFFFFF"
         android:hint="@string/invite_a_guest"
         android:inputType="text"
@@ -203,6 +204,7 @@
         android:layout_height="wrap_content"
         android:text="@string/send_button"
         android:textSize="18sp"
+        android:typeface="serif"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/description"
@@ -231,7 +233,7 @@
             android:layout_marginEnd="2dp"
             android:text="@string/public_event"
             android:textSize="16sp"
-            android:fontFamily="serif"
+            android:typeface="serif"
             android:textColor="#FFFFFF" />
 
         <Switch
@@ -249,7 +251,7 @@
             android:layout_marginEnd="2dp"
             android:text="@string/opening_visible"
             android:textSize="16sp"
-            android:fontFamily="serif"
+            android:typeface="serif"
             android:textColor="#FFFFFF" />
 
         <Switch
@@ -266,7 +268,7 @@
             android:layout_marginEnd="2dp"
             android:text="@string/closing_date_visible"
             android:textSize="16sp"
-            android:fontFamily="serif"
+            android:typeface="serif"
             android:textColor="#FFFFFF" />
 
         <Switch
@@ -284,7 +286,7 @@
             android:layout_marginEnd="2dp"
             android:text="@string/closing_visible"
             android:textSize="16sp"
-            android:fontFamily="serif"
+            android:typeface="serif"
             android:textColor="#FFFFFF" />
 
         <Switch
@@ -303,6 +305,7 @@
         android:background="@drawable/button_two"
         android:text="@string/delete_event"
         android:textSize="18sp"
+        android:typeface="serif"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -317,6 +320,7 @@
         android:background="@drawable/button_three"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
+        android:typeface="serif"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -28,6 +28,12 @@ interface StudentService {
     @GET("students/netid/{netid}")
     suspend fun getByNetId(@Path ("netid") netid: String): Student?
 
+    @PATCH("students/{id}/barcode")
+    suspend fun updateBarcode(
+        @Path("id") id: Int,
+        @Body barcode: Int
+    ): Student?
+
 //    Update a student by its {id} with @body student
     @PATCH("students/{id}")
     suspend fun update(
