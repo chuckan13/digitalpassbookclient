@@ -9,6 +9,7 @@ import android.widget.*
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
+import com.example.digitalpassbook2.MainActivity
 import com.example.digitalpassbook2.R
 import com.example.digitalpassbook2.server.*
 
@@ -37,22 +38,20 @@ class StudentPassListAdapter (private val context: Context,
         val rowView = inflater.inflate(R.layout.adapter_pass_list, parent, false)
 
         val pass = getItem(position)
-        pass?.orgId?.let { it1 -> studentPassListViewModel.getOrganization(it1) }
-        studentPassListViewModel.organization.observe(context as FragmentActivity, Observer {
-            val organization = it ?: return@Observer
 
             val orgName = rowView.findViewById(R.id.club_name) as TextView
-            orgName.text = organization.name
+            orgName.text = MainActivity.organizationNames[pass!!.orgId]
 
             val orgLogo = rowView.findViewById(R.id.club_logo) as ImageView
-            orgLogo.setImageResource(rowView.resources.getIdentifier(organization.logo, "drawable", context.packageName))
+            orgLogo.setImageResource(rowView.resources.getIdentifier(
+                MainActivity.organizationLogos[pass!!.orgId], "drawable", context.packageName))
 
             val passDate = rowView.findViewById<TextView>(R.id.pass_date)
             passDate.text = pass?.date?.substring(5,10)
 
-            val orgId = organization.id
-            val orgLogoArg = organization.logo
-            val orgNameArg = organization.name
+            val orgId = pass!!.orgId
+            val orgLogoArg = MainActivity.organizationLogos[pass!!.orgId]
+            val orgNameArg = MainActivity.organizationNames[pass!!.orgId]
             val passId = getItemId(position)
 
             rowView.setOnClickListener {
@@ -67,7 +66,6 @@ class StudentPassListAdapter (private val context: Context,
                     PassbookFragmentDirections.actionNavigationPassbookToNavigationSendPass(passId)
                 rowView.findNavController().navigate(action)
             }
-        })
 
         return rowView
     }
