@@ -11,8 +11,6 @@ import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.example.digitalpassbook2.R
 import com.example.digitalpassbook2.server.*
-import org.w3c.dom.Text
-import java.time.format.DateTimeFormatter
 
 
 class StudentPassListAdapter (private val context: Context,
