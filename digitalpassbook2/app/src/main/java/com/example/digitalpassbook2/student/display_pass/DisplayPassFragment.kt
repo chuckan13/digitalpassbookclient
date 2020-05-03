@@ -34,8 +34,6 @@ class DisplayPassFragment() : Fragment(), FragmentManager.OnBackStackChangedList
 
     private lateinit var displayPassViewModel: DisplayPassViewModel
 
-    private lateinit var startDateFormatted : String
-
     private val args: DisplayPassFragmentArgs by navArgs()
 
     // function for switching an element's visibility between VISIBLE and INVISIBLE
@@ -66,13 +64,13 @@ class DisplayPassFragment() : Fragment(), FragmentManager.OnBackStackChangedList
         val studentName = view.findViewById(R.id.user_name) as TextView
         val orgQR = view.findViewById(R.id.pass_qr) as ImageView
         val orgQRsmall = view.findViewById(R.id.pass_qr_small) as ImageView
-        val clock = view.findViewById(R.id.clock) as TextClock
+//        val clock = view.findViewById(R.id.clock) as TextClock
         val startDateDisplay = view.findViewById(R.id.start_date) as TextView
         val startTimeDisplay = view.findViewById(R.id.start_time) as TextView
         val passImage = view.findViewById(R.id.pass_image) as ImageView
 
         // retrieves the pass object associated with this pass, sets date and time TextViews
-        val pass = displayPassViewModel.getPass(passId)
+        displayPassViewModel.getPass(passId)
         displayPassViewModel.pass.observe(context as FragmentActivity, Observer { it ->
             val pass = (it ?: return@Observer)
             // extracts date and time strings from pass.date, and sets TextViews in the xml
@@ -89,6 +87,10 @@ class DisplayPassFragment() : Fragment(), FragmentManager.OnBackStackChangedList
         orgName.text = args.clubNameArg
         studentName.text = MyUser.name
 
+        // this code can be made substantially faster by doing a couple of things
+        // 1. only generate the qr code when the small qr code/logo is clicked
+        // 2. use a generic qr code that is stored in drawables as the small qr code (no one will scan it)
+        // 3. (design idea) we can add a buffering/spinning wheel while the qr code renders... see register fragment lines 69 and 141 for an example
         try {
             val qrText = ""+clubName+passId
             val bitmap = textToImageEncode(qrText)

@@ -1,6 +1,7 @@
 package com.example.digitalpassbook2.student.eventbook
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,9 @@ import androidx.appcompat.app.AlertDialog
 import com.example.digitalpassbook2.MainActivity
 import com.example.digitalpassbook2.R
 import com.example.digitalpassbook2.server.*
+import kotlinx.android.synthetic.main.dialog_event_details.*
+import java.text.SimpleDateFormat
+import kotlinx.android.synthetic.main.dialog_event_details.view.*
 
 class StudentEventListAdapter (private val context: Context,
                                private val studentEventList: MutableList<Event?>) : BaseAdapter() {

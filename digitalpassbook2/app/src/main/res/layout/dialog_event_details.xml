@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:label=""
+    tools:context=".student.eventbook.EventbookFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:title=""
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:typeface="serif"
+            android:textAppearance="@style/Toolbar.TitleText"
+            android:layout_gravity="center"
+            android:id="@+id/toolbar_title" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:id="@+id/date_time_picker_buttons"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="24dp"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/doors_open_text"
+                android:typeface="serif"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="16dp" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/doors_open_date_time"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textColor="#FFFFFF"
+                android:typeface="serif"
+                android:textSize="16sp"
+                android:layout_width="170dp"
+                android:layout_height="45dp"
+                android:background="@drawable/button_one"
+                android:shadowColor="#000000"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="5"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="16dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/doors_close_text"
+                android:textColor="#FFFFFF"
+                android:typeface="serif"
+                android:textSize="18sp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="10dp" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/doors_close_date_time"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textColor="#FFFFFF"
+                android:typeface="serif"
+                android:textSize="16sp"
+                android:layout_width="170dp"
+                android:layout_height="45dp"
+                android:background="@drawable/button_one"
+                android:shadowColor="#000000"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="5"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="10dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/event_title"
+        android:visibility="visible"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:typeface="serif"
+        android:textColor="#FFFFFF"
+        android:hint="@string/event_title_hint"
+        android:importantForAutofill="no"
+        android:maxLength="30"
+        android:textSize="16sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintTop_toBottomOf="@id/date_time_picker_buttons"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <TextView
+        android:id="@+id/event_location"
+        android:visibility="visible"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:typeface="serif"
+        android:textColor="#FFFFFF"
+        android:hint="@string/location_hint"
+        android:importantForAutofill="no"
+        android:maxLength="30"
+        android:textSize="16sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintTop_toBottomOf="@id/date_time_picker_buttons"
+        app:layout_constraintStart_toEndOf="@id/event_title"
+        app:layout_constraintLeft_toRightOf="@id/event_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:id="@+id/event_description"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:typeface="serif"
+        android:textColor="#FFFFFF"
+        android:hint="@string/description_hint"
+        android:importantForAutofill="no"
+        android:maxLength="30"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/event_title" />
+
+    <GridLayout
+        android:id="@+id/options_grid"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@+id/event_description"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="16dp"
+        android:columnCount="4"
+        android:rowCount="4"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/textview7"
+            android:layout_gravity="start|center"
+            android:text="@string/passes_per_member"
+            android:textSize="16sp"
+            android:typeface="serif"
+            android:textColor="#FFFFFF"
+            android:layout_marginEnd="2dp" />
+
+        <Button
+            android:id="@+id/number"
+            android:textColor="#FFFFFF"
+            android:typeface="serif"
+            android:textSize="16sp"
+            android:text="@string/number_passes"
+            android:background="@drawable/button_one"
+            android:shadowColor="#000000"
+            android:layout_gravity="start|center"
+            android:layout_marginEnd="8dp"
+            android:layout_width="35dp"
+            android:layout_height="25dp" />
+
+        <AutoCompleteTextView
+            android:id="@+id/invited"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center"
+            android:layout_marginEnd="2dp"
+            android:typeface="serif"
+            android:hint="@string/invite_a_guest"
+            android:inputType="text"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+
+        <ImageButton
+            android:id="@+id/add_invited"
+            android:layout_gravity="start|center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:typeface="serif"
+            android:contentDescription="@string/add_invited"
+            android:background="#000000"
+            android:src="@drawable/ic_add_icon"/>
+
+        <TextView
+            android:id="@+id/textview1"
+            android:layout_gravity="start|center"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="2dp"
+            android:text="@string/transferability_text"
+            android:textSize="16sp"
+            android:typeface="serif"
+            android:textColor="#FFFFFF" />
+
+        <Switch
+            android:id="@+id/transferability"
+            android:layout_gravity="start|center"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"/>
+
+        <TextView
+            android:id="@+id/textview2"
+            android:layout_gravity="start|center"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="2dp"
+            android:text="@string/permanent_guest_list_invited"
+            android:textSize="16sp"
+            android:typeface="serif"
+            android:textColor="#FFFFFF" />
+
+        <Switch
+            android:id="@+id/perm_guest_list"
+            android:layout_gravity="start|center"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true" />
+
+        <TextView
+            android:id="@+id/textview3"
+            android:layout_gravity="start|center"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="2dp"
+            android:text="@string/public_event"
+            android:textSize="16sp"
+            android:fontFamily="serif"
+            android:textColor="#FFFFFF" />
+
+        <Switch
+            android:id="@+id/public_event"
+            android:layout_gravity="start|center"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/textview4"
+            android:layout_gravity="start|center"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="2dp"
+            android:text="@string/opening_visible"
+            android:textSize="16sp"
+            android:typeface="serif"
+            android:textColor="#FFFFFF" />
+
+        <Switch
+            android:id="@+id/viewable_opening_time"
+            android:layout_gravity="start|center"
+            android:layout_marginTop="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/textview5"
+            android:layout_gravity="start|center"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="2dp"
+            android:text="@string/closing_date_visible"
+            android:textSize="16sp"
+            android:typeface="serif"
+            android:textColor="#FFFFFF" />
+
+        <Switch
+            android:id="@+id/viewable_closing_date"
+            android:layout_gravity="start|center"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/textview6"
+            android:layout_gravity="start|center"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="2dp"
+            android:text="@string/closing_visible"
+            android:textSize="16sp"
+            android:typeface="serif"
+            android:textColor="#FFFFFF" />
+
+        <Switch
+            android:id="@+id/viewable_closing_time"
+            android:layout_gravity="start|center"
+            android:layout_marginTop="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </GridLayout>
+
+    <Button
+        android:id="@+id/option_toggle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_two"
+        android:text="@string/see_more"
+        android:textSize="18sp"
+        android:typeface="serif"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/submit"
+        tools:ignore="InvalidId" />
+
+    <Button
+        android:id="@+id/back_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Back"
+        android:background="@drawable/button_three"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:typeface="serif"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/organization_nav_view"
+        />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/organization_nav_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:isScrollContainer="false"
+        android:visibility="visible"
+        app:itemIconTint="@android:color/white"
+        app:itemTextColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/organization_bottom_nav_menu"
+        tools:visibility="visible" />
+</androidx.constraintlayout.widget.ConstraintLayout>

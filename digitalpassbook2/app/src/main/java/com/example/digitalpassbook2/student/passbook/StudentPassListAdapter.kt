@@ -41,17 +41,18 @@ class StudentPassListAdapter (private val context: Context,
 
         val orgLogo = rowView.findViewById(R.id.club_logo) as ImageView
         orgLogo.setImageResource(rowView.resources.getIdentifier(
-            MainActivity.organizationLogos[pass.orgId], "drawable", context.packageName))
+            MainActivity.organizationLogos[pass!!.orgId], "drawable", context.packageName))
 
         val passDate = rowView.findViewById<TextView>(R.id.pass_date)
-        passDate.text = pass.date.substring(5,10)
+        passDate.text = pass?.date?.substring(5,10)
 
-        val orgId = pass.orgId
-        val orgLogoArg = MainActivity.organizationLogos[pass.orgId]
-        val orgNameArg = MainActivity.organizationNames[pass.orgId]
+        val orgId = pass!!.orgId
+        val orgLogoArg = MainActivity.organizationLogos[pass!!.orgId]
+        val orgNameArg = MainActivity.organizationNames[pass!!.orgId]
         val passId = getItemId(position)
 
-        rowView.setOnClickListener {
+        val passRow = rowView.findViewById<RelativeLayout>(R.id.pass_row)
+        passRow.setOnClickListener {
             val action =
                 PassbookFragmentDirections.
                     actionNavigationPassbookToNavigationDisplayPass(passId, orgId, orgLogoArg, orgNameArg)
