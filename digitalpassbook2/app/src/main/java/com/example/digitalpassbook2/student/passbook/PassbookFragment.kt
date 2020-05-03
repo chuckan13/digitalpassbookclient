@@ -38,8 +38,7 @@ class PassbookFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setNavigation(view)
         val swipeRefreshLayout = view.findViewById<SwipeRefreshLayout>(R.id.swipe_refresh)
-        passesListView = view.findViewById<ListView>(R.id.student_passes_list_view)
-        val progressBar = view.findViewById<ProgressBar>(R.id.loading_spinner)
+        passesListView = view.findViewById(R.id.student_passes_list_view)
 
         if (MainActivity.passUpdateBoolean) {
             passbookViewModel.getPasses(MyUser.id)

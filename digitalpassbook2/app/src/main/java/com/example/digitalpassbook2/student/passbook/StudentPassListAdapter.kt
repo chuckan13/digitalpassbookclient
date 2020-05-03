@@ -6,8 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.example.digitalpassbook2.MainActivity
 import com.example.digitalpassbook2.R
@@ -34,38 +32,37 @@ class StudentPassListAdapter (private val context: Context,
 
     @SuppressLint("ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val studentPassListViewModel = StudentPassListViewModel()
         val rowView = inflater.inflate(R.layout.adapter_pass_list, parent, false)
 
         val pass = getItem(position)
 
-            val orgName = rowView.findViewById(R.id.club_name) as TextView
-            orgName.text = MainActivity.organizationNames[pass!!.orgId]
+        val orgName = rowView.findViewById(R.id.club_name) as TextView
+        orgName.text = MainActivity.organizationNames[pass!!.orgId]
 
-            val orgLogo = rowView.findViewById(R.id.club_logo) as ImageView
-            orgLogo.setImageResource(rowView.resources.getIdentifier(
-                MainActivity.organizationLogos[pass!!.orgId], "drawable", context.packageName))
+        val orgLogo = rowView.findViewById(R.id.club_logo) as ImageView
+        orgLogo.setImageResource(rowView.resources.getIdentifier(
+            MainActivity.organizationLogos[pass.orgId], "drawable", context.packageName))
 
-            val passDate = rowView.findViewById<TextView>(R.id.pass_date)
-            passDate.text = pass?.date?.substring(5,10)
+        val passDate = rowView.findViewById<TextView>(R.id.pass_date)
+        passDate.text = pass.date.substring(5,10)
 
-            val orgId = pass!!.orgId
-            val orgLogoArg = MainActivity.organizationLogos[pass!!.orgId]
-            val orgNameArg = MainActivity.organizationNames[pass!!.orgId]
-            val passId = getItemId(position)
+        val orgId = pass.orgId
+        val orgLogoArg = MainActivity.organizationLogos[pass.orgId]
+        val orgNameArg = MainActivity.organizationNames[pass.orgId]
+        val passId = getItemId(position)
 
-            rowView.setOnClickListener {
-                val action =
-                    PassbookFragmentDirections.
-                        actionNavigationPassbookToNavigationDisplayPass(passId, orgId, orgLogoArg, orgNameArg)
-                rowView.findNavController().navigate(action)
-            }
+        rowView.setOnClickListener {
+            val action =
+                PassbookFragmentDirections.
+                    actionNavigationPassbookToNavigationDisplayPass(passId, orgId, orgLogoArg, orgNameArg)
+            rowView.findNavController().navigate(action)
+        }
 
-            rowView.findViewById<ImageButton>(R.id.send_button).setOnClickListener {
-                val action =
-                    PassbookFragmentDirections.actionNavigationPassbookToNavigationSendPass(passId)
-                rowView.findNavController().navigate(action)
-            }
+        rowView.findViewById<ImageButton>(R.id.send_button).setOnClickListener {
+            val action =
+                PassbookFragmentDirections.actionNavigationPassbookToNavigationSendPass(passId)
+            rowView.findNavController().navigate(action)
+        }
 
         return rowView
     }

@@ -8,11 +8,10 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.Observer
+import androidx.appcompat.app.AlertDialog
+import com.example.digitalpassbook2.MainActivity
 import com.example.digitalpassbook2.R
 import com.example.digitalpassbook2.server.*
-import java.text.SimpleDateFormat
 
 class StudentEventListAdapter (private val context: Context,
                                private val studentEventList: MutableList<Event?>) : BaseAdapter() {
@@ -34,32 +33,28 @@ class StudentEventListAdapter (private val context: Context,
 
     @SuppressLint("ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val studentEventListViewModel = StudentEventListViewModel()
         val rowView = inflater.inflate(R.layout.adapter_pass_list, parent, false)
 
         val event = getItem(position)
-        val clubLogo = rowView.findViewById(R.id.club_logo) as ImageView
-        val clubName = rowView.findViewById(R.id.club_name) as TextView
-        val eventDate = rowView.findViewById(R.id.pass_date) as TextView
 
-        event?.orgId?.let { it1 -> studentEventListViewModel.getOrganization(it1) }
-        studentEventListViewModel.organization.observe(context as FragmentActivity, Observer {
-            val organization = it ?: return@Observer
-            clubLogo.setImageResource(rowView.resources.getIdentifier(organization.logo, "drawable", context.packageName))
-            clubName.text = organization.name
-            val format1 = SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSSZ")
-            val format2 = SimpleDateFormat("MM/dd")
-            val dateStart = event?.startDate
-            val formatDateStart = dateStart?.substring(5,10)
-            eventDate.text = formatDateStart
+        val orgName = rowView.findViewById(R.id.club_name) as TextView
+        orgName.text = MainActivity.organizationNames[event!!.orgId]
 
-            rowView.setOnClickListener {
-//                val action =
-//                    EventbookFragmentDirections.actionNavigationEventbookToNavigationViewEvent(event?.id, event?.orgId)
-//                rowView.findNavController().navigate(action)
-            }
+        val orgLogo = rowView.findViewById(R.id.club_logo) as ImageView
+        orgLogo.setImageResource(rowView.resources.getIdentifier(
+            MainActivity.organizationLogos[event.orgId], "drawable", context.packageName))
 
-        })
+        val passDate = rowView.findViewById<TextView>(R.id.pass_date)
+        passDate.text = event.startDate.substring(5,10)
+
+        val orgId = event.orgId
+        val orgLogoArg = MainActivity.organizationLogos[event.orgId]
+        val orgNameArg = MainActivity.organizationNames[event.orgId]
+        val eventId = getItemId(position)
+
+        rowView.setOnClickListener {
+
+        }
 
         return rowView
     }

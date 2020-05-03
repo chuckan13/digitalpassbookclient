@@ -14,6 +14,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.example.digitalpassbook2.MainActivity
 import com.example.digitalpassbook2.MyUser
 import com.example.digitalpassbook2.R
 import com.example.digitalpassbook2.Util
@@ -21,7 +23,7 @@ import com.example.digitalpassbook2.server.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
-class EventbookFragment : Fragment(), FragmentManager.OnBackStackChangedListener {
+class EventbookFragment : Fragment() {
 
     private lateinit var eventbookViewModel: EventbookViewModel
 
@@ -35,21 +37,36 @@ class EventbookFragment : Fragment(), FragmentManager.OnBackStackChangedListener
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setNavigation(view)
-        Log.d("EventbookFragment", "View Created")
+        val swipeRefreshLayout = view.findViewById<SwipeRefreshLayout>(R.id.swipe_refresh)
+        eventsListView = view.findViewById(R.id.student_events_list_view)
 
-        eventsListView = view.findViewById<ListView>(R.id.student_events_list_view)
-
-        eventbookViewModel.getEventList(MyUser.id)
-        eventbookViewModel.eventList.observe(context as FragmentActivity, Observer { it1 ->
-            val eventList = (it1 ?: return@Observer)
-            var sortedEventList : MutableList<Event?> = ArrayList()
-            if (eventList.isNotEmpty()) {
-                sortedEventList = eventList.sortedWith(compareBy {it?.startDate}) as MutableList<Event?>
-            }
-            val adapter = activity?.let { StudentEventListAdapter(it, sortedEventList) }
+        if (MainActivity.eventUpdateBoolean) {
+            eventbookViewModel.getEventList(MyUser.id)
+            eventbookViewModel.eventList.observe(context as FragmentActivity, Observer { it1 ->
+                MainActivity.studentEventList = (it1 ?: return@Observer)
+                val adapter = activity?.let { StudentEventListAdapter(it, MainActivity.studentEventList!!) }
+                eventsListView.adapter = adapter
+                eventsListView.visibility = View.VISIBLE
+                MainActivity.eventUpdateBoolean = false
+            })
+        }
+        else {
+            val adapter = activity?.let { StudentEventListAdapter(it, MainActivity.studentEventList!!) }
             eventsListView.adapter = adapter
             eventsListView.visibility = View.VISIBLE
-        })
+        }
+
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent)
+        swipeRefreshLayout.setOnRefreshListener {
+            eventbookViewModel.getEventList(MyUser.id)
+            eventbookViewModel.eventList.observe(context as FragmentActivity, Observer { it ->
+                MainActivity.studentEventList = (it ?: return@Observer)
+                val adapter = activity?.let { StudentEventListAdapter(it, MainActivity.studentEventList!!) }
+                eventsListView.adapter = adapter
+                eventsListView.visibility = View.VISIBLE
+                swipeRefreshLayout.isRefreshing = false
+            })
+        }
 
     }
 
@@ -61,9 +78,6 @@ class EventbookFragment : Fragment(), FragmentManager.OnBackStackChangedListener
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         Util.onOptionsStudent(item, context)
         return super.onOptionsItemSelected(item)
-    }
-
-    override fun onBackStackChanged() {
     }
 
     private fun setNavigation(view : View) {
@@ -80,7 +94,6 @@ class EventbookFragment : Fragment(), FragmentManager.OnBackStackChangedListener
         (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayShowTitleEnabled(false)
         toolbar.setupWithNavController(navController, appBarConfiguration)
         setHasOptionsMenu(true)
-        fragmentManager?.addOnBackStackChangedListener(this)
         val navView: BottomNavigationView = view.findViewById(R.id.student_nav_view)
         navView.setupWithNavController(navController)
     }

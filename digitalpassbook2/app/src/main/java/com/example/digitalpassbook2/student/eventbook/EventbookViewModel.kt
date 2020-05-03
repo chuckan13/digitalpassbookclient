@@ -60,8 +60,8 @@ class EventbookViewModel : ViewModel() {
         }
     }
 
-    private val _eventList = MutableLiveData<List<Event?>>()
-    val eventList: LiveData<List<Event?>> = _eventList
+    private val _eventList = MutableLiveData<MutableList<Event?>>()
+    val eventList: LiveData<MutableList<Event?>> = _eventList
 
     fun getEventList(id: Int) {
         viewModelScope.launch {
@@ -84,7 +84,12 @@ class EventbookViewModel : ViewModel() {
                     catch (exception : Exception) {}
                 }
             }
-            _eventList.value = events
+            var sortedEventList: MutableList<Event?> = ArrayList()
+            if (events.isNotEmpty()) {
+                sortedEventList =
+                    events.sortedWith(compareBy { it?.startDate }) as MutableList<Event?>
+            }
+            _eventList.value = sortedEventList
         }
     }
 
