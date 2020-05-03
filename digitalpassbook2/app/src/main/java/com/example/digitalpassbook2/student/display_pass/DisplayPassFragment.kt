@@ -117,6 +117,26 @@ class DisplayPassFragment() : Fragment(), FragmentManager.OnBackStackChangedList
             startTimeDisplay.toggleVisibility()
         }
 
+        orgQRsmall.setOnClickListener{
+            orgLogo.toggleVisibility()
+            orgQR.toggleVisibility()
+            orgQRsmall.toggleVisibility()
+            passImage.toggleVisibility()
+            startDateDisplay.toggleVisibility()
+            startTimeDisplay.toggleVisibility()
+        }
+
+        passImage.setOnClickListener{
+            orgLogo.toggleVisibility()
+            orgQR.toggleVisibility()
+            orgQRsmall.toggleVisibility()
+            passImage.toggleVisibility()
+            startDateDisplay.toggleVisibility()
+            startTimeDisplay.toggleVisibility()
+        }
+
+
+
         progress.visibility = View.INVISIBLE
     }
 
