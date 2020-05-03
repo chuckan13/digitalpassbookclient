@@ -13,20 +13,6 @@ class DisplayPassViewModel : ViewModel() {
         PassService.create()
     }
 
-    private val organizationServe by lazy {
-        OrganizationService.create()
-    }
-
-    private val eventServe by lazy {
-        EventService.create()
-    }
-
-    private val _text = MutableLiveData<String>().apply {
-        value = "Display Pass"
-    }
-
-    val text: LiveData<String> = _text
-
     // gets the pass associated with a specific PassId (why do we need this here?)
     private val _pass = MutableLiveData<Pass>()
     val pass: LiveData<Pass> = _pass
@@ -37,23 +23,23 @@ class DisplayPassViewModel : ViewModel() {
         }
     }
 
-    // gets the organization associated with a specific organization Id
-    private val _organization = MutableLiveData<Organization>()
-    val organization: LiveData<Organization> = _organization
-
-    fun getOrganization(orgId : Int) {
-        viewModelScope.launch {
-            _organization.value = organizationServe.get(orgId)
-        }
-    }
-
-    // gets the event associated with a particular eventId
-    private val _event = MutableLiveData<Event>()
-    val event: LiveData<Event> = _event
-
-    fun getEvent(eventId : Int) {
-        viewModelScope.launch {
-            _event.value = eventServe.get(eventId)
-        }
-    }
+//    // gets the organization associated with a specific organization Id
+//    private val _organization = MutableLiveData<Organization>()
+//    val organization: LiveData<Organization> = _organization
+//
+//    fun getOrganization(orgId : Int) {
+//        viewModelScope.launch {
+//            _organization.value = organizationServe.get(orgId)
+//        }
+//    }
+//
+//    // gets the event associated with a particular eventId
+//    private val _event = MutableLiveData<Event>()
+//    val event: LiveData<Event> = _event
+//
+//    fun getEvent(eventId : Int) {
+//        viewModelScope.launch {
+//            _event.value = eventServe.get(eventId)
+//        }
+//    }
 }
