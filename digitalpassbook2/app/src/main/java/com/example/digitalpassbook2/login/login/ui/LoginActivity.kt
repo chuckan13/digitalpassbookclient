@@ -16,8 +16,11 @@ import com.example.digitalpassbook2.R
 import com.example.digitalpassbook2.login.register.ui.RegisterActivity
 
 class LoginActivity : AppCompatActivity() {
-
     private lateinit var loginViewModel: LoginViewModel
+
+    override fun onBackPressed() {
+        finishAffinity()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,6 +104,7 @@ class LoginActivity : AppCompatActivity() {
     private fun showLoginFailed(errorString: String?) {
         Toast.makeText(applicationContext, errorString, Toast.LENGTH_SHORT).show()
     }
+
 }
 
 /**

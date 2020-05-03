@@ -1,5 +1,6 @@
 package com.example.digitalpassbook2.student.passbook
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,8 @@ import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.example.digitalpassbook2.R
 import com.example.digitalpassbook2.server.*
+import org.w3c.dom.Text
+import java.time.format.DateTimeFormatter
 
 
 class StudentPassListAdapter (private val context: Context,
@@ -30,6 +33,7 @@ class StudentPassListAdapter (private val context: Context,
         return studentPassList[position]?.id?.toLong()!!
     }
 
+    @SuppressLint("ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val studentPassListViewModel = StudentPassListViewModel()
         val rowView = inflater.inflate(R.layout.adapter_pass_list, parent, false)
@@ -45,19 +49,22 @@ class StudentPassListAdapter (private val context: Context,
             val orgLogo = rowView.findViewById(R.id.club_logo) as ImageView
             orgLogo.setImageResource(rowView.resources.getIdentifier(organization.logo, "drawable", context.packageName))
 
+            val passDate = rowView.findViewById<TextView>(R.id.pass_date)
+            passDate.text = pass?.date?.substring(5,10)
+
             val orgId = organization.id
             val orgLogoArg = organization.logo
             val orgNameArg = organization.name
             val passId = getItemId(position)
 
-            rowView.findViewById<Button>(R.id.view_button).setOnClickListener {
+            rowView.setOnClickListener {
                 val action =
                     PassbookFragmentDirections.
                         actionNavigationPassbookToNavigationDisplayPass(passId, orgId, orgLogoArg, orgNameArg)
                 rowView.findNavController().navigate(action)
             }
 
-            rowView.findViewById<Button>(R.id.send_button).setOnClickListener {
+            rowView.findViewById<ImageButton>(R.id.send_button).setOnClickListener {
                 val action =
                     PassbookFragmentDirections.actionNavigationPassbookToNavigationSendPass(passId)
                 rowView.findNavController().navigate(action)

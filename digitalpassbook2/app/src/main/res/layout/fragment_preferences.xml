@@ -24,6 +24,7 @@
             android:text="@string/title_preferences"
             android:textAppearance="@style/Toolbar.TitleText"
             android:layout_gravity="center"
+            android:typeface="serif"
             android:id="@+id/toolbar_title" />
 
     </androidx.appcompat.widget.Toolbar>
@@ -35,7 +36,7 @@
         android:layout_height="wrap_content"
         android:text="@string/members_section_text"
         android:textColor="#FFFFFF"
-        android:fontFamily="serif"
+        android:typeface="serif"
         android:textSize="18sp"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
@@ -71,14 +72,14 @@
             android:layout_gravity="start|center"
             android:text="@string/passes_per_member"
             android:textSize="18sp"
-            android:fontFamily="serif"
+            android:typeface="serif"
             android:textColor="#FFFFFF"
             android:layout_marginEnd="@dimen/activity_horizontal_margin" />
 
         <Button
             android:id="@+id/number_passes_per_member"
             android:textColor="#FFFFFF"
-            android:fontFamily="serif"
+            android:typeface="serif"
             android:textSize="18sp"
             android:text="@string/number_passes"
             android:background="@drawable/button_one"
@@ -107,14 +108,14 @@
             android:layout_gravity="start|center"
             android:text="@string/passes_per_senior"
             android:textSize="18sp"
-            android:fontFamily="serif"
+            android:typeface="serif"
             android:textColor="#FFFFFF"
             android:layout_marginEnd="@dimen/activity_horizontal_margin" />
 
         <Button
             android:id="@+id/number_passes_per_senior"
             android:textColor="#FFFFFF"
-            android:fontFamily="serif"
+            android:typeface="serif"
             android:textSize="18sp"
             android:text="@string/number_passes"
             android:background="@drawable/button_one"
@@ -131,14 +132,14 @@
             android:layout_gravity="start|center"
             android:text="@string/passes_per_junior"
             android:textSize="18sp"
-            android:fontFamily="serif"
+            android:typeface="serif"
             android:textColor="#FFFFFF"
             android:layout_marginEnd="@dimen/activity_horizontal_margin" />
 
         <Button
             android:id="@+id/number_passes_per_junior"
             android:textColor="#FFFFFF"
-            android:fontFamily="serif"
+            android:typeface="serif"
             android:textSize="18sp"
             android:text="@string/number_passes"
             android:background="@drawable/button_one"
@@ -155,14 +156,14 @@
             android:layout_gravity="start|center"
             android:text="@string/passes_per_sophomore"
             android:textSize="18sp"
-            android:fontFamily="serif"
+            android:typeface="serif"
             android:textColor="#FFFFFF"
             android:layout_marginEnd="@dimen/activity_horizontal_margin" />
 
         <Button
             android:id="@+id/number_passes_per_sophomore"
             android:textColor="#FFFFFF"
-            android:fontFamily="serif"
+            android:typeface="serif"
             android:textSize="18sp"
             android:text="@string/number_passes"
             android:background="@drawable/button_one"
@@ -192,7 +193,7 @@
             android:layout_gravity="start|center"
             android:text="@string/passes_by_member"
             android:textSize="18sp"
-            android:fontFamily="serif"
+            android:typeface="serif"
             android:textColor="#FFFFFF"
             android:layout_marginEnd="@dimen/activity_horizontal_margin" />
 
@@ -202,6 +203,7 @@
             android:layout_gravity="start|center"
             android:layout_width="35dp"
             android:layout_height="25dp"
+            android:typeface="serif"
             android:src="@drawable/ic_edit"
             android:background="#000000"
             android:contentDescription="@string/passes_by_member_desc" />

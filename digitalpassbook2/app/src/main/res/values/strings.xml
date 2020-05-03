@@ -17,21 +17,22 @@
     <string name="prompt_username">Username</string>
     <string name="prompt_first_name">First Name</string>
     <string name="prompt_last_name">Last Name</string>
-    <string name="prompt_email">Email Address</string>
+    <string name="prompt_class_year">Class Year</string>
     <string name="prompt_password">Password</string>
     <string name="register_question">Don\'t have an account?</string>
     <string name="action_register">Sign Up.</string>
     <string name="recover_password">Recover Password</string>
     <string name="action_sign_in_short">Log In</string>
     <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_email">Not a valid email</string>
+    <string name="invalid_class_year">Not a valid graduating class year</string>
     <string name="invalid_first_name">First Name cannot be blank</string>
     <string name="invalid_last_name">Last Name cannot be blank</string>
-    <string name="register_invalid_password">Password must have 7 characters</string>
+    <string name="register_invalid_password">Password must be at least 8 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="view_button">View</string>
     <string name="send_button">Send</string>
     <string name="submit_button">Submit</string>
+    <string name="scan_id_prompt">We ask you to scan your PUID or Driver\'s License to make club entry easier.</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -50,9 +51,12 @@
     <string name="details_button">Details</string>
     <string name="title_event_details">Event Details</string>
     <string name="permanent_guest_list_invited">Permanent List</string>
+    <string name="scan_prompt">Your Barcode Number: </string>
     <string name="transferability_text">Single Transfer</string>
+    <string name="incomplete_scan">Incomplete</string>
     <string name="date">Date</string>
-    <string name="done">Completed</string>
+    <string name="skip">Skip</string>
+    <string name="scan_complete">Barcode Scan Complete</string>
     <string name="scan_here">Scan ID</string>
     <string name="time">Time</string>
     <string name="create_event_button">Create Event</string>
@@ -81,6 +85,8 @@
     <string name="title_notifications">Notifications</string>
     <string name="events">Events</string>
     <string name="edit_event">Edit Event</string>
+    <string name="blank_username">Username cannot be blank</string>
+    <string name="contains_whitespace">Username cannot have whitespace characters</string>
     <string name="text_image">Text Image</string>
     <string name="invited_text">Invited</string>
     <string name="spots_text">Spots</string>
@@ -101,4 +107,5 @@
     <string name="action_next">Next</string>
     <string name="welcome">"Welcome !"</string>
     <string name="user_created">User Successfully Created</string>
+    <string name="menu_refresh">Refresh</string>
 </resources>

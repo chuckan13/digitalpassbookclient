@@ -15,7 +15,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="36dp"
         android:layout_marginBottom="32dp"
-        android:enabled="false"
+        android:enabled="true"
         android:text="@string/scan_here"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,24 +24,62 @@
         app:layout_constraintVertical_bias="1" />
 
     <TextView
-        android:id="@+id/done"
+        android:id="@+id/scan_prompt"
+        android:layout_width="220dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="32dp"
+        android:enabled="true"
+        android:gravity="start"
+        android:text="@string/scan_prompt"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.123"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.197" />
+
+    <TextView
+        android:id="@+id/scan_result"
         android:layout_width="120dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="32dp"
+        android:enabled="true"
+        android:gravity="start"
+        android:text="@string/incomplete_scan"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.876"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.197" />
+
+    <TextView
+        android:id="@+id/skip"
+        android:layout_width="60dp"
         android:layout_height="30dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="32dp"
         android:clickable="true"
         android:enabled="true"
         android:focusable="true"
-        android:gravity="start"
-        android:text="@string/done"
+        android:text="@string/skip"
         android:textColor="@color/white"
         android:textSize="18sp"
+        android:gravity="center_horizontal"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintHorizontal_bias="0.954"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0" />
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

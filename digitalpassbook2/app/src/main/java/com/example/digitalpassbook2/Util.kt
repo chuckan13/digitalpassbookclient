@@ -26,6 +26,7 @@ object Util {
         }
         else if (id == R.id.navigation_logout) {
             val intent = Intent(context, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP;
             context.startActivity(intent)
         }
     }

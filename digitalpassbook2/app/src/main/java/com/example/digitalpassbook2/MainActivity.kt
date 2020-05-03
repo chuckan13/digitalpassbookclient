@@ -1,11 +1,19 @@
 package com.example.digitalpassbook2
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.digitalpassbook2.login.login.ui.LoggedInUserView
+import com.example.digitalpassbook2.login.login.ui.LoginActivity
+import com.example.digitalpassbook2.server.Pass
 
 
 class MainActivity : AppCompatActivity() {
+    companion object {
+        var studentPassList: MutableList<Pass?>? = null
+        var passUpdateBoolean = true
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,5 +37,6 @@ class MainActivity : AppCompatActivity() {
         onBackPressed()
         return true
     }
+
 
 }
