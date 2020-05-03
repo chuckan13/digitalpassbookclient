@@ -10,9 +10,7 @@ import com.example.digitalpassbook2.login.login.ui.LoggedInUserView
 import com.example.digitalpassbook2.login.login.ui.LoginActivity
 
 class RegisterActivity : AppCompatActivity() {
-//    companion object {
-//        var globalUserData: LoggedInUserView? = null
-//    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("Register Activity", "post action bar, pre content view")
