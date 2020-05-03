@@ -5,11 +5,32 @@
     android:layout_gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:label=""
     tools:context=".organization.create_event.CreateEventFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:title=""
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_create_event"
+            android:textAppearance="@style/Toolbar.TitleText"
+            android:layout_gravity="center"
+            android:id="@+id/toolbar_title" />
+
+    </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
         android:id="@+id/date_time_picker_buttons"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="fill_parent"
@@ -36,9 +57,7 @@
                 android:fontFamily="serif"
                 android:textSize="18sp"
                 android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp" >
+                android:layout_marginEnd="16dp" >
             </TextView>
 
             <Button
@@ -57,9 +76,7 @@
                 android:shadowRadius="5"
                 android:layout_marginTop="4dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp" />
+                android:layout_marginEnd="16dp" />
 
         </LinearLayout>
 
@@ -78,9 +95,7 @@
                 android:fontFamily="serif"
                 android:textSize="18sp"
                 android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp" >
+                android:layout_marginEnd="10dp" >
             </TextView>
 
             <Button
@@ -99,9 +114,7 @@
                 android:shadowRadius="5"
                 android:layout_marginTop="4dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp" />
+                android:layout_marginEnd="10dp" />
 
         </LinearLayout>
 
@@ -195,8 +208,7 @@
             android:textSize="16sp"
             android:fontFamily="serif"
             android:textColor="#FFFFFF"
-            android:layout_marginEnd="2dp"
-            android:layout_marginRight="2dp" />
+            android:layout_marginEnd="2dp" />
 
         <Button
             android:id="@+id/number"
@@ -208,7 +220,6 @@
             android:shadowColor="#000000"
             android:layout_gravity="start|center"
             android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
             android:layout_width="35dp"
             android:layout_height="25dp" />
 
@@ -218,7 +229,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="start|center"
             android:layout_marginEnd="2dp"
-            android:layout_marginRight="2dp"
             android:fontFamily="serif"
             android:hint="@string/invite_a_guest"
             android:inputType="text"
@@ -239,7 +249,6 @@
             android:layout_gravity="start|center"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="2dp"
-            android:layout_marginRight="2dp"
             android:text="@string/transferability_text"
             android:textSize="16sp"
             android:fontFamily="serif"
@@ -250,7 +259,6 @@
             android:layout_gravity="start|center"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"/>
@@ -260,7 +268,6 @@
             android:layout_gravity="start|center"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="2dp"
-            android:layout_marginRight="2dp"
             android:text="@string/permanent_guest_list_invited"
             android:textSize="16sp"
             android:fontFamily="serif"
@@ -279,7 +286,6 @@
             android:layout_gravity="start|center"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="2dp"
-            android:layout_marginRight="2dp"
             android:text="@string/public_event"
             android:textSize="16sp"
             android:fontFamily="serif"
@@ -290,7 +296,6 @@
             android:layout_gravity="start|center"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -299,7 +304,6 @@
             android:layout_gravity="start|center"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="2dp"
-            android:layout_marginRight="2dp"
             android:text="@string/opening_visible"
             android:textSize="16sp"
             android:fontFamily="serif"
@@ -317,7 +321,6 @@
             android:layout_gravity="start|center"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="2dp"
-            android:layout_marginRight="2dp"
             android:text="@string/closing_date_visible"
             android:textSize="16sp"
             android:fontFamily="serif"
@@ -328,7 +331,6 @@
             android:layout_gravity="start|center"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -337,7 +339,6 @@
             android:layout_gravity="start|center"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="2dp"
-            android:layout_marginRight="2dp"
             android:text="@string/closing_visible"
             android:textSize="16sp"
             android:fontFamily="serif"
@@ -388,7 +389,6 @@
         app:itemIconTint="@android:color/white"
         app:itemTextColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:menu="@menu/organization_bottom_nav_menu"

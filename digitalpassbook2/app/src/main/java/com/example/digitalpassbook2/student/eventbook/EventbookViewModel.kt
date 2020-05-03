@@ -65,8 +65,11 @@ class EventbookViewModel : ViewModel() {
 
     fun getEventList(id: Int) {
         viewModelScope.launch {
+            Log.d("EventbookViewModel", "getStudent by ID")
             val student = studentServe.get(id)
+            Log.d("EventbookViewModel", "getEvents by orgID")
             val events = student?.orgId?.let { organizationServe.getEvents(it) } as MutableList<Event?>
+            Log.d("EventbookViewModel", "getPasses by user ID")
             val passList = passServe.getByUserId(id)
             passList?.forEach {
                 if (it != null) {

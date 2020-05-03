@@ -1,30 +1,59 @@
 package com.example.digitalpassbook2.student.display_pass
 
 import android.graphics.Bitmap
+import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextClock
 import android.widget.TextView
+<<<<<<< HEAD
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.Observer
+=======
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
+>>>>>>> 02c8677f29804067cf33d5477b048085d212853b
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
+import com.example.digitalpassbook2.MyUser
 import com.example.digitalpassbook2.R
-import com.example.digitalpassbook2.student.MyStudent
+import com.example.digitalpassbook2.Util
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.google.zxing.WriterException
 import com.google.zxing.common.BitMatrix
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 
-class DisplayPassFragment() : Fragment() {
+class DisplayPassFragment() : Fragment(), FragmentManager.OnBackStackChangedListener {
 
     private lateinit var displayPassViewModel: DisplayPassViewModel
 
+    private lateinit var startDateFormatted : String
+
     private val args: DisplayPassFragmentArgs by navArgs()
+
+    // function for switching an element's visibility between VISIBLE and INVISIBLE
+    private fun View.toggleVisibility() {
+        visibility = when {
+            (visibility == View.VISIBLE) -> View.INVISIBLE
+            else -> View.VISIBLE
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         displayPassViewModel = ViewModelProviders.of(this).get(DisplayPassViewModel::class.java)
@@ -33,6 +62,7 @@ class DisplayPassFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setNavigation(view)
 
         val passId = args.passArg.toInt()
         val clubName = args.clubNameArg
@@ -40,26 +70,95 @@ class DisplayPassFragment() : Fragment() {
 
         val progress = view.findViewById(R.id.loading_spinner) as ProgressBar
         val orgLogo = view.findViewById(R.id.pass_club_logo) as ImageView
+        val orgLogosmall = view.findViewById(R.id.pass_club_logo_small) as ImageView
         val orgName = view.findViewById(R.id.pass_club_name) as TextView
         val studentName = view.findViewById(R.id.user_name) as TextView
         val orgQR = view.findViewById(R.id.pass_qr) as ImageView
+        val orgQRsmall = view.findViewById(R.id.pass_qr_small) as ImageView
         val clock = view.findViewById(R.id.clock) as TextClock
+        val startDateDisplay = view.findViewById(R.id.start_date) as TextView
+        val startTimeDisplay = view.findViewById(R.id.start_time) as TextView
+        val passImage = view.findViewById(R.id.pass_image) as ImageView
+
+        // retrieves the pass object associated with this pass, sets date and time TextViews
+        val pass = displayPassViewModel.getPass(passId)
+        displayPassViewModel.pass.observe(context as FragmentActivity, Observer { it ->
+            val pass = (it ?: return@Observer)
+            // extracts date and time strings from pass.date, and sets TextViews in the xml
+            val date = pass.date.substringBefore('T').substringAfter('-')
+            val time = pass.date.substringAfter('T').substringBefore('.').substringBeforeLast(':')
+            startDateDisplay.text = date
+            startTimeDisplay.text = time
+        })
 
         orgLogo.setImageResource(resources.getIdentifier(clubLogo, "drawable", context?.packageName))
+        orgLogosmall.setImageResource(resources.getIdentifier(clubLogo, "drawable", context?.packageName))
+        // view.setBackgroundColor(resources.getIdentifier(clubLogo, "values", context?.packageName))
+        passImage.setImageResource(R.drawable.ic_passbook_24dp)
         orgName.text = args.clubNameArg
-        studentName.text = MyStudent.name
+        studentName.text = MyUser.name
 
         try {
             val qrText = ""+clubName+passId
             val bitmap = textToImageEncode(qrText)
             orgQR.setImageBitmap(bitmap)
+            orgQRsmall.setImageBitmap(bitmap)
         }
         catch (e: WriterException) {
             e.printStackTrace()
         }
 
-        orgQR.visibility = View.VISIBLE
+        orgLogo.setOnClickListener{
+            orgLogo.toggleVisibility()
+            orgQR.toggleVisibility()
+            orgQRsmall.toggleVisibility()
+            passImage.toggleVisibility()
+            startDateDisplay.toggleVisibility()
+            startTimeDisplay.toggleVisibility()
+        }
+
+        orgQR.setOnClickListener{
+            orgLogo.toggleVisibility()
+            orgQR.toggleVisibility()
+            orgQRsmall.toggleVisibility()
+            passImage.toggleVisibility()
+            startDateDisplay.toggleVisibility()
+            startTimeDisplay.toggleVisibility()
+        }
+
         progress.visibility = View.INVISIBLE
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.student_toolbar_nav_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        Util.onOptionsStudent(item, context)
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackStackChanged() {
+    }
+
+    private fun setNavigation(view : View) {
+        val navController = Navigation.findNavController(
+            context as FragmentActivity,
+            R.id.student_nav_host_fragment
+        )
+        val appBarConfiguration = AppBarConfiguration(setOf(
+            R.id.navigation_passbook, R.id.navigation_eventbook, R.id.navigation_notifications))
+        val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
+        (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
+        (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayShowHomeEnabled(true)
+        (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayShowTitleEnabled(false)
+        toolbar.setupWithNavController(navController, appBarConfiguration)
+        setHasOptionsMenu(true)
+        fragmentManager?.addOnBackStackChangedListener(this)
+        val navView: BottomNavigationView = view.findViewById(R.id.student_nav_view)
+        navView.setupWithNavController(navController)
     }
 
     // code to create QR code image

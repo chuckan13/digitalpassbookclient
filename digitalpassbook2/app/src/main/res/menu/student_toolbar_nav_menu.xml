@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:All4One="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/algo"
+        android:icon="@drawable/ic_menu"
+        All4One:showAsAction="always"
+        android:title="@string/menu_title">
+        <menu>
+            <item
+                android:id="@+id/navigation_passbook"
+                android:icon="@drawable/ic_passbook"
+                android:title="@string/title_passbook" />
+
+            <item
+                android:id="@+id/navigation_eventbook"
+                android:icon="@drawable/ic_eventbook"
+                android:title="@string/title_eventbook" />
+
+            <item
+                android:id="@+id/navigation_notifications"
+                android:icon="@drawable/ic_notifications"
+                android:title="@string/title_notifications"/>
+
+            <item
+                android:id="@+id/navigation_logout"
+                android:icon="@drawable/ic_logout"
+                android:title="@string/title_logout" />
+        </menu>
+    </item>
+</menu>

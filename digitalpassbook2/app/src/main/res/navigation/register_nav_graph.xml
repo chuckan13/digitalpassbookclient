@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/register_nav_graph"
+    app:startDestination="@+id/navigation_register_page">
+
+    <fragment
+        android:id="@+id/navigation_register_page"
+        android:name="com.example.digitalpassbook2.login.register.ui.RegisterFragment"
+        android:label="@string/title_create_account"
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_navigation_register_to_navigation_scanner"
+            app:destination="@id/navigation_scanner" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_scanner"
+        android:name="com.example.digitalpassbook2.login.register.ui.ScannerFragment"
+        android:label="@string/title_scanner"
+        tools:layout="@layout/fragment_scanner">
+        <action
+            android:id="@+id/action_navigation_scanner_to_navigation_register"
+            app:destination="@id/navigation_register_page" />
+    </fragment>
+
+<!--    <fragment-->
+<!--        android:id="@+id/navigation_loading"-->
+<!--        tools:layout="@layout/activity_splash">-->
+<!--    </fragment>-->
+
+</navigation>

@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".login.ui.LoginActivity"
+            android:name=".login.login.ui.LoginActivity"
             android:label="@string/title_activity_login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,8 +21,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".student.StudentActivity"
-            android:label="@string/student_activity">
+            android:name=".login.register.ui.RegisterActivity"
+            android:label="@string/title_activity_register">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
 
@@ -32,8 +32,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".organization.OrganizationActivity"
-            android:label="@string/organization_activity">
+            android:name=".MainActivity"
+            android:label="@string/main_activity">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
 
