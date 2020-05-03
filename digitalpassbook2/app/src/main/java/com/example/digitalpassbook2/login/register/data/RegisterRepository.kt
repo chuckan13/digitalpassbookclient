@@ -14,10 +14,10 @@ class RegisterRepository(val dataSource: RegisterDataSource) {
     suspend fun register(
         first: String,
         last: String,
-        email: String,
+        classYear: String,
         username: String,
         password: String): Result<LoggedInUser> {
         Log.d("RegisterRepository", "register function called")
-        return dataSource.register(first, last, email, username, password)
+        return dataSource.register(first, last, classYear, username, password)
     }
 }

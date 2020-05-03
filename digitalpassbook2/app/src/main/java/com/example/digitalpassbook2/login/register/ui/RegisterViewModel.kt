@@ -27,14 +27,14 @@ class RegisterViewModel(private val registerRepository: RegisterRepository) : Vi
         StudentService.create()
     }
 
-    fun register(first: String, last: String, email: String, username: String, password: String) {
+    fun register(first: String, last: String, classYear: String, username: String, password: String) {
         // can be launched in a separate asynchronous job
         Log.d("RegisterViewModel", "register functionc called")
         viewModelScope.launch() {
             val exists = async {studentServe.checkStudentExist(username)}
             if (!exists.await()!!) {
                 Log.d("Seeing background runs", "Idk what frag change does")
-                val result = registerRepository.register(first, last, email, username, password)
+                val result = registerRepository.register(first, last, classYear, username, password)
 
                 if (result is Result.Success) {
                     _registerResult.value =
@@ -58,29 +58,42 @@ class RegisterViewModel(private val registerRepository: RegisterRepository) : Vi
         }
     }
 
-    fun registerDataChanged(first: String, last: String, email: String, username: String, password: String) {
-        if (!isUserNameValid(username)) {
-            _registerForm.value = RegisterFormState(usernameError = R.string.invalid_username)
-        }
-        else if (!isEmailValid(email)) {
-            _registerForm.value = RegisterFormState(emailError = R.string.invalid_email)
-        }
-        else if (!isNameValid(first)) {
+    fun registerDataChanged(first: String, last: String, classYear: String, username: String, password: String) {
+        if (!isNameValid(first)) {
+            Log.d("Register View Model", "Invalid First")
             _registerForm.value = RegisterFormState(firstError = R.string.invalid_first_name)
         }
         else if (!isNameValid(last)) {
+            Log.d("Register View Model", "Invalid Last")
             _registerForm.value = RegisterFormState(lastError = R.string.invalid_last_name)
         }
         else if (!isPasswordValid(password)) {
+            Log.d("Register View Model", "Invalid Password")
             _registerForm.value = RegisterFormState(passwordError = R.string.register_invalid_password)
         }
+        else if (username.isBlank()) {
+            Log.d("Register View Model", "Invalid Username")
+            _registerForm.value = RegisterFormState(usernameError = R.string.blank_username)
+        }
+        else if (username.contains(" ")) {
+            _registerForm.value = RegisterFormState(usernameError = R.string.contains_whitespace)
+        }
+        else if (!isClassYearValid(classYear)) {
+            Log.d("Register View Model", "Invalid Class Year")
+            _registerForm.value = RegisterFormState(classYearError = R.string.invalid_class_year)
+        }
         else {
+            Log.d("Register View Model", "Valid Data")
             _registerForm.value = RegisterFormState(isDataValid = true)
         }
     }
 
-    private fun isEmailValid(email: String): Boolean {
-        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    private fun isClassYearValid(classYear: String): Boolean {
+        return if (classYear.isNotEmpty()) {
+            val classYearNumeric: Int = Integer.parseInt(classYear)
+            classYearNumeric in 2020..2029
+        } else
+            false
     }
 
     private fun isNameValid(name: String): Boolean {
@@ -88,13 +101,7 @@ class RegisterViewModel(private val registerRepository: RegisterRepository) : Vi
     }
 
     private fun isPasswordValid(password: String): Boolean {
-        return password.length > 7
-    }
-
-    // A placeholder username validation check
-    private fun isUserNameValid(username: String): Boolean {
-        return username.isNotBlank()
-        // add uniqueness check as well
+        return password.length >= 8
     }
 
 }

@@ -75,70 +75,71 @@
         <GridLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="-10dp"
+            android:layout_gravity="center"
             android:layout_marginBottom="8dp"
             android:columnCount="3"
-            android:rowCount="2"
-            android:layout_gravity="center"
-            >
+            android:rowCount="2">
 
-            <include layout="@layout/text_image"
+            <include
                 android:id="@+id/number_invited"
-                android:gravity="center"
+                layout="@layout/text_image"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                android:layout_height="80dp"
-                android:layout_width="80dp" />
+                android:gravity="center" />
 
-            <include layout="@layout/text_image"
+            <include
                 android:id="@+id/number_spots"
-                android:gravity="center"
+                layout="@layout/text_image"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                android:layout_height="80dp"
-                android:layout_width="80dp"
-                />
+                android:gravity="center" />
 
-            <include layout="@layout/text_image"
+            <include
                 android:id="@+id/number_arrived"
-                android:gravity="center"
+                layout="@layout/text_image"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                android:layout_height="80dp"
-                android:layout_width="80dp"
-                />
+                android:gravity="center" />
 
             <TextView
                 android:id="@+id/number_invited_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:text="@string/invited_text"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:typeface="serif"
-                android:text="@string/invited_text" />
+                android:typeface="serif" />
 
             <TextView
                 android:id="@+id/number_spots_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:text="@string/spots_text"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:typeface="serif"
-                android:text="@string/spots_text" />
+                android:typeface="serif" />
 
             <TextView
                 android:id="@+id/number_arrived_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:text="@string/arrived_text"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:typeface="serif"
-                android:text="@string/arrived_text" />
+                android:typeface="serif" />
 
         </GridLayout>
 

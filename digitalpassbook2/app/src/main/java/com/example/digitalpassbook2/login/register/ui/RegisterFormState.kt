@@ -6,7 +6,7 @@ package com.example.digitalpassbook2.login.register.ui
 data class RegisterFormState(
     val firstError: Int? = null,
     val lastError: Int? = null,
-    val emailError: Int? = null,
+    val classYearError: Int? = null,
     val usernameError: Int? = null,
     val passwordError: Int? = null,
     val isDataValid: Boolean = false

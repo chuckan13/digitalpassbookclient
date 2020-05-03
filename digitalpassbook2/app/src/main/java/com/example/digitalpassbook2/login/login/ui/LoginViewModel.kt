@@ -1,5 +1,6 @@
 package com.example.digitalpassbook2.login.login.ui
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -42,9 +43,14 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     }
 
     fun loginDataChanged(username: String) {
-        if (!isUserNameValid(username)) {
-            _loginForm.value = LoginFormState(usernameError = R.string.invalid_username)
-        } else {
+        if (username.isBlank()) {
+            Log.d("Register View Model", "Invalid Username")
+            _loginForm.value = LoginFormState(usernameError = R.string.blank_username)
+        }
+        else if (username.contains(" ")) {
+            _loginForm.value = LoginFormState(usernameError = R.string.contains_whitespace)
+        }
+        else {
             _loginForm.value = LoginFormState(isDataValid = true)
         }
     }
@@ -53,4 +59,5 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     private fun isUserNameValid(username: String): Boolean {
         return username.isNotBlank()
     }
+
 }
