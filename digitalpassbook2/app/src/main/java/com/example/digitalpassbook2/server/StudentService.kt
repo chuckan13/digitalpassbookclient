@@ -31,7 +31,7 @@ interface StudentService {
     @PATCH("students/{id}/barcode")
     suspend fun updateBarcode(
         @Path("id") id: Int,
-        @Body barcode: Int
+        @Body barcode: String
     ): Student?
 
 //    Update a student by its {id} with @body student
