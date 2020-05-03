@@ -2,10 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="140dp">
+    android:layout_height="40dp">
 
     <ImageView
-        android:id="@+id/club_logo"
+        android:id="@+id/event_club_logo"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_alignParentStart ="true"
@@ -16,10 +16,10 @@
         android:contentDescription="@string/club_logo" />
 
     <TextView
-        android:id="@+id/club_name"
+        android:id="@+id/event_club_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/club_logo"
+        android:layout_toEndOf="@id/event_club_logo"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:gravity="center_vertical"
