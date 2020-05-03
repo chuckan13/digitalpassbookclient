@@ -8,11 +8,11 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextClock
 import android.widget.TextView
-<<<<<<< HEAD
-import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.Observer
+import androidx.fragment.app.FragmentManager
 =======
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
