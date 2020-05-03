@@ -56,7 +56,7 @@
     <string name="incomplete_scan">Incomplete</string>
     <string name="date">Date</string>
     <string name="skip">Skip</string>
-    <string name="scan_complete">Barcode Scan Complete</string>
+    <string name="scan_complete">Finish</string>
     <string name="scan_here">Scan ID</string>
     <string name="time">Time</string>
     <string name="create_event_button">Create Event</string>
@@ -108,4 +108,6 @@
     <string name="welcome">"Welcome !"</string>
     <string name="user_created">User Successfully Created</string>
     <string name="menu_refresh">Refresh</string>
+    <string name="scan_cancelled">Cancelled</string>
+    <string name="title_activity_scan">Scanner</string>
 </resources>

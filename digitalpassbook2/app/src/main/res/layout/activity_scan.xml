@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".login.register.ui.ScannerFragment">
+    tools:context=".login.register.ui.ScanActivity">
 
     <Button
         android:id="@+id/scanner_button"
@@ -62,7 +62,7 @@
         app:layout_constraintVertical_bias="0.197" />
 
     <TextView
-        android:id="@+id/skip"
+        android:id="@+id/continue_button"
         android:layout_width="60dp"
         android:layout_height="30dp"
         android:layout_marginTop="16dp"
