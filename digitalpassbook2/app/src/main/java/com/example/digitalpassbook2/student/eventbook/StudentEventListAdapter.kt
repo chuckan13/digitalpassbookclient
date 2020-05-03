@@ -35,12 +35,12 @@ class StudentEventListAdapter (private val context: Context,
     @SuppressLint("ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val studentEventListViewModel = StudentEventListViewModel()
-        val rowView = inflater.inflate(R.layout.adapter_student_event_list, parent, false)
+        val rowView = inflater.inflate(R.layout.adapter_pass_list, parent, false)
 
         val event = getItem(position)
-        val clubLogo = rowView.findViewById(R.id.event_club_logo) as ImageView
-        val clubName = rowView.findViewById(R.id.event_club_name) as TextView
-        val eventDate = rowView.findViewById(R.id.event_date) as TextView
+        val clubLogo = rowView.findViewById(R.id.club_logo) as ImageView
+        val clubName = rowView.findViewById(R.id.club_name) as TextView
+        val eventDate = rowView.findViewById(R.id.pass_date) as TextView
 
         event?.orgId?.let { it1 -> studentEventListViewModel.getOrganization(it1) }
         studentEventListViewModel.organization.observe(context as FragmentActivity, Observer {
@@ -53,11 +53,11 @@ class StudentEventListAdapter (private val context: Context,
             val formatDateStart = dateStart?.substring(5,10)
             eventDate.text = formatDateStart
 
-//            rowView.findViewById<Button>(R.id.view_button).setOnClickListener {
+            rowView.setOnClickListener {
 //                val action =
 //                    EventbookFragmentDirections.actionNavigationEventbookToNavigationViewEvent(event?.id, event?.orgId)
 //                rowView.findNavController().navigate(action)
-//            }
+            }
 
         })
 
