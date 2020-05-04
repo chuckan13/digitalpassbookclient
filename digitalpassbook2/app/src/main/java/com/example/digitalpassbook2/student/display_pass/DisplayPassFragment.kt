@@ -30,7 +30,7 @@ import com.google.zxing.common.BitMatrix
 import java.util.*
 
 
-class DisplayPassFragment() : Fragment(), FragmentManager.OnBackStackChangedListener {
+class DisplayPassFragment() : Fragment() {
 
     private lateinit var displayPassViewModel: DisplayPassViewModel
 
@@ -152,15 +152,12 @@ class DisplayPassFragment() : Fragment(), FragmentManager.OnBackStackChangedList
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onBackStackChanged() {
-    }
-
     private fun setNavigation(view : View) {
         val navController = Navigation.findNavController(
             context as FragmentActivity,
             R.id.student_nav_host_fragment
         )
-        val appBarConfiguration = AppBarConfiguration(setOf(R.id.navigation_eventbook, R.id.navigation_notifications))
+        val appBarConfiguration = AppBarConfiguration(setOf(R.id.navigation_eventbook))
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
         (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
         (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -168,7 +165,6 @@ class DisplayPassFragment() : Fragment(), FragmentManager.OnBackStackChangedList
         (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayShowTitleEnabled(false)
         toolbar.setupWithNavController(navController, appBarConfiguration)
         setHasOptionsMenu(true)
-        fragmentManager?.addOnBackStackChangedListener(this)
         val navView: BottomNavigationView = view.findViewById(R.id.student_nav_view)
         navView.setupWithNavController(navController)
     }

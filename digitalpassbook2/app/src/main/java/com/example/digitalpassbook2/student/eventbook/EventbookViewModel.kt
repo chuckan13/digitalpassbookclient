@@ -68,9 +68,11 @@ class EventbookViewModel : ViewModel() {
             Log.d("EventbookViewModel", "getStudent by ID")
             val student = studentServe.get(id)
             Log.d("EventbookViewModel", "getEvents by orgID")
+            // Member Events
             val events = student?.orgId?.let { organizationServe.getEvents(it) } as MutableList<Event?>
             Log.d("EventbookViewModel", "getPasses by user ID")
             val passList = passServe.getByUserId(id)
+            // Guest Events
             passList?.forEach {
                 if (it != null) {
                     try {
@@ -78,6 +80,20 @@ class EventbookViewModel : ViewModel() {
                         if (guestEvent != null) {
                             if (guestEvent.orgId != student.orgId && guestEvent !in events) {
                                 events.add(guestEvent)
+                            }
+                        }
+                    }
+                    catch (exception : Exception) {}
+                }
+            }
+            // Bouncer Events
+            if (student.bouncingEvents != null) {
+                student.bouncingEvents!!.forEach {
+                    try {
+                        val bouncerEvent = eventServe.get(it)
+                        if (bouncerEvent != null) {
+                            if (bouncerEvent !in events) {
+                                events.add(bouncerEvent)
                             }
                         }
                     }

@@ -59,6 +59,15 @@ class CreateEventViewModel : ViewModel() {
         }
     }
 
+    private val _org = MutableLiveData<Organization?>()
+    val org: LiveData<Organization?> = _org
+
+    fun getOrg(id : Int) {
+        viewModelScope.launch {
+            _org.value = organizationServe.get(id)
+        }
+    }
+
     fun guestListPasses(guestList : MutableList<String?>, event : Event) {
         viewModelScope.launch {
             try {
@@ -134,7 +143,7 @@ class CreateEventViewModel : ViewModel() {
     }
 
     fun makePass(student : Student?, event: Event) {
-        val pass = student?.id?.let { it -> Pass(MyUser.id, it, event.id, event.startDate, arrayOf<String>()) }
+        val pass = student?.id?.let { it -> Pass(MyUser.id, it, event.id, event.startDate, arrayOf<String>(), isLocked=false) }
         if (pass != null) {
             createPass(pass)
         }

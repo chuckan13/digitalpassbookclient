@@ -46,10 +46,13 @@ class Event {
     @SerializedName("bouncers")
     var bouncers: Array<String>
 
+    @SerializedName("numArrived")
+    var numArrived: Int
+
     constructor(orgID: Int, startDate: String, endDate: String, eventName: String, description: String,
                 location: String, transferability: Boolean, openTimeVisibility: Boolean,
                 closeDateVisibility: Boolean, closeTimeVisibility: Boolean, cutoff : String,
-                allStudentsVisibility: Boolean, bouncers: Array<String>) {
+                allStudentsVisibility: Boolean, bouncers: Array<String>, numArrived: Int) {
         this.orgId = orgID
         this.startDate = startDate
         this.endDate = endDate
@@ -63,6 +66,7 @@ class Event {
         this.cutoff = cutoff
         this.allStudentsVisibility = allStudentsVisibility
         this.bouncers = bouncers
+        this.numArrived = numArrived
     }
 
     constructor(orgID: Int) {
@@ -79,6 +83,7 @@ class Event {
         this.cutoff = Date().toString()
         this.allStudentsVisibility = false
         this.bouncers = arrayOf()
+        this.numArrived = 0
     }
 
 }

@@ -47,8 +47,26 @@
         android:textStyle="bold"
         android:adjustViewBounds="true"
         android:scaleType="fitEnd"
+        android:visibility="invisible"
         android:background="@android:color/transparent"
         android:src="@drawable/ic_passbook" />
+
+    <ImageButton
+        android:id="@+id/security_button"
+        android:contentDescription="@string/bouncer"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="end"
+        android:layout_marginEnd="10dp"
+        android:text="@string/bouncer"
+        android:textStyle="bold"
+        android:adjustViewBounds="true"
+        android:scaleType="fitEnd"
+        android:visibility="invisible"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_security" />
 
     <TextView
         android:id="@+id/event_date"

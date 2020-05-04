@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_navigation_eventbook_to_navigation_send_pass"
             app:destination="@id/navigation_send_pass" />
+        <action
+            android:id="@+id/action_navigation_eventbook_to_navigation_scan_pass"
+            app:destination="@id/navigation_scan_pass" />
     </fragment>
 
     <fragment
@@ -47,6 +50,15 @@
         tools:layout="@layout/fragment_send_pass" >
         <argument
             android:name="passArg"
+            app:argType="long" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_scan_pass"
+        android:name="com.example.digitalpassbook2.student.scan_pass.ScanPassFragment"
+        tools:layout="@layout/scan_pass_fragment" >
+        <argument
+            android:name="eventArg"
             app:argType="long" />
     </fragment>
 

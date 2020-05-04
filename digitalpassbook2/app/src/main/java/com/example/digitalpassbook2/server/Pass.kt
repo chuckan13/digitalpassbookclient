@@ -7,7 +7,8 @@ class Pass(
     @field:SerializedName("userId") var userId: Int,
     @field:SerializedName("eventsId") val eventId: Int,
     @field:SerializedName("date") var date: String,
-    @field:SerializedName("owners") var owners: Array<String>
+    @field:SerializedName("owners") var owners: Array<String>,
+    @field:SerializedName("isLocked") var isLocked: Boolean
 ) {
     @SerializedName("id")
     val id = 0

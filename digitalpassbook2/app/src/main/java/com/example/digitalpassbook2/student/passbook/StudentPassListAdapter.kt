@@ -45,31 +45,13 @@ class StudentPassListAdapter (private val context: Context,
         val orgName = rowView.findViewById(R.id.club_name) as TextView
         orgName.text = MainActivity.organizationNames[pass.orgId]
 
-        val orgId = pass.orgId
-        val orgLogoArg = MainActivity.organizationLogos[pass.orgId]
-        val orgNameArg = MainActivity.organizationNames[pass.orgId]
-        val passId = getItemId(position)
-
-//        rowView.findViewById<RelativeLayout>(R.id.pass_row).setOnClickListener {
-//            val action =
-//                EventbookFragmentDirections.
-//                    actionNavigationEventbookToNavigationDisplayPass(passId, orgId, orgLogoArg, orgNameArg)
-//            val navController = Navigation.findNavController(
-//                context as FragmentActivity,
-//                R.id.student_nav_host_fragment
-//            )
-//            navController.navigate(action)
-//        }
-//
-//        rowView.findViewById<ImageButton>(R.id.send_pass_button).setOnClickListener {
-//            val action =
-//                EventbookFragmentDirections.actionNavigationEventbookToNavigationSendPass(passId)
-//            val navController = Navigation.findNavController(
-//                context as FragmentActivity,
-//                R.id.student_nav_host_fragment
-//            )
-//            navController.navigate(action)
-//        }
+        val access = rowView.findViewById(R.id.access) as ImageView
+        if (pass.isLocked) {
+            access.setImageResource(R.drawable.ic_locked)
+        }
+        else {
+            access.setImageResource(R.drawable.ic_edit)
+        }
 
         return rowView
     }

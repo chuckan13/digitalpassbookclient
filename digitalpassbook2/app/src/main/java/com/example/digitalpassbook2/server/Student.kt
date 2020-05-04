@@ -10,8 +10,9 @@ class Student(
     @field:SerializedName("email") val email: String,
     @field:SerializedName("princetonStudent") var princetonStudent: Boolean,
     @field:SerializedName("defaultPasses") var defaultPasses: Int,
-    @field:SerializedName("barCodeNumber") var barCodeNumber: Int,
-    @field:SerializedName("graduatingClass") var graduatingClass: Int
+    @field:SerializedName("barCodeNumber") var barCodeNumber: String,
+    @field:SerializedName("graduatingClass") var graduatingClass: Int,
+    @field:SerializedName("bouncingEvents") var bouncingEvents: Array<Int>?
 ) {
     @SerializedName("id")
     val id = 0

@@ -9,8 +9,6 @@ import com.example.digitalpassbook2.server.Pass
 
 class MainActivity : AppCompatActivity() {
     companion object {
-        var studentPassList: MutableList<Pass?>? = null
-        var passUpdateBoolean = true
         var studentEventList: MutableList<Event?>? = null
         var eventUpdateBoolean = true
         // index corresponds to orgID number

@@ -27,13 +27,14 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class EditEventFragment : Fragment(), FragmentManager.OnBackStackChangedListener {
+class EditEventFragment : Fragment() {
 
     private lateinit var editEventViewModel: EditEventViewModel
 
     private lateinit var startDateFormatted : String
     private lateinit var endDateFormatted : String
     private lateinit var guestNameAutoCompleteTextView : AutoCompleteTextView
+    private lateinit var bouncerAutoCompleteTextView : AutoCompleteTextView
 
     private val args: EditEventFragmentArgs by navArgs()
 
@@ -76,6 +77,7 @@ class EditEventFragment : Fragment(), FragmentManager.OnBackStackChangedListener
         setNavigation(view)
 
         guestNameAutoCompleteTextView = view.findViewById(R.id.guest_name)
+        bouncerAutoCompleteTextView = view.findViewById(R.id.bouncer_name)
         editEventViewModel.getStudentList()
         val studentStringList : MutableList<String> = ArrayList()
         editEventViewModel.studentList.observe(context as FragmentActivity, Observer { it1 ->
@@ -86,8 +88,9 @@ class EditEventFragment : Fragment(), FragmentManager.OnBackStackChangedListener
                     studentStringList.add(it.netid)
                 }
             }
-            val adapter = activity?.let { ArrayAdapter<String>(it, android.R.layout.simple_dropdown_item_1line, studentStringList) }
+            val adapter = activity?.let { ArrayAdapter(it, android.R.layout.simple_dropdown_item_1line, studentStringList) }
             guestNameAutoCompleteTextView.setAdapter(adapter)
+            bouncerAutoCompleteTextView.setAdapter(adapter)
         })
 
         val eventId = args.eventArg.toInt()
@@ -96,7 +99,7 @@ class EditEventFragment : Fragment(), FragmentManager.OnBackStackChangedListener
             val event = (it ?: return@Observer)
 
             val guestList : MutableList<String?> = ArrayList()
-            view.findViewById<Button>(R.id.send_pass_button).setOnClickListener {
+            view.findViewById<ImageButton>(R.id.send_pass_button).setOnClickListener {
                 val guest = guestNameAutoCompleteTextView.text.toString()
                 if (guest in studentStringList) {
                     guestList.add(guest)
@@ -104,6 +107,18 @@ class EditEventFragment : Fragment(), FragmentManager.OnBackStackChangedListener
                 }
                 else {
                     Toast.makeText(context, "The NetID " + guestNameAutoCompleteTextView.text.toString() + " does not match any user", Toast.LENGTH_LONG).show()
+                }
+            }
+
+            val bouncerList : MutableList<String?> = ArrayList()
+            view.findViewById<ImageButton>(R.id.add_bouncer_button).setOnClickListener {
+                val bouncer = bouncerAutoCompleteTextView.text.toString()
+                if (bouncer in studentStringList) {
+                    bouncerList.add(bouncer)
+                    bouncerAutoCompleteTextView.setText("")
+                }
+                else {
+                    Toast.makeText(context, "The NetID " + bouncerAutoCompleteTextView.text.toString() + " does not match any user", Toast.LENGTH_LONG).show()
                 }
             }
 
@@ -119,8 +134,6 @@ class EditEventFragment : Fragment(), FragmentManager.OnBackStackChangedListener
             viewableClosingDate.isChecked = event.closeDateVisibility
             val viewableClosingTime = view.findViewById<Switch>(R.id.viewable_closing_time)
             viewableClosingTime.isChecked = event.closeTimeVisibility
-            val publicEvent = view.findViewById<Switch>(R.id.public_event)
-            publicEvent.isChecked = event.allStudentsVisibility
 
             // Doors open and close
             startDateFormatted = event.startDate
@@ -167,8 +180,8 @@ class EditEventFragment : Fragment(), FragmentManager.OnBackStackChangedListener
                                 event.openTimeVisibility = viewableOpeningTime.isChecked
                                 event.closeDateVisibility = viewableClosingDate.isChecked
                                 event.closeTimeVisibility = viewableClosingTime.isChecked
-                                event.allStudentsVisibility = publicEvent.isChecked
                                 editEventViewModel.guestListPasses(guestList, event)
+                                editEventViewModel.bouncerList(bouncerList, event)
                                 editEventViewModel.updateEvent(event.id, event)
                                 findNavController().navigate(R.id.navigation_home)
                             }
@@ -196,16 +209,13 @@ class EditEventFragment : Fragment(), FragmentManager.OnBackStackChangedListener
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onBackStackChanged() {
-    }
-
     private fun setNavigation(view : View) {
         val navController = Navigation.findNavController(
             context as FragmentActivity,
             R.id.organization_nav_host_fragment
         )
         val appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.navigation_home, R.id.navigation_notifications, R.id.navigation_preferences))
+            R.id.navigation_home, R.id.navigation_preferences))
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
         (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
         (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -213,7 +223,6 @@ class EditEventFragment : Fragment(), FragmentManager.OnBackStackChangedListener
         (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayShowTitleEnabled(false)
         toolbar.setupWithNavController(navController, appBarConfiguration)
         setHasOptionsMenu(true)
-        fragmentManager?.addOnBackStackChangedListener(this)
         val navView: BottomNavigationView = view.findViewById(R.id.organization_nav_view)
         navView.setupWithNavController(navController)
     }

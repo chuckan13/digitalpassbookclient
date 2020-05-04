@@ -36,7 +36,7 @@ class EventbookFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setNavigation(view)
         eventsListView = view.findViewById(R.id.student_events_list_view)
-        swipeRefreshLayout = view.findViewById<SwipeRefreshLayout>(R.id.swipe_refresh)
+        swipeRefreshLayout = view.findViewById(R.id.swipe_refresh)
 
         if (MainActivity.eventUpdateBoolean) {
             refresh()
@@ -83,7 +83,7 @@ class EventbookFragment : Fragment() {
             context as FragmentActivity,
             R.id.student_nav_host_fragment
         )
-        val appBarConfiguration = AppBarConfiguration(setOf(R.id.navigation_eventbook, R.id.navigation_notifications))
+        val appBarConfiguration = AppBarConfiguration(setOf(R.id.navigation_eventbook))
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
         (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
         (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayHomeAsUpEnabled(true)

@@ -15,8 +15,8 @@ class ScannerViewModel : ViewModel() {
         StudentService.create()
     }
 
-    private val _scanResult = MutableLiveData<Student>()
-    val scanResult: LiveData<Student> =  _scanResult
+    private val _scanResult = MutableLiveData<Student?>()
+    val scanResult: LiveData<Student?> =  _scanResult
 
     fun updateBarcode(userId: Int, barcode: String) {
         viewModelScope.launch {

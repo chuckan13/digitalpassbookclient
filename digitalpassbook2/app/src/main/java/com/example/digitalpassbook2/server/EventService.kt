@@ -48,6 +48,12 @@ interface EventService {
         @Path("id") id: Int
     ):  List<Student?>?
 
+    @POST("events/isinvited")
+    suspend fun isInvited(
+        @Query("eventsid") eventsId: Int,
+        @Query("userbarcode") userBarCode: String
+    ): Boolean
+
     companion object {
         fun create(): EventService {
 

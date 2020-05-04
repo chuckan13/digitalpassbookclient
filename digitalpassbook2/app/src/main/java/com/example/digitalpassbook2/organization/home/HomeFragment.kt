@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.digitalpassbook2.R
 import com.example.digitalpassbook2.MyUser
 import com.example.digitalpassbook2.Util
@@ -20,11 +21,12 @@ import com.example.digitalpassbook2.server.Event
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
-class HomeFragment : Fragment(), FragmentManager.OnBackStackChangedListener {
+class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
 
     private lateinit var eventsListView : ListView
+    private lateinit var swipeRefreshLayout : SwipeRefreshLayout
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
@@ -34,9 +36,30 @@ class HomeFragment : Fragment(), FragmentManager.OnBackStackChangedListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setNavigation(view)
+        eventsListView = view.findViewById(R.id.events_list_view)
+        swipeRefreshLayout = view.findViewById(R.id.swipe_refresh)
+        refresh()
 
-        eventsListView = view.findViewById<ListView>(R.id.events_list_view)
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent)
+        swipeRefreshLayout.setOnRefreshListener {
+            refresh()
+        }
+    }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.organization_toolbar_nav_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        Util.onOptionsOrganization(item, context)
+        if (item.itemId == R.id.menu_refresh) {
+            refresh()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun refresh() {
         homeViewModel.getEventList(MyUser.id)
         homeViewModel.eventList.observe(context as FragmentActivity, Observer { it ->
             val eventList = (it ?: return@Observer)
@@ -48,20 +71,8 @@ class HomeFragment : Fragment(), FragmentManager.OnBackStackChangedListener {
             val adapter = activity?.let { OrganizationEventListAdapter(it, sortedEventList) }
             eventsListView.adapter = adapter
             eventsListView.visibility = View.VISIBLE
+            swipeRefreshLayout.isRefreshing = false
         })
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.organization_toolbar_nav_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        Util.onOptionsOrganization(item, context)
-        return super.onOptionsItemSelected(item)
-    }
-
-    override fun onBackStackChanged() {
     }
 
     private fun setNavigation(view : View) {
@@ -78,7 +89,6 @@ class HomeFragment : Fragment(), FragmentManager.OnBackStackChangedListener {
         (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayShowTitleEnabled(false)
         toolbar.setupWithNavController(navController, appBarConfiguration)
         setHasOptionsMenu(true)
-        fragmentManager?.addOnBackStackChangedListener(this)
         val navView: BottomNavigationView = view.findViewById(R.id.organization_nav_view)
         navView.setupWithNavController(navController)
     }

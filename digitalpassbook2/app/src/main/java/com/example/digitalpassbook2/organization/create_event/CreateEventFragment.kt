@@ -30,7 +30,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class CreateEventFragment : Fragment(), NumberPicker.OnValueChangeListener, FragmentManager.OnBackStackChangedListener {
+class CreateEventFragment : Fragment(), NumberPicker.OnValueChangeListener {
 
     private lateinit var createEventViewModel: CreateEventViewModel
 
@@ -123,12 +123,24 @@ class CreateEventFragment : Fragment(), NumberPicker.OnValueChangeListener, Frag
         val eventTitle = view.findViewById<EditText>(R.id.event_title)
         val description = view.findViewById<EditText>(R.id.description)
         val location = view.findViewById<EditText>(R.id.location)
+        val numberButton = view.findViewById<Button>(R.id.number)
         val transferability = view.findViewById<Switch>(R.id.transferability)
-        val permGuestList = view.findViewById<Switch>(R.id.perm_guest_list)
         val viewableOpeningTime = view.findViewById<Switch>(R.id.viewable_opening_time)
         val viewableClosingDate = view.findViewById<Switch>(R.id.viewable_closing_date)
         val viewableClosingTime = view.findViewById<Switch>(R.id.viewable_closing_time)
-        val publicEvent = view.findViewById<Switch>(R.id.public_event)
+
+        createEventViewModel.getOrg(MyUser.id)
+        createEventViewModel.org.observe(context as FragmentActivity, Observer {
+            val organization = (it ?: return@Observer)
+            eventTitle.setText(organization.defaultEventName)
+            description.setText(organization.defaultEventDescription)
+            location.setText(organization.defaultEventLocation)
+            numberButton.text = organization.defaultPassesPerMember.toString()
+            transferability.isChecked = organization.defaultTransferability
+            viewableOpeningTime.isChecked = organization.defaultCloseTimeVisibility
+            viewableClosingDate.isChecked = organization.defaultCloseDateVisibility
+            viewableClosingTime.isChecked = organization.defaultCloseTimeVisibility
+        })
 
         // Doors open and close
         val startDate = Date()
@@ -182,7 +194,6 @@ class CreateEventFragment : Fragment(), NumberPicker.OnValueChangeListener, Frag
         }
 
         // Handle passes number
-        val numberButton = view.findViewById<Button>(R.id.number)
         passesNumber(numberButton)
 
         // Submit form
@@ -197,15 +208,12 @@ class CreateEventFragment : Fragment(), NumberPicker.OnValueChangeListener, Frag
                             eventTitle.text.toString(), description.text.toString(), location.text.toString(),
                             transferability.isChecked, viewableOpeningTime.isChecked,
                             viewableClosingDate.isChecked, viewableClosingTime.isChecked, endDateFormatted,
-                            publicEvent.isChecked, arrayOf())
+                            allStudentsVisibility = false, bouncers = arrayOf(), numArrived = 0)
                         createEventViewModel.createEvent(localEvent)
                         createEventViewModel.event.observe(context as FragmentActivity, Observer { it2 ->
                             val event = (it2 ?: return@Observer)
                             memberListPasses(numberPasses, event)
                             createEventViewModel.guestListPasses(guestList, event)
-//                        if (permGuestList.isChecked) {
-//                            TODO()
-//                        }
                         })
                         findNavController().navigate(R.id.navigation_home)
                     }
@@ -226,9 +234,7 @@ class CreateEventFragment : Fragment(), NumberPicker.OnValueChangeListener, Frag
         Log.i("value is",""+newVal)
     }
 
-    // Menu icons are inflated just as they were with actionbar
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         inflater.inflate(R.menu.organization_toolbar_nav_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
@@ -238,16 +244,13 @@ class CreateEventFragment : Fragment(), NumberPicker.OnValueChangeListener, Frag
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onBackStackChanged() {
-    }
-
     private fun setNavigation(view : View) {
         val navController = Navigation.findNavController(
             context as FragmentActivity,
             R.id.organization_nav_host_fragment
         )
         val appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.navigation_home, R.id.navigation_notifications, R.id.navigation_preferences))
+            R.id.navigation_home, R.id.navigation_preferences))
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
         (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
         (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -255,7 +258,6 @@ class CreateEventFragment : Fragment(), NumberPicker.OnValueChangeListener, Frag
         (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayShowTitleEnabled(false)
         toolbar.setupWithNavController(navController, appBarConfiguration)
         setHasOptionsMenu(true)
-        fragmentManager?.addOnBackStackChangedListener(this)
         val navView: BottomNavigationView = view.findViewById(R.id.organization_nav_view)
         navView.setupWithNavController(navController)
     }

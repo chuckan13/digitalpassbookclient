@@ -63,7 +63,7 @@ class EditEventViewModel : ViewModel() {
             val student = studentServe.getByNetId(netid)
             val event = eventServe.get(eventId)
             val pass = student?.id?.let { event?.startDate?.let { it1 ->
-                Pass(MyUser.id, it, eventId, it1, arrayOf<String>()) } }
+                Pass(MyUser.id, it, eventId, it1, arrayOf<String>(), isLocked=false) } }
             if (pass != null) {
                 passServe.create(pass)
             }
@@ -75,12 +75,42 @@ class EditEventViewModel : ViewModel() {
             try {
                 guestList.forEach {
                     if (it != null) {
-                        val student = studentServe.getByNetId(it)
+                        createPass(event.id, it)
+                    }
+                }
+            }
+            catch (exception : Exception) {
+                println("getStudentFromInvited")
+            }
+        }
+    }
+
+    fun bouncerList(bouncerList : MutableList<String?>, event : Event) {
+        viewModelScope.launch {
+            try {
+                val bouncers : MutableList<String> = ArrayList()
+                if (event.bouncers != null) {
+                    event.bouncers.forEach {
+                        bouncers.add(it)
+                    }
+                }
+                bouncerList.forEach { it2 ->
+                    if (it2 != null) {
+                        bouncers.add(it2)
+                        val student = studentServe.getByNetId(it2)
+                        val events : MutableList<Int> = ArrayList()
+                        student?.bouncingEvents?.forEach {
+                            events.add(it)
+                        }
+                        events.add(event.id)
+                        student?.bouncingEvents = events.toTypedArray()
                         if (student != null) {
-                            createPass(event.id, student.netid)
+                            studentServe.update(student.id, student)
                         }
                     }
                 }
+                event.bouncers = bouncers.toTypedArray()
+                eventServe.update(event.id, event)
             }
             catch (exception : Exception) {
                 println("getStudentFromInvited")

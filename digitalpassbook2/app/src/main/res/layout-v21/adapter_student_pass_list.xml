@@ -42,4 +42,19 @@
         android:focusableInTouchMode="false"
         tools:ignore="RelativeOverlap,RtlSymmetry" />
 
+    <ImageView
+        android:id="@+id/access"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd ="true"
+        android:layout_marginEnd="10dp"
+        android:layout_centerVertical="true"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:typeface="serif"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        tools:ignore="RelativeOverlap,RtlSymmetry"
+        android:contentDescription="@string/access" />
+
 </RelativeLayout>

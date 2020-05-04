@@ -3,19 +3,19 @@ package com.example.digitalpassbook2.login.register.ui
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
 import android.view.View
-import android.widget.Toast
+import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.example.digitalpassbook2.MainActivity
 import com.example.digitalpassbook2.R
 import com.example.digitalpassbook2.login.login.ui.LoggedInUserView
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_scan.*
-import kotlinx.android.synthetic.main.fragment_display_pass.*
+
 
 class ScanActivity : AppCompatActivity() {
 
@@ -23,6 +23,7 @@ class ScanActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        scannerViewModel = ScannerViewModel()
         setContentView(R.layout.activity_scan)
 
         val user = intent.getParcelableExtra<LoggedInUserView>("EXTRA_PARCEL")
@@ -32,14 +33,38 @@ class ScanActivity : AppCompatActivity() {
             integrator.setOrientationLocked(true)
             integrator.initiateScan()
         }
+        type_button.setOnClickListener{
+            var text = ""
+            val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+            builder.setTitle("Enter Barcode Number:")
+            val input = EditText(this)
+            input.inputType = InputType.TYPE_CLASS_TEXT
+            builder.setView(input)
+            builder.setPositiveButton("OK"
+            ) { _, _ ->
+                text = input.text.toString()
+                scan_result.text = text
+                continue_button.text = getString(R.string.scan_complete)
+                loading_scanner.visibility = View.VISIBLE
+                continue_button.isEnabled = false
+                scanner_button.isEnabled = false
+                try {
+                    scannerViewModel.updateBarcode(user!!.userId, text)
+                }
+                catch (e: Exception) {
+                    Log.d("Not recognizing Bar Code as String", e.toString())
+                }
+            }
+            builder.setNegativeButton("Cancel"
+            ) { dialog, _ -> dialog.cancel() }
+            builder.show()
+        }
         continue_button.setOnClickListener {
             val intent: Intent = Intent(this, MainActivity::class.java)
             intent.putExtra("EXTRA_PARCEL", user)
-//                Log.d("RegisterFragment", "start new activity")
             startActivity(intent)
             setResult(Activity.RESULT_OK)
         }
-        scannerViewModel = ScannerViewModel()
         scannerViewModel.scanResult.observe(this, Observer {
             val scanResult = it ?: return@Observer
             loading_scanner.visibility = View.GONE
@@ -56,13 +81,17 @@ class ScanActivity : AppCompatActivity() {
             }
             else {
                 val user = intent.getParcelableExtra<LoggedInUserView>("EXTRA_PARCEL")
-                Toast.makeText(this, "Scanned: " + result.contents, Toast.LENGTH_SHORT).show()
                 scan_result.text = result.contents
                 continue_button.text = getString(R.string.scan_complete)
                 loading_scanner.visibility = View.VISIBLE
                 continue_button.isEnabled = false
                 scanner_button.isEnabled = false
-                scannerViewModel.updateBarcode(user!!.userId, result.contents)
+                try {
+                    scannerViewModel.updateBarcode(user!!.userId, result.contents)
+                }
+                catch (e: Exception) {
+                    Log.d("Not recognizing Bar Code as String", e.toString())
+                }
             }
         }
         else {

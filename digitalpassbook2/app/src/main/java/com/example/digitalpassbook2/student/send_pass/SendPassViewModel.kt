@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.digitalpassbook2.server.EventService
 import com.example.digitalpassbook2.server.PassService
 import com.example.digitalpassbook2.server.Student
 import com.example.digitalpassbook2.server.StudentService
@@ -13,6 +14,10 @@ class SendPassViewModel : ViewModel() {
 
     private val passServe by lazy {
         PassService.create()
+    }
+
+    private val eventServe by lazy {
+        EventService.create()
     }
 
     private val studentServe by lazy {
@@ -37,9 +42,13 @@ class SendPassViewModel : ViewModel() {
     fun updatePass(passId: Int, netid: String) {
         viewModelScope.launch {
             val pass = passServe.get(passId)
+            val event = pass?.eventId?.let { eventServe.get(it) }
             val student = studentServe.getByNetId(netid)
-            if (pass != null && student != null) {
+            if (pass != null && student != null && event != null) {
                 pass.userId = student.id
+                if (student.orgId != pass.orgId && event.transferability) {
+                    pass.isLocked = true
+                }
                 passServe.update(pass.id, pass)
             }
         }

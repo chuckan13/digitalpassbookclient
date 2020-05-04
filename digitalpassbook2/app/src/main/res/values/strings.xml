@@ -112,4 +112,11 @@
     <string name="title_activity_scan">Scanner</string>
     <string name="Back">Back</string>
     <string name="your_passes">Your Passes:</string>
+    <string name="bouncer">bouncer</string>
+    <string name="or_textview">or</string>
+    <string name="type_here">Type ID</string>
+    <string name="on_list">on list?</string>
+    <string name="leave">leave</string>
+    <string name="access">access</string>
+    <string name="add_a_bouncer">Bouncer Username</string>
 </resources>
