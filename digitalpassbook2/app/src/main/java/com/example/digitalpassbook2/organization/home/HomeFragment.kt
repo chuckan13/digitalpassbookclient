@@ -81,7 +81,7 @@ class HomeFragment : Fragment() {
             R.id.organization_nav_host_fragment
         )
         val appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.navigation_home, R.id.navigation_notifications, R.id.navigation_preferences))
+            R.id.navigation_home, R.id.navigation_preferences))
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
         (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
         (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayHomeAsUpEnabled(true)

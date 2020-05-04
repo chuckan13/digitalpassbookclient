@@ -71,7 +71,9 @@ class OrganizationEventListAdapter (private val context: Context,
         })
 
         val numberArrived = rowView.findViewById<RelativeLayout>(R.id.number_arrived).findViewById<TextView>(R.id.imageViewText)
-        numberArrived.text = 0.toString()
+        if (event != null) {
+            numberArrived.text = event.numArrived.toString()
+        }
 
         return rowView
     }
