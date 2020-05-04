@@ -27,6 +27,7 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.google.zxing.WriterException
 import com.google.zxing.common.BitMatrix
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -64,7 +65,6 @@ class DisplayPassFragment() : Fragment(), FragmentManager.OnBackStackChangedList
         val studentName = view.findViewById(R.id.user_name) as TextView
         val orgQR = view.findViewById(R.id.pass_qr) as ImageView
         val orgQRsmall = view.findViewById(R.id.pass_qr_small) as ImageView
-//        val clock = view.findViewById(R.id.clock) as TextClock
         val startDateDisplay = view.findViewById(R.id.start_date) as TextView
         val startTimeDisplay = view.findViewById(R.id.start_time) as TextView
         val passImage = view.findViewById(R.id.pass_image) as ImageView
@@ -74,10 +74,22 @@ class DisplayPassFragment() : Fragment(), FragmentManager.OnBackStackChangedList
         displayPassViewModel.pass.observe(context as FragmentActivity, Observer { it ->
             val pass = (it ?: return@Observer)
             // extracts date and time strings from pass.date, and sets TextViews in the xml
-            val date = pass.date.substringBefore('T').substringAfter('-')
-            val time = pass.date.substringAfter('T').substringBefore('.').substringBeforeLast(':')
-            startDateDisplay.text = date
-            startTimeDisplay.text = time
+            //val date = pass.date.substringBefore('T').substringAfter('-')
+            //val time = pass.date.substringAfter('T').substringBefore('.').substringBeforeLast(':')
+
+            val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+            val dateformatter = SimpleDateFormat("M/d")
+            val date = formatter.parse(pass.date)
+            val timeformatter = SimpleDateFormat("h:mm a")
+            // these are the actual strings
+            val formattedDate = dateformatter.format(date)
+            val formattedTime = timeformatter.format(date)
+
+            startDateDisplay.text = formattedDate
+            startTimeDisplay.text = formattedTime
+
+            //startDateDisplay.text = date
+            //startTimeDisplay.text = time
         })
 
         orgLogo.setImageResource(resources.getIdentifier(clubLogo, "drawable", context?.packageName))

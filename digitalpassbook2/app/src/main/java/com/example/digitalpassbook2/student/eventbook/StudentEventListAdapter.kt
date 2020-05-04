@@ -18,6 +18,9 @@ import com.example.digitalpassbook2.server.Event
 import com.example.digitalpassbook2.server.Pass
 import com.example.digitalpassbook2.student.passbook.StudentPassListAdapter
 import com.google.android.material.internal.ContextUtils.getActivity
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 
 class StudentEventListAdapter (private val context: Context,
@@ -52,7 +55,13 @@ class StudentEventListAdapter (private val context: Context,
             MainActivity.organizationLogos[event.orgId], "drawable", context.packageName))
 
         val passDate = rowView.findViewById<TextView>(R.id.event_date)
-        passDate.text = event.startDate.substring(5,10)
+
+        val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+        val dateformatter = SimpleDateFormat("M/d")
+        val date = formatter.parse(event.startDate)
+        val formattedDate = dateformatter.format(date)
+
+        passDate.text = formattedDate
         val eventId = getItemId(position)
 
         rowView.findViewById<ImageButton>(R.id.send_pass_button).setOnClickListener {
