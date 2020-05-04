@@ -32,6 +32,7 @@
             android:label="@string/title_activity_scan"
             android:screenOrientation="portrait"
             android:stateNotNeeded="true"
+            android:noHistory="true"
             tools:ignore="LockedOrientationActivity"
             tools:replace="screenOrientation">
             <intent-filter>
@@ -56,7 +57,8 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:label="@string/main_activity">
+            android:label="@string/main_activity"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
 

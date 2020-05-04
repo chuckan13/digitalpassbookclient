@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import com.example.digitalpassbook2.MainActivity
 import com.example.digitalpassbook2.R
 import com.example.digitalpassbook2.login.login.ui.LoggedInUserView
+import com.example.digitalpassbook2.login.login.ui.LoginActivity
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_scan.*
 
@@ -97,6 +98,12 @@ class ScanActivity : AppCompatActivity() {
         else {
             super.onActivityResult(requestCode, resultCode, data)
         }
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        setResult(Activity.RESULT_OK)
     }
 
 }
