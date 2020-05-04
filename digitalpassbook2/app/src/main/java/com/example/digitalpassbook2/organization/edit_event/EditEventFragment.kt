@@ -96,7 +96,7 @@ class EditEventFragment : Fragment(), FragmentManager.OnBackStackChangedListener
             val event = (it ?: return@Observer)
 
             val guestList : MutableList<String?> = ArrayList()
-            view.findViewById<Button>(R.id.send_button).setOnClickListener {
+            view.findViewById<Button>(R.id.send_pass_button).setOnClickListener {
                 val guest = guestNameAutoCompleteTextView.text.toString()
                 if (guest in studentStringList) {
                     guestList.add(guest)

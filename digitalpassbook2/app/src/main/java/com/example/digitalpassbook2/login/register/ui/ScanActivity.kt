@@ -39,6 +39,7 @@ class ScanActivity : AppCompatActivity() {
             startActivity(intent)
             setResult(Activity.RESULT_OK)
         }
+        scannerViewModel = ScannerViewModel()
         scannerViewModel.scanResult.observe(this, Observer {
             val scanResult = it ?: return@Observer
             loading_scanner.visibility = View.GONE

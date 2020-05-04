@@ -84,7 +84,7 @@
     <string name="menu_title">menu</string>
     <string name="title_notifications">Notifications</string>
     <string name="events">Events</string>
-    <string name="edit_event">Edit Event</string>
+    <string name="send_pass">Edit Event</string>
     <string name="blank_username">Username cannot be blank</string>
     <string name="contains_whitespace">Username cannot have whitespace characters</string>
     <string name="text_image">Text Image</string>
@@ -111,4 +111,5 @@
     <string name="scan_cancelled">Cancelled</string>
     <string name="title_activity_scan">Scanner</string>
     <string name="Back">Back</string>
+    <string name="your_passes">Your Passes:</string>
 </resources>

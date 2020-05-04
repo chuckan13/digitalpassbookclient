@@ -160,8 +160,7 @@ class DisplayPassFragment() : Fragment(), FragmentManager.OnBackStackChangedList
             context as FragmentActivity,
             R.id.student_nav_host_fragment
         )
-        val appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.navigation_passbook, R.id.navigation_eventbook, R.id.navigation_notifications))
+        val appBarConfiguration = AppBarConfiguration(setOf(R.id.navigation_eventbook, R.id.navigation_notifications))
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
         (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
         (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayHomeAsUpEnabled(true)

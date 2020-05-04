@@ -19,7 +19,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/edit_event"
+            android:text="@string/send_pass"
             android:textAppearance="@style/Toolbar.TitleText"
             android:layout_gravity="center"
             android:typeface="serif"
@@ -191,7 +191,7 @@
         android:hint="@string/invite_a_guest"
         android:inputType="text"
         android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/send_button"
+        app:layout_constraintEnd_toStartOf="@+id/send_pass_button"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/description"
@@ -199,7 +199,7 @@
         android:layout_marginStart="@dimen/activity_horizontal_margin" />
 
     <Button
-        android:id="@+id/send_button"
+        android:id="@+id/send_pass_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/send_button"

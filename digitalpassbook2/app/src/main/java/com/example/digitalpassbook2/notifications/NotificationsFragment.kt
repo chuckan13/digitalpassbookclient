@@ -57,8 +57,7 @@ class NotificationsFragment : Fragment(), FragmentManager.OnBackStackChangedList
         }
         else {
             host = R.id.student_nav_host_fragment
-            appBarConfiguration = AppBarConfiguration(setOf(
-                R.id.navigation_passbook, R.id.navigation_eventbook, R.id.navigation_notifications))
+            appBarConfiguration = AppBarConfiguration(setOf(R.id.navigation_eventbook, R.id.navigation_notifications))
             navView.inflateMenu(R.menu.student_bottom_nav_menu)
         }
         val navController = Navigation.findNavController(context as FragmentActivity, host)

@@ -1,11 +1,8 @@
 package com.example.digitalpassbook2
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.digitalpassbook2.login.login.ui.LoggedInUserView
-import com.example.digitalpassbook2.login.login.ui.LoginActivity
 import com.example.digitalpassbook2.server.Event
 import com.example.digitalpassbook2.server.Pass
 

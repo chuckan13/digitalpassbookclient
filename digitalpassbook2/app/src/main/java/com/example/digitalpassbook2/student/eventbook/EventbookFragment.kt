@@ -2,13 +2,11 @@ package com.example.digitalpassbook2.student.eventbook
 
 import android.os.Bundle
 import android.view.*
-import android.util.Log
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
@@ -19,7 +17,6 @@ import com.example.digitalpassbook2.MainActivity
 import com.example.digitalpassbook2.MyUser
 import com.example.digitalpassbook2.R
 import com.example.digitalpassbook2.Util
-import com.example.digitalpassbook2.server.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
@@ -28,6 +25,7 @@ class EventbookFragment : Fragment() {
     private lateinit var eventbookViewModel: EventbookViewModel
 
     private lateinit var eventsListView : ListView
+    private lateinit var swipeRefreshLayout : SwipeRefreshLayout
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         eventbookViewModel = ViewModelProviders.of(this).get(EventbookViewModel::class.java)
@@ -37,18 +35,11 @@ class EventbookFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setNavigation(view)
-        val swipeRefreshLayout = view.findViewById<SwipeRefreshLayout>(R.id.swipe_refresh)
         eventsListView = view.findViewById(R.id.student_events_list_view)
+        swipeRefreshLayout = view.findViewById<SwipeRefreshLayout>(R.id.swipe_refresh)
 
         if (MainActivity.eventUpdateBoolean) {
-            eventbookViewModel.getEventList(MyUser.id)
-            eventbookViewModel.eventList.observe(context as FragmentActivity, Observer { it1 ->
-                MainActivity.studentEventList = (it1 ?: return@Observer)
-                val adapter = activity?.let { StudentEventListAdapter(it, MainActivity.studentEventList!!) }
-                eventsListView.adapter = adapter
-                eventsListView.visibility = View.VISIBLE
-                MainActivity.eventUpdateBoolean = false
-            })
+            refresh()
         }
         else {
             val adapter = activity?.let { StudentEventListAdapter(it, MainActivity.studentEventList!!) }
@@ -58,14 +49,7 @@ class EventbookFragment : Fragment() {
 
         swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent)
         swipeRefreshLayout.setOnRefreshListener {
-            eventbookViewModel.getEventList(MyUser.id)
-            eventbookViewModel.eventList.observe(context as FragmentActivity, Observer { it ->
-                MainActivity.studentEventList = (it ?: return@Observer)
-                val adapter = activity?.let { StudentEventListAdapter(it, MainActivity.studentEventList!!) }
-                eventsListView.adapter = adapter
-                eventsListView.visibility = View.VISIBLE
-                swipeRefreshLayout.isRefreshing = false
-            })
+            refresh()
         }
 
     }
@@ -77,7 +61,21 @@ class EventbookFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         Util.onOptionsStudent(item, context)
+        if (item.itemId == R.id.menu_refresh) {
+            refresh()
+        }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun refresh() {
+        eventbookViewModel.getEventList(MyUser.id)
+        eventbookViewModel.eventList.observe(context as FragmentActivity, Observer { it ->
+            MainActivity.studentEventList = (it ?: return@Observer)
+            val adapter = activity?.let { StudentEventListAdapter(it, MainActivity.studentEventList!!) }
+            eventsListView.adapter = adapter
+            eventsListView.visibility = View.VISIBLE
+            swipeRefreshLayout.isRefreshing = false
+        })
     }
 
     private fun setNavigation(view : View) {
@@ -85,8 +83,7 @@ class EventbookFragment : Fragment() {
             context as FragmentActivity,
             R.id.student_nav_host_fragment
         )
-        val appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.navigation_passbook, R.id.navigation_eventbook, R.id.navigation_notifications))
+        val appBarConfiguration = AppBarConfiguration(setOf(R.id.navigation_eventbook, R.id.navigation_notifications))
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
         (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
         (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayHomeAsUpEnabled(true)

@@ -61,7 +61,7 @@
 
         <ImageButton
             android:id="@+id/details_button"
-            android:contentDescription="@string/edit_event"
+            android:contentDescription="@string/send_pass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"

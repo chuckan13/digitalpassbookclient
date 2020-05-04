@@ -1,43 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/event_row"
     android:layout_width="match_parent"
-    android:layout_height="40dp">
+    android:layout_height="140dp"
+    android:focusable="true"
+    android:clickable="true"
+    android:background="@drawable/background_border">
 
     <ImageView
-        android:id="@+id/event_club_logo"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:id="@+id/club_logo"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_alignParentStart ="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="8dp"
         android:layout_marginStart="8dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitEnd"
         tools:ignore="RtlSymmetry"
         android:contentDescription="@string/club_logo" />
 
     <TextView
-        android:id="@+id/event_club_name"
+        android:id="@+id/club_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/event_club_logo"
+        android:layout_toEndOf="@id/club_logo"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:gravity="center_vertical"
-        android:textSize="18sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         android:typeface="serif"
-        tools:ignore="RtlSymmetry" />
+        tools:ignore="RelativeOverlap,RtlSymmetry" />
+
+    <ImageButton
+        android:id="@+id/send_pass_button"
+        android:contentDescription="@string/send_pass"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="end"
+        android:layout_marginEnd="10dp"
+        android:text="@string/send_pass"
+        android:textStyle="bold"
+        android:adjustViewBounds="true"
+        android:scaleType="fitEnd"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_passbook" />
 
     <TextView
         android:id="@+id/event_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="10dp"
-        android:textSize="18sp"
+        android:layout_alignParentStart ="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="16dp"
+        android:textSize="20sp"
         android:textStyle="bold"
         android:typeface="serif"
         tools:ignore="RelativeOverlap,RtlSymmetry" />
-
 
 </RelativeLayout>

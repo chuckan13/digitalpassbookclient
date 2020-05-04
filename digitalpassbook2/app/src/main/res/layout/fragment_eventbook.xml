@@ -4,6 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/student_nav_host_fragment"
+    app:navGraph="@navigation/student_nav_graph"
+    app:defaultNavHost="true"
+    android:name="androidx.navigation.fragment.NavHostFragment"
     tools:context=".student.eventbook.EventbookFragment">
 
     <androidx.appcompat.widget.Toolbar
@@ -40,7 +44,13 @@
         <ListView
             android:id="@+id/student_events_list_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:divider="#00000000"
+            android:dividerHeight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

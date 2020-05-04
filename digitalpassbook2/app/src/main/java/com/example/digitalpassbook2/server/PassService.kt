@@ -2,9 +2,11 @@ package com.example.digitalpassbook2.server
 
 import retrofit2.Call
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.*
+
 
 interface PassService {
 //    Get all passes sorted by date
@@ -36,13 +38,20 @@ interface PassService {
 
 //    Get the passes of an event with {id}
     @GET("passes/event/{id}")
-    fun getByEventsId(@Path("id") eventsId: Int): List<Pass?>?
+    suspend fun getByEventsId(@Path("id") eventsId: Int): List<Pass?>?
+
+    @GET("passes/for_user_at_event")
+    suspend fun getByEventsStudentsId(
+        @Query("eventsid") eventsId: Int,
+        @Query("userid") userId: Int
+    ): List<Pass?>?
 
     companion object {
         fun create(): PassService {
 
             val retrofit = Retrofit.Builder()
                 .baseUrl("https://pure-river-68629.herokuapp.com/")
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

@@ -7,7 +7,13 @@
         android:title="@string/menu_title">
         <menu>
             <item
+                android:id="@+id/navigation_eventbook"
+                android:icon="@drawable/ic_eventbook"
+                android:title="@string/title_eventbook" />
+
+            <item
                 android:id="@+id/menu_refresh"
+                android:icon="@drawable/ic_refresh"
                 android:title="@string/menu_refresh"/>
 
             <item
