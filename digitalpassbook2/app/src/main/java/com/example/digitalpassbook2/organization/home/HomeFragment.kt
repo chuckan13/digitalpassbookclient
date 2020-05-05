@@ -1,5 +1,7 @@
 package com.example.digitalpassbook2.organization.home
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.ListView
@@ -17,6 +19,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.digitalpassbook2.R
 import com.example.digitalpassbook2.MyUser
 import com.example.digitalpassbook2.Util
+import com.example.digitalpassbook2.login.login.ui.LoginActivity
 import com.example.digitalpassbook2.server.Event
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -81,7 +84,7 @@ class HomeFragment : Fragment() {
             R.id.organization_nav_host_fragment
         )
         val appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.navigation_home, R.id.navigation_notifications, R.id.navigation_preferences))
+            R.id.navigation_home, R.id.navigation_preferences))
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
         (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
         (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayHomeAsUpEnabled(true)
