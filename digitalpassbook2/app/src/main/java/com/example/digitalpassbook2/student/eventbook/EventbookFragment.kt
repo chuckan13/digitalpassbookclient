@@ -51,7 +51,6 @@ class EventbookFragment : Fragment() {
         swipeRefreshLayout.setOnRefreshListener {
             refresh()
         }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
