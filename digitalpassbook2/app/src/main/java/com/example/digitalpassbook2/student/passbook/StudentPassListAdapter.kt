@@ -32,7 +32,7 @@ class StudentPassListAdapter (private val context: Context,
         return studentPassList[position]?.id?.toLong()!!
     }
 
-    @SuppressLint("ViewHolder")
+    @SuppressLint("ViewHolder", "SetTextI18n")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val rowView = inflater.inflate(R.layout.adapter_student_pass_list, parent, false)
 
@@ -43,7 +43,7 @@ class StudentPassListAdapter (private val context: Context,
             MainActivity.organizationLogos[pass?.orgId!!], "drawable", context.packageName))
 
         val orgName = rowView.findViewById(R.id.club_name) as TextView
-        orgName.text = MainActivity.organizationNames[pass.orgId]
+        orgName.text = "Pass: $position"
 
         val access = rowView.findViewById(R.id.access) as ImageView
         if (pass.isLocked) {

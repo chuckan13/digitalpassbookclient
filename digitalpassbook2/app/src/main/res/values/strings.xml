@@ -90,7 +90,7 @@
     <string name="text_image">Text Image</string>
     <string name="invited_text">Invited</string>
     <string name="spots_text">Spots</string>
-    <string name="arrived_text">Arrived</string>
+    <string name="arrived_text">Students Arrived</string>
     <string name="save_changes">Save Changes</string>
     <string name="delete_event">Delete Event</string>
     <string name="main_activity">Main Activity</string>
@@ -120,4 +120,8 @@
     <string name="access">access</string>
     <string name="add_a_bouncer">Bouncer Username</string>
     <string name="username_lowercase">Username must be lowercase</string>
+    <string name="event_capacity">Event Capacity</string>
+    <string name="event_distributed">Passes Distributed</string>
+    <string name="ok_button">OK</string>
+    <string name="x_button">x</string>
 </resources>

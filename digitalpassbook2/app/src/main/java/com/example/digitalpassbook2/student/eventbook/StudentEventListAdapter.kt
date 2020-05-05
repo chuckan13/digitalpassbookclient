@@ -21,8 +21,6 @@ import com.example.digitalpassbook2.server.Student
 import com.example.digitalpassbook2.student.passbook.StudentPassListAdapter
 import com.google.android.material.internal.ContextUtils.getActivity
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 
 class StudentEventListAdapter (private val context: Context,
@@ -115,7 +113,7 @@ class StudentEventListAdapter (private val context: Context,
     fun showDialog(context: Context, passes : List<Pass?>, rowView : View) {
         val dialog = Dialog(context)
         dialog.setCancelable(false)
-        dialog.setContentView(R.layout.dialog_listview)
+        dialog.setContentView(R.layout.dialog_event_listview)
         dialog.window?.setLayout(900, 800)
         dialog.window?.setGravity(Gravity.CENTER)
         val btndialog: Button = dialog.findViewById(R.id.btndialog) as Button
