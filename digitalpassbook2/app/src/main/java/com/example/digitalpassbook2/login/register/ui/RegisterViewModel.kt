@@ -29,7 +29,7 @@ class RegisterViewModel(private val registerRepository: RegisterRepository) : Vi
 
     fun register(first: String, last: String, classYear: String, username: String, password: String) {
         // can be launched in a separate asynchronous job
-        Log.d("RegisterViewModel", "register functionc called")
+        Log.d("RegisterViewModel", "register function called")
         viewModelScope.launch() {
             val exists = async {studentServe.checkStudentExist(username)}
             if (!exists.await()!!) {
@@ -78,6 +78,9 @@ class RegisterViewModel(private val registerRepository: RegisterRepository) : Vi
         else if (username.contains(" ")) {
             _registerForm.value = RegisterFormState(usernameError = R.string.contains_whitespace)
         }
+        else if (!isLowerCase(username)) {
+            _registerForm.value = RegisterFormState(usernameError = R.string.username_lowercase)
+        }
         else if (!isClassYearValid(classYear)) {
             Log.d("Register View Model", "Invalid Class Year")
             _registerForm.value = RegisterFormState(classYearError = R.string.invalid_class_year)
@@ -94,6 +97,14 @@ class RegisterViewModel(private val registerRepository: RegisterRepository) : Vi
             classYearNumeric in 2020..2029
         } else
             false
+    }
+
+    private fun isLowerCase(username: String): Boolean {
+        for (c in username) {
+            if (c.isUpperCase())
+                return false
+        }
+        return true
     }
 
     private fun isNameValid(name: String): Boolean {

@@ -6,7 +6,7 @@
     android:layout_height="140dp"
     android:focusable="true"
     android:clickable="true"
-    android:background="@drawable/background_border">
+    android:background="?attr/selectableItemBackground">
 
     <ImageView
         android:id="@+id/club_logo"
@@ -35,23 +35,6 @@
         tools:ignore="RelativeOverlap,RtlSymmetry" />
 
     <ImageButton
-        android:id="@+id/send_pass_button"
-        android:contentDescription="@string/send_pass"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_gravity="end"
-        android:layout_marginEnd="10dp"
-        android:text="@string/send_pass"
-        android:textStyle="bold"
-        android:adjustViewBounds="true"
-        android:scaleType="fitEnd"
-        android:visibility="invisible"
-        android:background="@android:color/transparent"
-        android:src="@drawable/ic_passbook" />
-
-    <ImageButton
         android:id="@+id/security_button"
         android:contentDescription="@string/bouncer"
         android:layout_width="64dp"
@@ -72,13 +55,19 @@
         android:id="@+id/event_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart ="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_alignParentEnd ="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="16dp"
         android:textSize="20sp"
         android:textStyle="bold"
         android:typeface="serif"
         tools:ignore="RelativeOverlap,RtlSymmetry" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

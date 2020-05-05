@@ -1,6 +1,9 @@
 package com.example.digitalpassbook2.organization.home
 
+import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Context
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,11 +14,12 @@ import androidx.navigation.findNavController
 import com.example.digitalpassbook2.R
 import com.example.digitalpassbook2.MyUser
 import com.example.digitalpassbook2.server.*
-import java.text.SimpleDateFormat
 
 
 class OrganizationEventListAdapter (private val context: Context,
                                     private val eventList: List<Event?>) : BaseAdapter() {
+
+    private lateinit var organizationEventListViewModel: OrganizationEventListViewModel
 
     private val inflater: LayoutInflater =
         context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -33,7 +37,7 @@ class OrganizationEventListAdapter (private val context: Context,
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val organizationEventListViewModel = OrganizationEventListViewModel()
+        organizationEventListViewModel = OrganizationEventListViewModel()
         val rowView = inflater.inflate(R.layout.adapter_organization_event_list, parent, false)
 
         val clubLogo = rowView.findViewById(R.id.event_club_logo) as ImageView
@@ -44,8 +48,7 @@ class OrganizationEventListAdapter (private val context: Context,
 
         val eventDate = rowView.findViewById(R.id.event_date) as TextView
         val event = getItem(position)
-        val format1 = SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSSZ")
-        val format2 = SimpleDateFormat("MM/dd")
+
         val dateStart = event?.startDate
         val formatDateStart = dateStart?.substring(5,10)
         eventDate.text = formatDateStart
@@ -56,26 +59,45 @@ class OrganizationEventListAdapter (private val context: Context,
             rowView.findNavController().navigate(action)
         }
 
-        val numberInvited = rowView.findViewById<RelativeLayout>(R.id.number_invited).findViewById<TextView>(R.id.imageViewText)
-        event?.id?.let { it1 -> organizationEventListViewModel.getStudents(it1) }
-        organizationEventListViewModel.students.observe(context as FragmentActivity, Observer {
-            val students = it ?: return@Observer
-            numberInvited.text = students.size.toString()
-        })
-
-        val numberSpots = rowView.findViewById<RelativeLayout>(R.id.number_spots).findViewById<TextView>(R.id.imageViewText)
-        event?.id?.let { it1 -> organizationEventListViewModel.getPasses(it1) }
-        organizationEventListViewModel.passes.observe(context as FragmentActivity, Observer {
-            val passes = it ?: return@Observer
-            numberSpots.text = passes.size.toString()
-        })
-
-        val numberArrived = rowView.findViewById<RelativeLayout>(R.id.number_arrived).findViewById<TextView>(R.id.imageViewText)
-        if (event != null) {
-            numberArrived.text = event.numArrived.toString()
+        val organizationRow = rowView.findViewById<RelativeLayout>(R.id.organization_row)
+        organizationRow.setOnClickListener {
+            showDialog(context, event!!)
         }
 
         return rowView
+    }
+
+    @SuppressLint("RestrictedApi")
+    fun showDialog(context: Context, event: Event) {
+        organizationEventListViewModel = OrganizationEventListViewModel()
+        val dialog = Dialog(context)
+        dialog.setCancelable(true)
+        dialog.setCanceledOnTouchOutside(true)
+        dialog.setContentView(R.layout.dialog_organization_listview)
+        dialog.window?.setGravity(Gravity.CENTER)
+        dialog.window?.setLayout(900, 700)
+
+        val distributed = dialog.findViewById<TextView>(R.id.passes_distributed)
+        event.id.let { it1 -> organizationEventListViewModel.getStudents(it1) }
+        organizationEventListViewModel.students.observe(context as FragmentActivity, Observer {
+            val students = it ?: return@Observer
+            distributed.text = students.size.toString()
+        })
+
+        val capacity = dialog.findViewById<TextView>(R.id.event_capacity)
+        event.id.let { it1 -> organizationEventListViewModel.getPasses(it1) }
+        organizationEventListViewModel.passes.observe(context as FragmentActivity, Observer {
+            val passes = it ?: return@Observer
+            capacity.text = passes.size.toString()
+        })
+
+        val arrived = dialog.findViewById<TextView>(R.id.students_arrived)
+        arrived.text = event.numArrived.toString()
+
+        val okDialog: Button = dialog.findViewById(R.id.ok_button) as Button
+        okDialog.setOnClickListener() { dialog.dismiss() }
+
+        dialog.show()
     }
 
 }

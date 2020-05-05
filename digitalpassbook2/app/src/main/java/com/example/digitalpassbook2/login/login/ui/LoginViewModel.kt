@@ -10,6 +10,7 @@ import com.example.digitalpassbook2.login.login.data.LoginRepository
 import com.example.digitalpassbook2.login.login.data.Result
 
 import com.example.digitalpassbook2.R
+import com.example.digitalpassbook2.login.register.ui.RegisterFormState
 import kotlinx.coroutines.launch
 
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
@@ -50,9 +51,20 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
         else if (username.contains(" ")) {
             _loginForm.value = LoginFormState(usernameError = R.string.contains_whitespace)
         }
+        else if (!isLowerCase(username)) {
+            _loginForm.value = LoginFormState(usernameError = R.string.username_lowercase)
+        }
         else {
             _loginForm.value = LoginFormState(isDataValid = true)
         }
+    }
+
+    private fun isLowerCase(username: String): Boolean {
+        for (c in username) {
+            if (c.isUpperCase())
+                return false
+        }
+        return true
     }
 
     // A placeholder username validation check

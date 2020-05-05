@@ -21,8 +21,6 @@ import com.example.digitalpassbook2.server.Student
 import com.example.digitalpassbook2.student.passbook.StudentPassListAdapter
 import com.google.android.material.internal.ContextUtils.getActivity
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 
 class StudentEventListAdapter (private val context: Context,
@@ -50,6 +48,7 @@ class StudentEventListAdapter (private val context: Context,
         val rowView = inflater.inflate(R.layout.adapter_student_event_list, parent, false)
 
         val event = getItem(position)
+        val eventId = getItemId(position)
 
         val orgName = rowView.findViewById(R.id.club_name) as TextView
         orgName.text = MainActivity.organizationNames[event!!.orgId]
@@ -58,37 +57,33 @@ class StudentEventListAdapter (private val context: Context,
         orgLogo.setImageResource(rowView.resources.getIdentifier(
             MainActivity.organizationLogos[event.orgId], "drawable", context.packageName))
 
+        ////format and set the date
         val passDate = rowView.findViewById<TextView>(R.id.event_date)
-
         val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
-        val dateformatter = SimpleDateFormat("M/d")
+        val dateformatter = SimpleDateFormat("MM/dd")
         val date = formatter.parse(event.startDate)
         val formattedDate = dateformatter.format(date)
-
         passDate.text = formattedDate
-        val eventId = getItemId(position)
 
-        val sendPass = rowView.findViewById<ImageButton>(R.id.send_pass_button)
-        val bounce = rowView.findViewById<ImageButton>(R.id.security_button)
 
         studentEventListViewModel = StudentEventListViewModel()
         studentEventListViewModel.getStudent(MyUser.id)
+
+        val bounce = rowView.findViewById<ImageButton>(R.id.security_button)
         studentEventListViewModel.student.observe(context as FragmentActivity, Observer {
             val student = (it ?: return@Observer)
             if (isBouncer(student, eventId.toInt())) {
-                sendPass.visibility=View.INVISIBLE
                 bounce.visibility=View.VISIBLE
             }
             else {
-                sendPass.visibility=View.VISIBLE
                 bounce.visibility=View.INVISIBLE
             }
         })
 
-        sendPass.setOnClickListener {
-            val studentEventListViewModel = StudentEventListViewModel()
+        val eventRow = rowView.findViewById<RelativeLayout>(R.id.event_row)
+        eventRow.setOnClickListener {
             studentEventListViewModel.getPassNumber(eventId, MyUser.id)
-            studentEventListViewModel.passes.observe(context as FragmentActivity, Observer { it1 ->
+            studentEventListViewModel.passes.observe(context, Observer { it1 ->
                 val passes = (it1 ?: return@Observer)
                 if (passes.isNotEmpty()) {
                     showDialog(context, passes, rowView)
@@ -113,63 +108,31 @@ class StudentEventListAdapter (private val context: Context,
 
     @SuppressLint("RestrictedApi")
     fun showDialog(context: Context, passes : List<Pass?>, rowView : View) {
+        // create dialog to display the passes
         val dialog = Dialog(context)
         dialog.setCancelable(false)
-        dialog.setContentView(R.layout.dialog_listview)
+        dialog.setContentView(R.layout.dialog_event_listview)
         dialog.window?.setLayout(900, 800)
         dialog.window?.setGravity(Gravity.CENTER)
         val btndialog: Button = dialog.findViewById(R.id.btndialog) as Button
-        btndialog.setOnClickListener() { dialog.dismiss() }
-        val listView: ListView = dialog.findViewById(R.id.listview) as ListView
+        btndialog.setOnClickListener { dialog.dismiss() }
+
+        // set up dialog to contain a list of passes
         val passListAdapter = getActivity(context)?.let { it2 ->
-            StudentPassListAdapter(it2, passes as MutableList<Pass?>)
+            StudentPassListAdapter(it2, passes as MutableList<Pass?>, dialog, rowView)
         }
-        listView.adapter = passListAdapter
-        listView.setOnItemClickListener { _, _, position, _ ->
-            dialog.dismiss()
-            val pass = passes[position]
-            val passId = pass?.id
-            val orgId = pass?.orgId
-            val orgLogoArg = MainActivity.organizationLogos[orgId!!]
-            val orgNameArg = MainActivity.organizationNames[orgId]
-            val builderInner: AlertDialog.Builder? = getActivity(context)?.let { it -> AlertDialog.Builder(it) }
-            builderInner?.setTitle("Choose an action:")
-            builderInner?.setPositiveButton("Display") { dialog2, _ ->
-                dialog2.dismiss()
-                val action = passId?.toLong()?.let { it1 ->
-                    EventbookFragmentDirections.actionNavigationEventbookToNavigationDisplayPass(it1, orgId, orgLogoArg, orgNameArg)
-                }
-                if (action != null) {
-                    rowView.findNavController().navigate(action)
-                }
-            }
-            if (!pass.isLocked) {
-                builderInner?.setNegativeButton("Send") { dialog2, _ ->
-                    dialog2.dismiss()
-                    val action = passId?.toLong()?.let { it1 ->
-                        EventbookFragmentDirections.actionNavigationEventbookToNavigationSendPass(
-                            it1
-                        )
-                    }
-                    if (action != null) {
-                        rowView.findNavController().navigate(action)
-                    }
-                }
-            }
-            builderInner?.setNeutralButton("Cancel") { dialog2, _ ->
-                dialog2.dismiss()
-            }
-            builderInner?.show()
-        }
+
+        val passListView: ListView = dialog.findViewById(R.id.listview) as ListView
+        passListView.adapter = passListAdapter
+        passListView.visibility = View.VISIBLE
+
         dialog.show()
     }
-
-    private fun isBouncer(student: Student, eventsid: Int) : Boolean {
+    private fun isBouncer(student: Student, eventsid: Int): Boolean {
         var isBouncer = false
         if (student.bouncingEvents != null) {
             isBouncer = eventsid in student.bouncingEvents!!
         }
         return isBouncer
     }
-
 }

@@ -90,7 +90,7 @@
     <string name="text_image">Text Image</string>
     <string name="invited_text">Invited</string>
     <string name="spots_text">Spots</string>
-    <string name="arrived_text">Arrived</string>
+    <string name="arrived_text">Students Arrived</string>
     <string name="save_changes">Save Changes</string>
     <string name="delete_event">Delete Event</string>
     <string name="main_activity">Main Activity</string>
@@ -135,4 +135,11 @@
     <string name="closing_date_visible_text">Show End Date:</string>
     <string name="closing_time_visible_text">Show End Time:</string>
     <string name="update_event_defaults">Update Event Defaults</string>
+    <string name="username_lowercase">Username must be lowercase</string>
+    <string name="event_capacity">Event Capacity</string>
+    <string name="event_distributed">Passes Distributed</string>
+    <string name="ok_button">OK</string>
+    <string name="x_button">x</string>
+    <string name="your_pass">Your Pass</string>
+    <string name="extra_pass">Extra Pass</string>
 </resources>

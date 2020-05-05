@@ -12,31 +12,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginStart="36dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="36dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="36dp"
         android:enabled="true"
         android:text="@string/type_here"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="1" />
-
-    <TextView
-        android:id="@+id/or_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:text="@string/or_textview"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/type_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="1" >
-
-    </TextView>
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/scanner_button"
@@ -44,15 +27,13 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginStart="36dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="36dp"
-        android:layout_marginBottom="32dp"
         android:enabled="true"
         android:text="@string/scan_here"
-        app:layout_constraintBottom_toTopOf="@id/or_textview"
+        app:layout_constraintBottom_toTopOf="@+id/type_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="1" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/scan_prompt"

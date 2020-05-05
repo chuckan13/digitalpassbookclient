@@ -78,7 +78,7 @@ class CreateEventFragment : Fragment(), NumberPicker.OnValueChangeListener {
         button.setOnClickListener {
             val dialog = context?.let { it1 -> Dialog(it1) }
             dialog?.setTitle("Number of Passes per Member")
-            dialog?.setContentView(R.layout.number_picker_dialog)
+            dialog?.setContentView(R.layout.dialog_number_picker)
             val cancelButton = dialog?.findViewById<Button>(R.id.cancel_button)
             val setButton = dialog?.findViewById<Button>(R.id.set_button)
             val numberPicker = dialog?.findViewById<NumberPicker>(R.id.number_picker)
