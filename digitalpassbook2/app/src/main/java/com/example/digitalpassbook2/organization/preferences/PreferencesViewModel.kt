@@ -48,15 +48,19 @@ class PreferencesViewModel : ViewModel() {
     fun addMember(orgId : Int, netId : String, context : Context, memberAutoCompleteTextView: AutoCompleteTextView) {
         viewModelScope.launch {
             val student = studentServe.getByNetId(netId)
-            if (student?.orgId == 0) {
-                organizationServe.addMember(orgId, netId)
-                memberAutoCompleteTextView.setText("")
-            }
-            else if (student?.orgId != orgId) {
-                Toast.makeText(context, "The NetID \"$netId\" belongs to a different club", Toast.LENGTH_LONG).show()
-            }
-            else {
-                Toast.makeText(context, "The NetID \"$netId\" already belongs to a member", Toast.LENGTH_LONG).show()
+            if (student != null) {
+                val name = student.name
+                if (student.orgId == 0) {
+                    organizationServe.addMember(orgId, netId)
+                    memberAutoCompleteTextView.setText("")
+                    Toast.makeText(context, "\"$name\" has been added as a member.", Toast.LENGTH_LONG).show()
+                }
+                else if (student.orgId != orgId) {
+                    Toast.makeText(context, "The NetID \"$netId\" belongs to a different club", Toast.LENGTH_LONG).show()
+                }
+                else {
+                    Toast.makeText(context, "The NetID \"$netId\" already belongs to a member", Toast.LENGTH_LONG).show()
+                }
             }
         }
     }
@@ -64,12 +68,15 @@ class PreferencesViewModel : ViewModel() {
     fun removeMember(orgId : Int, netId : String, context : Context, memberAutoCompleteTextView: AutoCompleteTextView) {
         viewModelScope.launch {
             val student = studentServe.getByNetId(netId)
-            if (student?.orgId == orgId) {
-                organizationServe.removeMember(orgId, netId)
-                memberAutoCompleteTextView.setText("")
-            }
-            else {
-                Toast.makeText(context, "The NetID \"$netId\" does not belong to a member", Toast.LENGTH_LONG).show()
+            if (student != null) {
+                val name = student.name
+                if (student.orgId == orgId) {
+                    organizationServe.removeMember(orgId, netId)
+                    memberAutoCompleteTextView.setText("")
+                    Toast.makeText(context, "\"$name\" has been removed as a member.", Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(context, "The NetID \"$netId\" does not belong to a member", Toast.LENGTH_LONG).show()
+                }
             }
         }
     }
