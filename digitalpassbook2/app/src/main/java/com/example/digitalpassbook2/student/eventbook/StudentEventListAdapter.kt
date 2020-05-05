@@ -3,6 +3,7 @@ package com.example.digitalpassbook2.student.eventbook
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -60,7 +61,7 @@ class StudentEventListAdapter (private val context: Context,
         ////format and set the date
         val passDate = rowView.findViewById<TextView>(R.id.event_date)
         val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
-        val dateformatter = SimpleDateFormat("M/d")
+        val dateformatter = SimpleDateFormat("MM/dd")
         val date = formatter.parse(event.startDate)
         val formattedDate = dateformatter.format(date)
         passDate.text = formattedDate
@@ -75,28 +76,26 @@ class StudentEventListAdapter (private val context: Context,
             if (isBouncer(student, eventId.toInt())) {
                 bounce.visibility=View.VISIBLE
             }
+        })
+
+        studentEventListViewModel.passes.observe(context, Observer { it1 ->
+            val passes = (it1 ?: return@Observer)
+            if (passes.isNotEmpty()) {
+                showDialog(context, passes, rowView)
+            }
             else {
-                bounce.visibility=View.INVISIBLE
+                val noPasses: AlertDialog.Builder? =
+                    getActivity(context)?.let { it2 -> AlertDialog.Builder(it2) }
+                noPasses?.setTitle("You Have No Spots For This Event")
+                noPasses?.setNeutralButton("OK", null)
+                Log.d("StudentEventListAdapter", "Neutral Message")
+                noPasses?.show()
             }
         })
 
         val eventRow = rowView.findViewById<RelativeLayout>(R.id.event_row)
         eventRow.setOnClickListener {
             studentEventListViewModel.getPassNumber(eventId, MyUser.id)
-            studentEventListViewModel.passes.observe(context, Observer { it1 ->
-                val passes = (it1 ?: return@Observer)
-                if (passes.isNotEmpty()) {
-                    showDialog(context, passes, rowView)
-                }
-                else {
-                    val noPasses: AlertDialog.Builder? =
-                        getActivity(context)?.let { it2 -> AlertDialog.Builder(it2) }
-                    noPasses?.setTitle("You have no spots")
-                    noPasses?.setNeutralButton("OK", null)
-                    println("other message")
-                    noPasses?.show()
-                }
-            })
         }
 
         bounce.setOnClickListener {
@@ -111,7 +110,8 @@ class StudentEventListAdapter (private val context: Context,
     fun showDialog(context: Context, passes : List<Pass?>, rowView : View) {
         // create dialog to display the passes
         val dialog = Dialog(context)
-        dialog.setCancelable(false)
+        dialog.setCancelable(true)
+        dialog.setCanceledOnTouchOutside(true)
         dialog.setContentView(R.layout.dialog_event_listview)
         dialog.window?.setLayout(900, 800)
         dialog.window?.setGravity(Gravity.CENTER)
@@ -129,6 +129,7 @@ class StudentEventListAdapter (private val context: Context,
 
         dialog.show()
     }
+
     private fun isBouncer(student: Student, eventsid: Int): Boolean {
         var isBouncer = false
         if (student.bouncingEvents != null) {
