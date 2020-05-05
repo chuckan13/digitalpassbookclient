@@ -34,35 +34,41 @@
         android:typeface="serif"
         tools:ignore="RelativeOverlap,RtlSymmetry" />
 
-    <ImageButton
-        android:id="@+id/security_button"
-        android:contentDescription="@string/bouncer"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_gravity="end"
-        android:layout_marginEnd="10dp"
-        android:text="@string/bouncer"
-        android:textStyle="bold"
-        android:adjustViewBounds="true"
-        android:scaleType="fitEnd"
-        android:visibility="invisible"
-        android:background="@android:color/transparent"
-        android:src="@drawable/ic_security" />
-
-    <TextView
-        android:id="@+id/event_date"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd ="true"
-        android:layout_alignParentTop="true"
+        android:orientation="vertical"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="14dp"
-        android:layout_marginEnd="16dp"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:typeface="serif"
-        tools:ignore="RelativeOverlap,RtlSymmetry" />
+        android:layout_marginEnd="14dp">
+
+        <TextView
+            android:id="@+id/event_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:typeface="serif"
+            tools:ignore="RelativeOverlap,RtlSymmetry" />
+
+        <ImageButton
+            android:id="@+id/security_button"
+            android:contentDescription="@string/bouncer"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:text="@string/bouncer"
+            android:textStyle="bold"
+            android:adjustViewBounds="true"
+            android:scaleType="fitEnd"
+            android:visibility="invisible"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_security" />
+
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"

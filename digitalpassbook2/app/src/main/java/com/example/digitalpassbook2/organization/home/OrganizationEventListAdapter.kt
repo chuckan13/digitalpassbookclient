@@ -14,6 +14,7 @@ import androidx.navigation.findNavController
 import com.example.digitalpassbook2.R
 import com.example.digitalpassbook2.MyUser
 import com.example.digitalpassbook2.server.*
+import java.text.SimpleDateFormat
 
 
 class OrganizationEventListAdapter (private val context: Context,
@@ -49,9 +50,13 @@ class OrganizationEventListAdapter (private val context: Context,
         val eventDate = rowView.findViewById(R.id.event_date) as TextView
         val event = getItem(position)
 
-        val dateStart = event?.startDate
-        val formatDateStart = dateStart?.substring(5,10)
-        eventDate.text = formatDateStart
+        // formats and sets the date info
+        val passDate = rowView.findViewById<TextView>(R.id.event_date)
+        val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+        val dateformatter = SimpleDateFormat("M/d")
+        val date = formatter.parse(event?.startDate)
+        val formattedDate = dateformatter.format(date)
+        eventDate.text = formattedDate
 
         rowView.findViewById<ImageButton>(R.id.details_button).setOnClickListener {
             val action =
