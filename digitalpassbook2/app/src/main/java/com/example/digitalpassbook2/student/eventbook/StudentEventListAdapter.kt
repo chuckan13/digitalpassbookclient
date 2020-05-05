@@ -85,6 +85,11 @@ class StudentEventListAdapter (private val context: Context,
             }
         })
 
+        // displays event details when the rowView is clicked
+        rowView.setOnClickListener {
+            showEventDialog(context, it, event)
+        }
+
         sendPass.setOnClickListener {
             val studentEventListViewModel = StudentEventListViewModel()
             studentEventListViewModel.getPassNumber(eventId, MyUser.id)
@@ -109,6 +114,49 @@ class StudentEventListAdapter (private val context: Context,
         }
 
         return rowView
+    }
+
+    // dialog for details for the event when the event rowView is clicked
+    @SuppressLint("RestrictedApi")
+    fun showEventDialog(context: Context, rowView : View, event: Event) {
+        val dialog = Dialog(context)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.dialog_eventdetails)
+        dialog.window?.setLayout(900, 800)
+        dialog.window?.setGravity(Gravity.CENTER)
+        val btndialog: Button = dialog.findViewById(R.id.btndialog) as Button
+        btndialog.setOnClickListener() { dialog.dismiss() }
+        val listView: ListView = dialog.findViewById(R.id.listview) as ListView
+
+        val details = ArrayList<String>()
+
+        val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+        val dateformatter = SimpleDateFormat("M/d")
+        val timeformatter = SimpleDateFormat("h:m a")
+        val startDate = formatter.parse(event.startDate)
+        val endDate = formatter.parse(event.endDate)
+        val formattedStartDate = dateformatter.format(startDate)
+        val formattedStartTime = timeformatter.format(startDate)
+        val formattedEndDate = dateformatter.format(endDate)
+        val formattedEndTime = timeformatter.format(endDate)
+
+        if (event.name != "") details.add("Event Name: " + event.name)
+        if (event.location != "") details.add("Event Location: " + event.location)
+        if (event.startDate != "") details.add("Start Date: " + formattedStartDate)
+        if (event.closeDateVisibility) details.add("End Date: " + formattedEndDate)
+        if (event.openTimeVisibility) details.add("Doors Open: " + formattedStartTime)
+        if (event.closeTimeVisibility) details.add("Doors Closed: " + formattedEndTime)
+        if (event.description != "") details.add("Description: " + event.description)
+        if (event.transferability) details.add("Unlimited Transfer")
+        else details.add("Single Transfer")
+
+        // access the listView from xml file
+        arrayAdapter = ArrayAdapter(this,
+            android.R.layout.simple_list_item_1, details)
+
+        listView.adapter = arrayAdapter
+
+        dialog.show()
     }
 
     @SuppressLint("RestrictedApi")
