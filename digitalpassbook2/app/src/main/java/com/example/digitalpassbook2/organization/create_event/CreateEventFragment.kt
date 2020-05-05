@@ -188,7 +188,7 @@ class CreateEventFragment : Fragment(), NumberPicker.OnValueChangeListener {
                 invitedAutoCompleteTextView.setText("")
             }
             else {
-                Toast.makeText(context, "The NetID " + invitedAutoCompleteTextView.text.toString() + " does not match any user", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, "The NetID \"" + invitedAutoCompleteTextView.text.toString() + "\" does not match any user", Toast.LENGTH_LONG).show()
             }
         }
 

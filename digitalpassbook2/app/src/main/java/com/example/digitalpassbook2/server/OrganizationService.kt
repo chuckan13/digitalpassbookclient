@@ -55,6 +55,20 @@ interface OrganizationService {
     @GET("organizations/signin/{signin}")
     suspend fun getOrganizationBySignin (@Path("signin") signin: String): Organization?
 
+//    Add member to an organization with its {id} with @body member netID
+    @PATCH("organizations/memberaddition/{id}")
+    suspend fun addMember(
+        @Path("id") id: Int,
+        @Body netId: String
+    ): Organization?
+
+//    Remove member from an organization with its {id} with @body member netID
+    @PATCH("organizations/memberremoval/{id}")
+    suspend fun removeMember(
+        @Path("id") id: Int,
+        @Body netId: String
+    ): Organization?
+
     companion object {
         fun create(): OrganizationService {
 

@@ -14,6 +14,7 @@
             <item
                 android:id="@+id/navigation_create_event"
                 android:icon="@drawable/ic_create_event"
+                app:showAsAction="ifRoom"
                 android:title="@string/title_create_event" />
 
             <item
