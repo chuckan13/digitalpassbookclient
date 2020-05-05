@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
@@ -189,7 +188,7 @@ class CreateEventFragment : Fragment(), NumberPicker.OnValueChangeListener {
                 invitedAutoCompleteTextView.setText("")
             }
             else {
-                Toast.makeText(context, "The NetID " + invitedAutoCompleteTextView.text.toString() + " does not match any user", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, "The NetID \"" + invitedAutoCompleteTextView.text.toString() + "\" does not match any user", Toast.LENGTH_LONG).show()
             }
         }
 

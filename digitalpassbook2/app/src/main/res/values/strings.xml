@@ -45,7 +45,7 @@
     <string name="message_hint">Message (optional)</string>
     <string name="guest_name">Guest Name</string>
     <string name="guest_name_hint">Guest Name</string>
-    <string name="number_hint">Passes per member</string>
+    <string name="number_hint">Passes per member:</string>
     <string name="title_eventbook">Events</string>
     <string name="title_passbook">Passbook</string>
     <string name="details_button">Details</string>
@@ -119,4 +119,20 @@
     <string name="leave">leave</string>
     <string name="access">access</string>
     <string name="add_a_bouncer">Bouncer Username</string>
+    <string name="membership_text">Membership:</string>
+    <string name="add_member">Add/remove member by NetID</string>
+    <string name="subtract_member">Remove member</string>
+    <string name="event_settings">Event Settings:</string>
+    <string name="event_defaults">Event Defaults:</string>
+    <string name="name">Name:</string>
+    <string name="title">Title:</string>
+    <string name="description">Description:</string>
+    <string name="event_description_hint">Event Description</string>
+    <string name="event_location_hint">Event Location</string>
+    <string name="location">Location:</string>
+    <string name="single_transfer_text">Single Transfer:</string>
+    <string name="opening_visible_text">Show Start Time:</string>
+    <string name="closing_date_visible_text">Show End Date:</string>
+    <string name="closing_time_visible_text">Show End Time:</string>
+    <string name="update_event_defaults">Update Event Defaults</string>
 </resources>

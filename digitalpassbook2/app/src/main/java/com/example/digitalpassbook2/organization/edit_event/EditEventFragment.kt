@@ -106,7 +106,7 @@ class EditEventFragment : Fragment() {
                     guestNameAutoCompleteTextView.setText("")
                 }
                 else {
-                    Toast.makeText(context, "The NetID " + guestNameAutoCompleteTextView.text.toString() + " does not match any user", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "The NetID \"" + guestNameAutoCompleteTextView.text.toString() + "\" does not match any user", Toast.LENGTH_LONG).show()
                 }
             }
 
@@ -118,7 +118,7 @@ class EditEventFragment : Fragment() {
                     bouncerAutoCompleteTextView.setText("")
                 }
                 else {
-                    Toast.makeText(context, "The NetID " + bouncerAutoCompleteTextView.text.toString() + " does not match any user", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "The NetID \"" + bouncerAutoCompleteTextView.text.toString() + "\" does not match any user", Toast.LENGTH_LONG).show()
                 }
             }
 
