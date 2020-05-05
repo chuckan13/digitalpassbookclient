@@ -124,4 +124,6 @@
     <string name="event_distributed">Passes Distributed</string>
     <string name="ok_button">OK</string>
     <string name="x_button">x</string>
+    <string name="your_pass">Your Pass</string>
+    <string name="extra_pass">Extra Pass</string>
 </resources>

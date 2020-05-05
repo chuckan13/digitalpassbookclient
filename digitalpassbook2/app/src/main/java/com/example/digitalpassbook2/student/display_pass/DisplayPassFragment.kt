@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
@@ -28,8 +27,6 @@ import com.google.zxing.MultiFormatWriter
 import com.google.zxing.WriterException
 import com.google.zxing.common.BitMatrix
 import java.text.SimpleDateFormat
-import java.util.*
-
 
 class DisplayPassFragment() : Fragment() {
 
@@ -101,8 +98,7 @@ class DisplayPassFragment() : Fragment() {
 
         // this code can be made substantially faster by doing a couple of things
         // 1. only generate the qr code when the small qr code/logo is clicked
-        // 2. use a generic qr code that is stored in drawables as the small qr code (no one will scan it)
-        // 3. (design idea) we can add a buffering/spinning wheel while the qr code renders... see register fragment lines 69 and 141 for an example
+        // 2. (design idea) we can add a buffering/spinning wheel while the qr code renders... see register fragment lines 69 and 141 for an example
         try {
             val qrText = ""+clubName+passId
             val bitmap = textToImageEncode(qrText)
@@ -148,7 +144,6 @@ class DisplayPassFragment() : Fragment() {
             startDateDisplay.toggleVisibility()
             startTimeDisplay.toggleVisibility()
         }
-
 
 
         progress.visibility = View.INVISIBLE

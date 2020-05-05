@@ -1,6 +1,7 @@
 package com.example.digitalpassbook2.student.passbook
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import com.example.digitalpassbook2.MainActivity
 import com.example.digitalpassbook2.R
 import com.example.digitalpassbook2.server.*
@@ -15,7 +17,8 @@ import com.example.digitalpassbook2.student.eventbook.EventbookFragmentDirection
 
 
 class StudentPassListAdapter (private val context: Context,
-                              private val studentPassList: MutableList<Pass?>) : BaseAdapter() {
+                              private val studentPassList: MutableList<Pass?>,
+                              private val dialog: Dialog, private val eventRowView: View) : BaseAdapter() {
 
     private val inflater: LayoutInflater =
         context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -32,25 +35,55 @@ class StudentPassListAdapter (private val context: Context,
         return studentPassList[position]?.id?.toLong()!!
     }
 
-    @SuppressLint("ViewHolder", "SetTextI18n")
+    @SuppressLint("ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val rowView = inflater.inflate(R.layout.adapter_student_pass_list, parent, false)
 
         val pass = getItem(position)
+        val orgId = pass?.orgId
+        val orgLogoArg = MainActivity.organizationLogos[orgId!!]
+        val orgNameArg = MainActivity.organizationNames[orgId]
+
 
         val orgLogo = rowView.findViewById(R.id.club_logo) as ImageView
         orgLogo.setImageResource(rowView.resources.getIdentifier(
-            MainActivity.organizationLogos[pass?.orgId!!], "drawable", context.packageName))
+            MainActivity.organizationLogos[pass.orgId], "drawable", context.packageName))
 
-        val orgName = rowView.findViewById(R.id.club_name) as TextView
-        orgName.text = "Pass: $position"
+        val orgName = rowView.findViewById(R.id.pass_number) as TextView
+        if (position == 0)
+            orgName.text = context.getString(R.string.your_pass)
+        else
+            orgName.text = context.getString(R.string.extra_pass)
 
-        val access = rowView.findViewById(R.id.access) as ImageView
+        val send = rowView.findViewById<ImageView>(R.id.send_pass_button)
         if (pass.isLocked) {
-            access.setImageResource(R.drawable.ic_locked)
+            send.setImageResource(R.drawable.ic_locked)
         }
         else {
-            access.setImageResource(R.drawable.ic_edit)
+            send.setImageResource(R.drawable.ic_send_24dp)
+            send.setOnClickListener {
+                val action = pass.id.toLong().let { it1 ->
+                    EventbookFragmentDirections.actionNavigationEventbookToNavigationSendPass(
+                        it1
+                    )
+                }
+                eventRowView.findNavController().navigate(action)
+                dialog.dismiss()
+            }
+        }
+
+        val passRow = rowView.findViewById<RelativeLayout>(R.id.pass_row)
+        passRow.setOnClickListener {
+            val action = pass.id.toLong().let { it1 ->
+                EventbookFragmentDirections.actionNavigationEventbookToNavigationDisplayPass(
+                    it1,
+                    orgId,
+                    orgLogoArg,
+                    orgNameArg
+                )
+            }
+            eventRowView.findNavController().navigate(action)
+            dialog.dismiss()
         }
 
         return rowView
