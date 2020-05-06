@@ -78,21 +78,6 @@ class StudentEventListAdapter (private val context: Context,
             }
         })
 
-        studentEventListViewModel.passes.observe(context, Observer { it1 ->
-            val passes = (it1 ?: return@Observer)
-            if (passes.isNotEmpty()) {
-                showDialog(context, passes, rowView)
-            }
-            else {
-                val noPasses: AlertDialog.Builder? =
-                    getActivity(context)?.let { it2 -> AlertDialog.Builder(it2) }
-                noPasses?.setTitle("You Have No Spots For This Event")
-                noPasses?.setNeutralButton("OK", null)
-                Log.d("StudentEventListAdapter", "Neutral Message")
-                noPasses?.show()
-            }
-        })
-
         val eventRow = rowView.findViewById<RelativeLayout>(R.id.event_row)
         studentEventListViewModel.getPassNumber(eventId, MyUser.id)
         studentEventListViewModel.passes.observe(context, Observer { it1 ->
