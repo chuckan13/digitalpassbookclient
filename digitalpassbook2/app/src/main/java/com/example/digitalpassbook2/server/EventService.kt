@@ -54,6 +54,12 @@ interface EventService {
         @Query("userbarcode") userBarCode: String
     ): Boolean
 
+    @PATCH("events/{id}/bouncer")
+    suspend fun addBouncer(
+        @Path("id") eventsId: Int,
+        @Body netId: String
+    ): Event?
+
     companion object {
         fun create(): EventService {
 

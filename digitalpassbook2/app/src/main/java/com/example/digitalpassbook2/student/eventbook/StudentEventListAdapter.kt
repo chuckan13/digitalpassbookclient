@@ -81,22 +81,20 @@ class StudentEventListAdapter (private val context: Context,
         })
 
         val eventRow = rowView.findViewById<RelativeLayout>(R.id.event_row)
-        eventRow.setOnClickListener {
-            studentEventListViewModel.getPassNumber(eventId, MyUser.id)
-            studentEventListViewModel.passes.observe(context, Observer { it1 ->
-                val passes = (it1 ?: return@Observer)
+        studentEventListViewModel.getPassNumber(eventId, MyUser.id)
+        studentEventListViewModel.passes.observe(context, Observer { it1 ->
+            val passes = (it1 ?: return@Observer)
+            val yesDialog = yesDialog(context, passes, rowView)
+            val noDialog = noDialog(context)
+            eventRow.setOnClickListener {
                 if (passes.isNotEmpty()) {
-                    showDialog(context, passes, rowView)
+                    yesDialog.show()
                 }
                 else {
-                    val noPasses: AlertDialog.Builder? =
-                        getActivity(context)?.let { it2 -> AlertDialog.Builder(it2) }
-                    noPasses?.setTitle("You have no spots")
-                    noPasses?.setNegativeButton("OK") { dialog, _ -> dialog.cancel() }
-                    noPasses?.show()
+                    noDialog?.show()
                 }
-            })
-        }
+            }
+        })
 
         bounce.setOnClickListener {
             val action = EventbookFragmentDirections.actionNavigationEventbookToNavigationScanPass(eventId)
@@ -107,7 +105,7 @@ class StudentEventListAdapter (private val context: Context,
     }
 
     @SuppressLint("RestrictedApi")
-    fun showDialog(context: Context, passes : List<Pass?>, rowView : View) {
+    fun yesDialog(context: Context, passes : List<Pass?>, rowView : View) : Dialog {
         // create dialog to display the passes
         val dialog = Dialog(context)
         dialog.setCancelable(false)
@@ -125,9 +123,17 @@ class StudentEventListAdapter (private val context: Context,
         val passListView: ListView = dialog.findViewById(R.id.listview) as ListView
         passListView.adapter = passListAdapter
         passListView.visibility = View.VISIBLE
-
-        dialog.show()
+        return dialog
     }
+
+    private fun noDialog(context: Context) : AlertDialog.Builder? {
+        val noPasses: AlertDialog.Builder? = AlertDialog.Builder(context)
+        noPasses?.setTitle("You have no spots")
+        noPasses?.setNegativeButton("OK") { dialog, _ -> dialog.cancel() }
+        return noPasses
+    }
+
+
     private fun isBouncer(student: Student, eventsid: Int): Boolean {
         var isBouncer = false
         if (student.bouncingEvents != null) {

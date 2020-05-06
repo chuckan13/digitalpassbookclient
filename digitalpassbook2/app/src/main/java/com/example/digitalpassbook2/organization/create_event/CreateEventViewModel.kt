@@ -142,6 +142,21 @@ class CreateEventViewModel : ViewModel() {
         }
     }
 
+    fun bouncerListPasses(bouncerList : MutableList<String?>, event : Event) {
+        viewModelScope.launch {
+            try {
+                bouncerList.forEach {
+                    if (it != null) {
+                        eventServe.addBouncer(event.id, it)
+                    }
+                }
+            }
+            catch (exception : Exception) {
+                println("bouncerList")
+            }
+        }
+    }
+
     fun makePass(student : Student?, event: Event) {
         val pass = student?.id?.let { it -> Pass(MyUser.id, it, event.id, event.startDate, arrayOf<String>(), isLocked=false) }
         if (pass != null) {

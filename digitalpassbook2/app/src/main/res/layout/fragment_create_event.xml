@@ -318,6 +318,45 @@
 
     </GridLayout>
 
+    <LinearLayout
+        android:id="@+id/bouncers"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@id/options_grid"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="24dp"
+        android:orientation="horizontal" >
+
+        <AutoCompleteTextView
+            android:id="@+id/bouncer_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center"
+            android:layout_marginEnd="2dp"
+            android:typeface="serif"
+            android:hint="@string/add_a_bouncer"
+            android:inputType="text"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+
+        <ImageButton
+            android:id="@+id/add_bouncer_button"
+            android:layout_gravity="start|center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:typeface="serif"
+            android:contentDescription="@string/add_invited"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_add_icon"/>
+
+    </LinearLayout>
+
     <Button
         android:id="@+id/option_toggle"
         android:layout_width="match_parent"

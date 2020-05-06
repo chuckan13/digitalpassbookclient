@@ -216,7 +216,7 @@
             android:layout_height="wrap_content"
             android:typeface="serif"
             android:contentDescription="@string/add_invited"
-            android:background="#000000"
+            android:background="@android:color/transparent"
             android:src="@drawable/ic_add_icon"/>
 
         <TextView
@@ -306,7 +306,7 @@
             android:layout_height="wrap_content"
             android:typeface="serif"
             android:contentDescription="@string/add_invited"
-            android:background="#000000"
+            android:background="@android:color/transparent"
             android:src="@drawable/ic_add_icon"/>
 
     </LinearLayout>

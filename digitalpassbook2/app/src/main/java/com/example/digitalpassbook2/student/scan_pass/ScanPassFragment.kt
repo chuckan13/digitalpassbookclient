@@ -23,7 +23,7 @@ import com.example.digitalpassbook2.R
 import com.example.digitalpassbook2.Util
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.zxing.integration.android.IntentIntegrator
-import kotlinx.android.synthetic.main.scan_pass_fragment.*
+import kotlinx.android.synthetic.main.fragment_scan_pass.*
 
 
 class ScanPassFragment : Fragment() {
@@ -37,7 +37,7 @@ class ScanPassFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.scan_pass_fragment, container, false)
+        return inflater.inflate(R.layout.fragment_scan_pass, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -22,6 +23,7 @@ import com.example.digitalpassbook2.Util
 import com.example.digitalpassbook2.login.login.ui.LoginActivity
 import com.example.digitalpassbook2.server.Event
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.android.synthetic.main.fragment_home.*
 
 
 class HomeFragment : Fragment() {
@@ -63,13 +65,20 @@ class HomeFragment : Fragment() {
     }
 
     private fun refresh() {
+        create_event.setOnClickListener{
+            findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToNavigationCreateEvent())
+        }
         homeViewModel.getEventList(MyUser.id)
         homeViewModel.eventList.observe(context as FragmentActivity, Observer { it ->
             val eventList = (it ?: return@Observer)
             var sortedEventList : MutableList<Event?> = ArrayList()
             if (eventList.isNotEmpty()) {
+                no_events.visibility = View.INVISIBLE
                 sortedEventList =
                     eventList.sortedWith(compareBy { it?.startDate }) as MutableList<Event?>
+            }
+            else {
+                no_events.visibility = View.VISIBLE
             }
             val adapter = activity?.let { OrganizationEventListAdapter(it, sortedEventList) }
             eventsListView.adapter = adapter

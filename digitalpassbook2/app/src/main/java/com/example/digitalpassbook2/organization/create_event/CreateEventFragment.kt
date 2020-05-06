@@ -36,6 +36,7 @@ class CreateEventFragment : Fragment(), NumberPicker.OnValueChangeListener {
     private lateinit var startDateFormatted : String
     private lateinit var endDateFormatted : String
     private lateinit var invitedAutoCompleteTextView : AutoCompleteTextView
+    private lateinit var bouncerAutoCompleteTextView : AutoCompleteTextView
 
     private fun handleDateTime(button : Button, date : Date, startDate : Date, endButton : Button, endDate : Date, formatter : SimpleDateFormat) {
         val format = SimpleDateFormat("M/d/yy, h:mm a")
@@ -152,22 +153,10 @@ class CreateEventFragment : Fragment(), NumberPicker.OnValueChangeListener {
         handleDateTime(doorsOpen, startDate, startDate, doorsClose, endDate, formatter)
         handleDateTime(doorsClose, endDate, startDate, doorsClose, endDate, formatter)
 
-        // Toggle visibility
-        val toggleButton = view.findViewById<Button>(R.id.option_toggle)
-        toggleButton.setOnClickListener{
-            eventTitle.toggleVisibility()
-            location.toggleVisibility()
-            description.toggleVisibility()
-            options_grid.toggleVisibility()
-            if (toggleButton.text == getString(R.string.see_more)) {
-                toggleButton.text = getString(R.string.see_less)
-            }
-            else toggleButton.text = getString(R.string.see_more)
-        }
-
         // Get input from invited field
         val studentStringList : MutableList<String> = ArrayList()
         invitedAutoCompleteTextView = view.findViewById(R.id.invited)
+        bouncerAutoCompleteTextView = view.findViewById(R.id.bouncer_name)
         createEventViewModel.getStudentList()
         createEventViewModel.studentList.observe(context as FragmentActivity, Observer { it1 ->
             val studentList = (it1 ?: return@Observer)
@@ -177,8 +166,9 @@ class CreateEventFragment : Fragment(), NumberPicker.OnValueChangeListener {
                     studentStringList.add(it.netid)
                 }
             }
-            val adapter = activity?.let {ArrayAdapter<String>(it, android.R.layout.simple_dropdown_item_1line, studentStringList)}
+            val adapter = activity?.let {ArrayAdapter(it, android.R.layout.simple_dropdown_item_1line, studentStringList)}
             invitedAutoCompleteTextView.setAdapter(adapter)
+            bouncerAutoCompleteTextView.setAdapter(adapter)
         })
         val guestList : MutableList<String?> = ArrayList()
         view.findViewById<ImageButton>(R.id.add_invited).setOnClickListener {
@@ -186,14 +176,41 @@ class CreateEventFragment : Fragment(), NumberPicker.OnValueChangeListener {
             if (guest in studentStringList) {
                 guestList.add(guest)
                 invitedAutoCompleteTextView.setText("")
+                Toast.makeText(context, "Guest added!", Toast.LENGTH_LONG).show()
             }
             else {
                 Toast.makeText(context, "The NetID \"" + invitedAutoCompleteTextView.text.toString() + "\" does not match any user", Toast.LENGTH_LONG).show()
             }
         }
+        val bouncerList : MutableList<String?> = ArrayList()
+        view.findViewById<ImageButton>(R.id.add_bouncer_button).setOnClickListener {
+            val bouncer = bouncerAutoCompleteTextView.text.toString()
+            if (bouncer in studentStringList) {
+                bouncerList.add(bouncer)
+                bouncerAutoCompleteTextView.setText("")
+                Toast.makeText(context, "Bouncer added!", Toast.LENGTH_LONG).show()
+            }
+            else {
+                Toast.makeText(context, "The username \"" + bouncerAutoCompleteTextView.text.toString() + "\" does not match any user", Toast.LENGTH_LONG).show()
+            }
+        }
 
         // Handle passes number
         passesNumber(numberButton)
+
+        // Toggle visibility
+        val toggleButton = view.findViewById<Button>(R.id.option_toggle)
+        toggleButton.setOnClickListener{
+            eventTitle.toggleVisibility()
+            location.toggleVisibility()
+            description.toggleVisibility()
+            options_grid.toggleVisibility()
+            bouncerAutoCompleteTextView.toggleVisibility()
+            if (toggleButton.text == getString(R.string.see_more)) {
+                toggleButton.text = getString(R.string.see_less)
+            }
+            else toggleButton.text = getString(R.string.see_more)
+        }
 
         // Submit form
         view.findViewById<Button>(R.id.submit).setOnClickListener {
@@ -213,6 +230,7 @@ class CreateEventFragment : Fragment(), NumberPicker.OnValueChangeListener {
                             val event = (it2 ?: return@Observer)
                             memberListPasses(numberPasses, event)
                             createEventViewModel.guestListPasses(guestList, event)
+                            createEventViewModel.bouncerListPasses(bouncerList, event)
                         })
                         findNavController().navigate(R.id.navigation_home)
                     }

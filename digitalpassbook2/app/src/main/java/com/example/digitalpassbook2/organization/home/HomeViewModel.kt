@@ -9,11 +9,6 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "Home"
-    }
-    val text: LiveData<String> = _text
-
     private val organizationServe by lazy {
         OrganizationService.create()
     }

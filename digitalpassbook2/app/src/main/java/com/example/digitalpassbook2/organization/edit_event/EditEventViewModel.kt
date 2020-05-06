@@ -85,35 +85,17 @@ class EditEventViewModel : ViewModel() {
         }
     }
 
-    fun bouncerList(bouncerList : MutableList<String?>, event : Event) {
+     fun bouncerList(bouncerList : MutableList<String?>, event : Event) {
         viewModelScope.launch {
             try {
-                val bouncers : MutableList<String> = ArrayList()
-                if (event.bouncers != null) {
-                    event.bouncers.forEach {
-                        bouncers.add(it)
+                bouncerList.forEach {
+                    if (it != null) {
+                        eventServe.addBouncer(event.id, it)
                     }
                 }
-                bouncerList.forEach { it2 ->
-                    if (it2 != null) {
-                        bouncers.add(it2)
-                        val student = studentServe.getByNetId(it2)
-                        val events : MutableList<Int> = ArrayList()
-                        student?.bouncingEvents?.forEach {
-                            events.add(it)
-                        }
-                        events.add(event.id)
-                        student?.bouncingEvents = events.toTypedArray()
-                        if (student != null) {
-                            studentServe.update(student.id, student)
-                        }
-                    }
-                }
-                event.bouncers = bouncers.toTypedArray()
-                eventServe.update(event.id, event)
             }
             catch (exception : Exception) {
-                println("getStudentFromInvited")
+                println("bouncerList")
             }
         }
     }

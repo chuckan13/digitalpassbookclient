@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -17,7 +18,9 @@ import com.example.digitalpassbook2.MainActivity
 import com.example.digitalpassbook2.MyUser
 import com.example.digitalpassbook2.R
 import com.example.digitalpassbook2.Util
+import com.example.digitalpassbook2.server.Event
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.android.synthetic.main.fragment_eventbook.*
 
 
 class EventbookFragment : Fragment() {
@@ -70,6 +73,12 @@ class EventbookFragment : Fragment() {
         eventbookViewModel.getEventList(MyUser.id)
         eventbookViewModel.eventList.observe(context as FragmentActivity, Observer { it ->
             MainActivity.studentEventList = (it ?: return@Observer)
+            if (MainActivity.studentEventList!!.isNotEmpty()) {
+                no_events.visibility = View.INVISIBLE
+            }
+            else {
+                no_events.visibility = View.VISIBLE
+            }
             val adapter = activity?.let { StudentEventListAdapter(it, MainActivity.studentEventList!!) }
             eventsListView.adapter = adapter
             eventsListView.visibility = View.VISIBLE

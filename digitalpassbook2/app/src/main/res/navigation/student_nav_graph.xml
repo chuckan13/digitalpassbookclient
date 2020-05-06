@@ -56,7 +56,7 @@
     <fragment
         android:id="@+id/navigation_scan_pass"
         android:name="com.example.digitalpassbook2.student.scan_pass.ScanPassFragment"
-        tools:layout="@layout/scan_pass_fragment" >
+        tools:layout="@layout/fragment_scan_pass" >
         <argument
             android:name="eventArg"
             app:argType="long" />

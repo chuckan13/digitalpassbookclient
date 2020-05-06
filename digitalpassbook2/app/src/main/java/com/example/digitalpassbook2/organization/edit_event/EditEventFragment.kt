@@ -104,6 +104,7 @@ class EditEventFragment : Fragment() {
                 if (guest in studentStringList) {
                     guestList.add(guest)
                     guestNameAutoCompleteTextView.setText("")
+                    Toast.makeText(context, "Guest added!", Toast.LENGTH_LONG).show()
                 }
                 else {
                     Toast.makeText(context, "The NetID \"" + guestNameAutoCompleteTextView.text.toString() + "\" does not match any user", Toast.LENGTH_LONG).show()
@@ -116,9 +117,10 @@ class EditEventFragment : Fragment() {
                 if (bouncer in studentStringList) {
                     bouncerList.add(bouncer)
                     bouncerAutoCompleteTextView.setText("")
+                    Toast.makeText(context, "Bouncer added!", Toast.LENGTH_LONG).show()
                 }
                 else {
-                    Toast.makeText(context, "The NetID \"" + bouncerAutoCompleteTextView.text.toString() + "\" does not match any user", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "The username \"" + bouncerAutoCompleteTextView.text.toString() + "\" does not match any user", Toast.LENGTH_LONG).show()
                 }
             }
 
@@ -180,9 +182,9 @@ class EditEventFragment : Fragment() {
                                 event.openTimeVisibility = viewableOpeningTime.isChecked
                                 event.closeDateVisibility = viewableClosingDate.isChecked
                                 event.closeTimeVisibility = viewableClosingTime.isChecked
+                                editEventViewModel.updateEvent(event.id, event)
                                 editEventViewModel.guestListPasses(guestList, event)
                                 editEventViewModel.bouncerList(bouncerList, event)
-                                editEventViewModel.updateEvent(event.id, event)
                                 findNavController().navigate(R.id.navigation_home)
                             }
                             DialogInterface.BUTTON_NEGATIVE -> {
