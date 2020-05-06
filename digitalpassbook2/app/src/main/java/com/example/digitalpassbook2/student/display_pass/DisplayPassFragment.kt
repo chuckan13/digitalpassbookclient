@@ -75,9 +75,9 @@ class DisplayPassFragment() : Fragment() {
             //val time = pass.date.substringAfter('T').substringBefore('.').substringBeforeLast(':')
 
             val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
-            val dateformatter = SimpleDateFormat("M/d")
+            val dateformatter = SimpleDateFormat("MM/dd")
             val date = formatter.parse(pass.date)
-            val timeformatter = SimpleDateFormat("h:mm a")
+            val timeformatter = SimpleDateFormat("hh:mm a")
             // these are the actual strings
             val formattedDate = dateformatter.format(date)
             val formattedTime = timeformatter.format(date)
@@ -91,6 +91,7 @@ class DisplayPassFragment() : Fragment() {
 
         orgLogo.setImageResource(resources.getIdentifier(clubLogo, "drawable", context?.packageName))
         orgLogosmall.setImageResource(resources.getIdentifier(clubLogo, "drawable", context?.packageName))
+        orgQRsmall.setImageResource(R.drawable.ic_qr_code)
         // view.setBackgroundColor(resources.getIdentifier(clubLogo, "values", context?.packageName))
         passImage.setImageResource(R.drawable.ic_passbook)
         orgName.text = args.clubNameArg
@@ -99,15 +100,6 @@ class DisplayPassFragment() : Fragment() {
         // this code can be made substantially faster by doing a couple of things
         // 1. only generate the qr code when the small qr code/logo is clicked
         // 2. (design idea) we can add a buffering/spinning wheel while the qr code renders... see register fragment lines 69 and 141 for an example
-        try {
-            val qrText = ""+clubName+passId
-            val bitmap = textToImageEncode(qrText)
-            orgQR.setImageBitmap(bitmap)
-            orgQRsmall.setImageBitmap(bitmap)
-        }
-        catch (e: WriterException) {
-            e.printStackTrace()
-        }
 
         orgLogo.setOnClickListener{
             orgLogo.toggleVisibility()
@@ -128,6 +120,17 @@ class DisplayPassFragment() : Fragment() {
         }
 
         orgQRsmall.setOnClickListener{
+            val loadingSpinner = view.findViewById<ProgressBar>(R.id.loading_spinner)
+            loadingSpinner.visibility = View.VISIBLE
+            try {
+                val qrText = ""+clubName+passId
+                val bitmap = textToImageEncode(qrText)
+                orgQR.setImageBitmap(bitmap)
+            }
+            catch (e: WriterException) {
+                e.printStackTrace()
+            }
+            loadingSpinner.visibility = View.INVISIBLE
             orgLogo.toggleVisibility()
             orgQR.toggleVisibility()
             orgQRsmall.toggleVisibility()

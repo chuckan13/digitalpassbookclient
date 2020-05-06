@@ -143,4 +143,5 @@
     <string name="your_pass">Your Pass</string>
     <string name="extra_pass">Extra Pass</string>
     <string name="no_events">Events Are Shown Here</string>
+    <string name="title_scan_pass">Scan Pass</string>
 </resources>

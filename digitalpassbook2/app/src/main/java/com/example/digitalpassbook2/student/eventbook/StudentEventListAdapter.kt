@@ -3,6 +3,7 @@ package com.example.digitalpassbook2.student.eventbook
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -75,8 +76,20 @@ class StudentEventListAdapter (private val context: Context,
             if (isBouncer(student, eventId.toInt())) {
                 bounce.visibility=View.VISIBLE
             }
+        })
+
+        studentEventListViewModel.passes.observe(context, Observer { it1 ->
+            val passes = (it1 ?: return@Observer)
+            if (passes.isNotEmpty()) {
+                showDialog(context, passes, rowView)
+            }
             else {
-                bounce.visibility=View.INVISIBLE
+                val noPasses: AlertDialog.Builder? =
+                    getActivity(context)?.let { it2 -> AlertDialog.Builder(it2) }
+                noPasses?.setTitle("You Have No Spots For This Event")
+                noPasses?.setNeutralButton("OK", null)
+                Log.d("StudentEventListAdapter", "Neutral Message")
+                noPasses?.show()
             }
         })
 
@@ -108,7 +121,8 @@ class StudentEventListAdapter (private val context: Context,
     fun yesDialog(context: Context, passes : List<Pass?>, rowView : View) : Dialog {
         // create dialog to display the passes
         val dialog = Dialog(context)
-        dialog.setCancelable(false)
+        dialog.setCancelable(true)
+        dialog.setCanceledOnTouchOutside(true)
         dialog.setContentView(R.layout.dialog_event_listview)
         dialog.window?.setLayout(900, 800)
         dialog.window?.setGravity(Gravity.CENTER)
@@ -132,7 +146,6 @@ class StudentEventListAdapter (private val context: Context,
         noPasses?.setNegativeButton("OK") { dialog, _ -> dialog.cancel() }
         return noPasses
     }
-
 
     private fun isBouncer(student: Student, eventsid: Int): Boolean {
         var isBouncer = false
