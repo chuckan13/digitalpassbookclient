@@ -42,7 +42,8 @@ class ScanPassFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        scanPassViewModel = ViewModelProviders.of(this).get(ScanPassViewModel::class.java)
+        scanPassViewModel = ViewModelProviders.of(this)[ScanPassViewModel::class.java]
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -55,6 +56,7 @@ class ScanPassFragment : Fragment() {
             integrator.setOrientationLocked(true)
             integrator.initiateScan()
         }
+
         typeButton.setOnClickListener{
             val builder: AlertDialog.Builder? = context?.let { it1 -> AlertDialog.Builder(it1) }
             builder?.setTitle("Enter Barcode Number:")
@@ -64,33 +66,14 @@ class ScanPassFragment : Fragment() {
             builder?.setPositiveButton("OK"
             ) { _, _ ->
                 val text = input.text.toString()
-                scanPassCheck(text)
+                val eventId = args.eventArg.toInt()
+                scanPassViewModel.scanPass(eventId, text)
             }
             builder?.setNegativeButton("Cancel"
             ) { dialog, _ -> dialog.cancel() }
             builder?.show()
         }
-    }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        val result= IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
-        if (result != null) {
-            if (result.contents == null) {
-                scan_result.setImageResource(R.drawable.ic_cancel)
-            }
-            else {
-                scanPassCheck(result.contents)
-            }
-        }
-        else {
-            super.onActivityResult(requestCode, resultCode, data)
-        }
-    }
-
-    private fun scanPassCheck(barcode : String) {
-        val eventId = args.eventArg.toInt()
-        scanPassViewModel.scanPass(eventId, barcode)
         scanPassViewModel.onList.observe(context as FragmentActivity, Observer {
             val onList = it ?: return@Observer
             val scanResult = rootview.findViewById(R.id.scan_result) as ImageView
@@ -101,6 +84,23 @@ class ScanPassFragment : Fragment() {
                 scanResult.setImageResource(R.drawable.ic_cancel)
             }
         })
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        val result= IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+        if (result != null) {
+            if (result.contents == null) {
+                scan_result.setImageResource(R.drawable.ic_cancel)
+            }
+            else {
+                val eventId = args.eventArg.toInt()
+                scanPassViewModel.scanPass(eventId, result.contents)
+            }
+        }
+        else {
+            super.onActivityResult(requestCode, resultCode, data)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -134,8 +134,6 @@ class ScanPassFragment : Fragment() {
         (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayShowTitleEnabled(false)
         toolbar.setupWithNavController(navController, appBarConfiguration)
         setHasOptionsMenu(true)
-        val navView: BottomNavigationView = view.findViewById(R.id.student_nav_view)
-        navView.setupWithNavController(navController)
     }
 
 }
