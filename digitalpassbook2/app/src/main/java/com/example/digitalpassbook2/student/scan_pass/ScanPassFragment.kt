@@ -40,14 +40,9 @@ class ScanPassFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_scan_pass, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        scanPassViewModel = ViewModelProviders.of(this)[ScanPassViewModel::class.java]
-
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        scanPassViewModel = ViewModelProviders.of(this)[ScanPassViewModel::class.java]
         setNavigation(view)
         val scannerButton = view.findViewById<Button>(R.id.scanner_button)
         val typeButton = view.findViewById<Button>(R.id.type_button)

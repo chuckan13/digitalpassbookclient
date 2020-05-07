@@ -16,7 +16,7 @@ import com.example.digitalpassbook2.R
 import com.example.digitalpassbook2.Util
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class NotificationsFragment : Fragment(), FragmentManager.OnBackStackChangedListener {
+class NotificationsFragment : Fragment() {
 
     private lateinit var notificationsViewModel: NotificationsViewModel
 
@@ -42,23 +42,13 @@ class NotificationsFragment : Fragment(), FragmentManager.OnBackStackChangedList
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onBackStackChanged() {
-    }
-
     private fun setNavigation(view : View) {
-        val navView: BottomNavigationView = view.findViewById(R.id.nav_view)
         val host : Int
-        val appBarConfiguration : AppBarConfiguration
         if (MyUser.isOrg) {
             host = R.id.organization_nav_host_fragment
-            appBarConfiguration = AppBarConfiguration(setOf(
-                R.id.navigation_home, R.id.navigation_notifications, R.id.navigation_preferences))
-            navView.inflateMenu(R.menu.organization_bottom_nav_menu)
         }
         else {
             host = R.id.student_nav_host_fragment
-            appBarConfiguration = AppBarConfiguration(setOf(R.id.navigation_eventbook, R.id.navigation_notifications))
-            navView.inflateMenu(R.menu.student_bottom_nav_menu)
         }
         val navController = Navigation.findNavController(context as FragmentActivity, host)
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
@@ -66,10 +56,8 @@ class NotificationsFragment : Fragment(), FragmentManager.OnBackStackChangedList
         (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayShowHomeEnabled(true)
         (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayShowTitleEnabled(false)
-        toolbar.setupWithNavController(navController, appBarConfiguration)
+        toolbar.setupWithNavController(navController)
         setHasOptionsMenu(true)
-        fragmentManager?.addOnBackStackChangedListener(this)
-        navView.setupWithNavController(navController)
     }
 
 }

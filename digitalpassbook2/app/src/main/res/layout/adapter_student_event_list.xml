@@ -65,6 +65,7 @@
             android:adjustViewBounds="true"
             android:scaleType="fitEnd"
             android:visibility="invisible"
+            android:layout_marginTop="20dp"
             android:background="@android:color/transparent"
             android:src="@drawable/ic_security" />
 
