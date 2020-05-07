@@ -92,17 +92,13 @@ class HomeFragment : Fragment() {
             context as FragmentActivity,
             R.id.organization_nav_host_fragment
         )
-        val appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.navigation_home, R.id.navigation_preferences))
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
         (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
         (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayShowHomeEnabled(true)
         (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayShowTitleEnabled(false)
-        toolbar.setupWithNavController(navController, appBarConfiguration)
+        toolbar.setupWithNavController(navController)
         setHasOptionsMenu(true)
-        val navView: BottomNavigationView = view.findViewById(R.id.organization_nav_view)
-        navView.setupWithNavController(navController)
     }
 
 }
