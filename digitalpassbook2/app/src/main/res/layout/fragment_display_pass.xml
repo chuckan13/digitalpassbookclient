@@ -118,16 +118,16 @@
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:textSize="28sp"
-        android:format12Hour="h:mm:ss a"
+        android:format12Hour="hh:mm:ss a"
         android:visibility="visible"
         android:typeface="serif"
-        app:layout_constraintVertical_bias="0.3"
+        app:layout_constraintVertical_bias="0.9"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pass_qr_small" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/pass_qr"
@@ -152,21 +152,6 @@
         android:contentDescription="@string/pass_qr"
         android:src="@android:drawable/ic_menu_gallery"
         android:alpha="0.5"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.87" />
-
-    <ImageView
-        android:id="@+id/pass_qr_small"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:visibility="visible"
-        android:contentDescription="@string/pass_qr"
-        android:src="@android:drawable/ic_menu_gallery"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

@@ -58,7 +58,8 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/main_activity"
-            android:noHistory="false">
+            android:noHistory="false"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
 
