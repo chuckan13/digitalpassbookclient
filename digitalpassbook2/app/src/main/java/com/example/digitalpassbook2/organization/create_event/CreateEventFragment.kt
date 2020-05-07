@@ -275,8 +275,6 @@ class CreateEventFragment : Fragment(), NumberPicker.OnValueChangeListener {
         (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayShowTitleEnabled(false)
         toolbar.setupWithNavController(navController, appBarConfiguration)
         setHasOptionsMenu(true)
-        val navView: BottomNavigationView = view.findViewById(R.id.organization_nav_view)
-        navView.setupWithNavController(navController)
     }
 
 }

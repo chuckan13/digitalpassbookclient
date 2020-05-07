@@ -5,6 +5,7 @@ import android.view.*
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -57,6 +58,7 @@ class SendPassFragment : Fragment() {
         // Send the pass to them and navigate back to passbook
         view.findViewById<Button>(R.id.send_button_2).setOnClickListener {
             sendPassViewModel.updatePass(passId, guestNameAutoCompleteTextView.text.toString())
+            Toast.makeText(context, "Pass Sent", Toast.LENGTH_LONG).show()
             findNavController().navigate(R.id.navigation_eventbook)
         }
     }

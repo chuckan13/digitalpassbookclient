@@ -104,6 +104,7 @@ class PreferencesFragment : Fragment(), NumberPicker.OnValueChangeListener {
                 organization.defaultCloseTimeVisibility = viewableClosingTime.isChecked
                 organization.defaultPassesPerMember = number.text.toString().toInt()
                 preferencesViewModel.updateOrganization(MyUser.id, organization)
+                Toast.makeText(context, "Defaults Updated", Toast.LENGTH_LONG).show()
                 findNavController().navigate(R.id.navigation_home)
             }
 

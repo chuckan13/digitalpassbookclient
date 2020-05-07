@@ -66,6 +66,10 @@ class DisplayPassFragment() : Fragment() {
         val startTimeDisplay = view.findViewById(R.id.start_time) as TextView
         val passImage = view.findViewById(R.id.pass_image) as ImageView
 
+        orgLogo.setImageResource(resources.getIdentifier(clubLogo, "drawable", context?.packageName))
+        orgLogosmall.setImageResource(resources.getIdentifier(clubLogo, "drawable", context?.packageName))
+        orgQRsmall.setImageResource(R.drawable.ic_qr_code)
+
         // retrieves the pass object associated with this pass, sets date and time TextViews
         displayPassViewModel.getPass(passId)
         displayPassViewModel.pass.observe(context as FragmentActivity, Observer { it ->
@@ -89,9 +93,6 @@ class DisplayPassFragment() : Fragment() {
             //startTimeDisplay.text = time
         })
 
-        orgLogo.setImageResource(resources.getIdentifier(clubLogo, "drawable", context?.packageName))
-        orgLogosmall.setImageResource(resources.getIdentifier(clubLogo, "drawable", context?.packageName))
-        orgQRsmall.setImageResource(R.drawable.ic_qr_code)
         // view.setBackgroundColor(resources.getIdentifier(clubLogo, "values", context?.packageName))
         passImage.setImageResource(R.drawable.ic_passbook)
         orgName.text = args.clubNameArg
