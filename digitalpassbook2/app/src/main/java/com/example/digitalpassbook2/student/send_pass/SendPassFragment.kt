@@ -51,7 +51,7 @@ class SendPassFragment : Fragment() {
                     studentStringList.add(it.netid)
                 }
             }
-            val adapter = activity?.let {ArrayAdapter<String>(it, android.R.layout.simple_dropdown_item_1line, studentStringList)}
+            val adapter = activity?.let {ArrayAdapter(it, android.R.layout.simple_dropdown_item_1line, studentStringList)}
             guestNameAutoCompleteTextView.setAdapter(adapter)
         })
 
