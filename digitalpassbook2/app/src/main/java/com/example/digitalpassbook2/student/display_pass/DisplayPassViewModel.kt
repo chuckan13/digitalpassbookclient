@@ -9,17 +9,17 @@ import kotlinx.coroutines.launch
 
 class DisplayPassViewModel : ViewModel() {
 
-    private val passServe by lazy {
-        PassService.create()
+    private val eventServe by lazy {
+        EventService.create()
     }
 
     // gets the pass associated with a specific PassId (why do we need this here?)
-    private val _pass = MutableLiveData<Pass>()
-    val pass: LiveData<Pass> = _pass
+    private val _event = MutableLiveData<Event>()
+    val event: LiveData<Event> = _event
 
-    fun getPass(passId : Int) {
+    fun getEvent(eventId : Int) {
         viewModelScope.launch {
-            _pass.value = passServe.get(passId)
+            _event.value = eventServe.get(eventId)
         }
     }
 

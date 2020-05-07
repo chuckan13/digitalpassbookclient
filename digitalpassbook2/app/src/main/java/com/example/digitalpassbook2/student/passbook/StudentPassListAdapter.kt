@@ -50,10 +50,9 @@ class StudentPassListAdapter (private val context: Context,
             MainActivity.organizationLogos[pass.orgId], "drawable", context.packageName))
 
         val orgName = rowView.findViewById(R.id.pass_number) as TextView
-        if (position == 0)
-            orgName.text = context.getString(R.string.your_pass)
-        else
-            orgName.text = context.getString(R.string.extra_pass)
+
+        val passNumber = position + 1
+        orgName.text = "Pass $passNumber"
 
         val send = rowView.findViewById<ImageView>(R.id.send_pass_button)
         if (pass.isLocked) {
@@ -74,7 +73,7 @@ class StudentPassListAdapter (private val context: Context,
 
         val passRow = rowView.findViewById<RelativeLayout>(R.id.pass_row)
         passRow.setOnClickListener {
-            val action = pass.id.toLong().let { it1 ->
+            val action = pass.let { it1 ->
                 EventbookFragmentDirections.actionNavigationEventbookToNavigationDisplayPass(
                     it1,
                     orgId,

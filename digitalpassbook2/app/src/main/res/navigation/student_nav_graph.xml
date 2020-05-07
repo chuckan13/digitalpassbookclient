@@ -32,7 +32,7 @@
         tools:layout="@layout/fragment_display_pass" >
         <argument
             android:name="passArg"
-            app:argType="long" />
+            app:argType="com.example.digitalpassbook2.server.Pass" />
         <argument
             android:name="clubIdArg"
             app:argType="integer" />

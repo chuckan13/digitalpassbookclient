@@ -145,4 +145,5 @@
     <string name="no_events">Events Are Shown Here</string>
     <string name="title_scan_pass">Scan Pass</string>
     <string name="scan_explanation">Scanning Your ID Lets You Get In More Quickly At The Door!</string>
+    <string name="pass">Pass $passNumber</string>
 </resources>

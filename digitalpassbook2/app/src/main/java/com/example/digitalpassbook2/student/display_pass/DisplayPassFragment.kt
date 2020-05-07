@@ -1,6 +1,7 @@
 package com.example.digitalpassbook2.student.display_pass
 
 import android.graphics.Bitmap
+import android.media.Image
 import android.os.Build
 import android.os.Bundle
 import android.view.*
@@ -21,12 +22,14 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.digitalpassbook2.MyUser
 import com.example.digitalpassbook2.R
 import com.example.digitalpassbook2.Util
+import com.example.digitalpassbook2.server.Pass
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.google.zxing.WriterException
 import com.google.zxing.common.BitMatrix
 import java.text.SimpleDateFormat
+import java.util.*
 
 class DisplayPassFragment() : Fragment() {
 
@@ -51,106 +54,33 @@ class DisplayPassFragment() : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setNavigation(view)
 
-        val passId = args.passArg.toInt()
-        val clubName = args.clubNameArg
+        val pass: Pass = args.passArg
         val clubLogo = args.clubLogoArg
 
-        val progress = view.findViewById(R.id.loading_spinner) as ProgressBar
         val orgLogo = view.findViewById(R.id.pass_club_logo) as ImageView
         val orgLogosmall = view.findViewById(R.id.pass_club_logo_small) as ImageView
         val orgName = view.findViewById(R.id.pass_club_name) as TextView
         val studentName = view.findViewById(R.id.user_name) as TextView
-        val orgQR = view.findViewById(R.id.pass_qr) as ImageView
-        val orgQRsmall = view.findViewById(R.id.pass_qr_small) as ImageView
         val startDateDisplay = view.findViewById(R.id.start_date) as TextView
         val startTimeDisplay = view.findViewById(R.id.start_time) as TextView
-        val passImage = view.findViewById(R.id.pass_image) as ImageView
 
         orgLogo.setImageResource(resources.getIdentifier(clubLogo, "drawable", context?.packageName))
         orgLogosmall.setImageResource(resources.getIdentifier(clubLogo, "drawable", context?.packageName))
-        orgQRsmall.setImageResource(R.drawable.ic_qr_code)
-
-        // retrieves the pass object associated with this pass, sets date and time TextViews
-        displayPassViewModel.getPass(passId)
-        displayPassViewModel.pass.observe(context as FragmentActivity, Observer { it ->
-            val pass = (it ?: return@Observer)
-            // extracts date and time strings from pass.date, and sets TextViews in the xml
-            //val date = pass.date.substringBefore('T').substringAfter('-')
-            //val time = pass.date.substringAfter('T').substringBefore('.').substringBeforeLast(':')
-
-            val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
-            val dateformatter = SimpleDateFormat("MM/dd")
-            val date = formatter.parse(pass.date)
-            val timeformatter = SimpleDateFormat("hh:mm a")
-            // these are the actual strings
-            val formattedDate = dateformatter.format(date)
-            val formattedTime = timeformatter.format(date)
-
-            startDateDisplay.text = formattedDate
-            startTimeDisplay.text = formattedTime
-
-            //startDateDisplay.text = date
-            //startTimeDisplay.text = time
-        })
-
-        // view.setBackgroundColor(resources.getIdentifier(clubLogo, "values", context?.packageName))
-        passImage.setImageResource(R.drawable.ic_passbook)
         orgName.text = args.clubNameArg
         studentName.text = MyUser.name
 
-        // this code can be made substantially faster by doing a couple of things
-        // 1. only generate the qr code when the small qr code/logo is clicked
-        // 2. (design idea) we can add a buffering/spinning wheel while the qr code renders... see register fragment lines 69 and 141 for an example
+        val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+        val dateFormatter = SimpleDateFormat("MM/dd")
+        val date: Date = formatter.parse(pass.date)
+        val timeFormatter = SimpleDateFormat("hh:mm a")
 
-        orgLogo.setOnClickListener{
-            orgLogo.toggleVisibility()
-            orgQR.toggleVisibility()
-            orgQRsmall.toggleVisibility()
-            passImage.toggleVisibility()
-            startDateDisplay.toggleVisibility()
-            startTimeDisplay.toggleVisibility()
-        }
+        // these are the actual strings
+        val formattedDate = dateFormatter.format(date)
+        val formattedTime = timeFormatter.format(date)
 
-        orgQR.setOnClickListener{
-            orgLogo.toggleVisibility()
-            orgQR.toggleVisibility()
-            orgQRsmall.toggleVisibility()
-            passImage.toggleVisibility()
-            startDateDisplay.toggleVisibility()
-            startTimeDisplay.toggleVisibility()
-        }
+        startDateDisplay.text = formattedDate
+        startTimeDisplay.text = formattedTime
 
-        orgQRsmall.setOnClickListener{
-            val loadingSpinner = view.findViewById<ProgressBar>(R.id.loading_spinner)
-            loadingSpinner.visibility = View.VISIBLE
-            try {
-                val qrText = ""+clubName+passId
-                val bitmap = textToImageEncode(qrText)
-                orgQR.setImageBitmap(bitmap)
-            }
-            catch (e: WriterException) {
-                e.printStackTrace()
-            }
-            loadingSpinner.visibility = View.INVISIBLE
-            orgLogo.toggleVisibility()
-            orgQR.toggleVisibility()
-            orgQRsmall.toggleVisibility()
-            passImage.toggleVisibility()
-            startDateDisplay.toggleVisibility()
-            startTimeDisplay.toggleVisibility()
-        }
-
-        passImage.setOnClickListener{
-            orgLogo.toggleVisibility()
-            orgQR.toggleVisibility()
-            orgQRsmall.toggleVisibility()
-            passImage.toggleVisibility()
-            startDateDisplay.toggleVisibility()
-            startTimeDisplay.toggleVisibility()
-        }
-
-
-        progress.visibility = View.INVISIBLE
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
