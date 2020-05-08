@@ -70,9 +70,9 @@ class DisplayPassFragment() : Fragment() {
         studentName.text = MyUser.name
 
         val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
-        val dateFormatter = SimpleDateFormat("MM/dd")
+        val dateFormatter = SimpleDateFormat("M/d")
         val date: Date = formatter.parse(pass.date)
-        val timeFormatter = SimpleDateFormat("hh:mm a")
+        val timeFormatter = SimpleDateFormat("h:mm a")
 
         // these are the actual strings
         val formattedDate = dateFormatter.format(date)

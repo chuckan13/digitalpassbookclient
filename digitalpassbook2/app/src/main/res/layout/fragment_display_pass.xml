@@ -118,7 +118,7 @@
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:textSize="28sp"
-        android:format12Hour="hh:mm:ss a"
+        android:format12Hour="h:mm:ss a"
         android:visibility="visible"
         android:typeface="serif"
         app:layout_constraintVertical_bias="0.9"

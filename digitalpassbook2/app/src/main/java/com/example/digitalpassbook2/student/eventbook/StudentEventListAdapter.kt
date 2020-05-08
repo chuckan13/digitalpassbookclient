@@ -61,7 +61,7 @@ class StudentEventListAdapter (private val context: Context,
         ////format and set the date
         val passDate = rowView.findViewById<TextView>(R.id.event_date)
         val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
-        val dateformatter = SimpleDateFormat("MM/dd")
+        val dateformatter = SimpleDateFormat("M/d")
         val date = formatter.parse(event.startDate)
         val formattedDate = dateformatter.format(date)
         passDate.text = formattedDate
