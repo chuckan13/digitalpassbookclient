@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/students_arrived_prompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/passes_distributed_prompt"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.3"
+        android:layout_marginBottom="10dp"
+        android:text="@string/arrived_text"
+        android:typeface="serif"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/students_arrived"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/passes_distributed_prompt"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/students_arrived_prompt"
+        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_marginBottom="10dp"
+        android:text="0"
+        android:typeface="serif"
+        android:textSize="20sp"
+        />
+
+
+    <TextView
+        android:id="@+id/passes_distributed_prompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/event_capacity_prompt"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="@id/students_arrived_prompt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginBottom="10dp"
+        android:text="@string/event_distributed"
+        android:typeface="serif"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/passes_distributed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/event_capacity_prompt"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/students_arrived"
+        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintHorizontal_bias="0"
+        android:layout_marginBottom="10dp"
+        android:text="0"
+        android:typeface="serif"
+        android:textSize="20sp"
+         />
+
+    <TextView
+        android:id="@+id/event_capacity_prompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/ok_button"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="@id/students_arrived_prompt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="1"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginBottom="20dp"
+        android:text="@string/event_capacity"
+        android:typeface="serif"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/event_capacity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/ok_button"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/students_arrived"
+        app:layout_constraintVertical_bias="1"
+        app:layout_constraintHorizontal_bias="0"
+        android:layout_marginBottom="20dp"
+        android:text="0"
+        android:typeface="serif"
+        android:textSize="20sp"
+        />
+
+    <Button
+        android:id="@+id/ok_button"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.85"
+        android:text="@string/ok_button"
+        android:typeface="serif"
+        android:textSize="18sp"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

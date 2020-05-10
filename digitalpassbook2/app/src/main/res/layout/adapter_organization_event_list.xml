@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="140dp"
+    android:focusable="true"
+    android:id="@+id/organization_row"
+    android:clickable="true"
+    android:background="?attr/selectableItemBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:orientation="vertical"
+        android:id="@+id/linear_layout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:gravity="start|top"
+            tools:ignore="RtlSymmetry" >
+
+            <ImageView
+                android:id="@+id/event_club_logo"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:contentDescription="@string/club_logo"
+                android:layout_marginEnd="8dp"
+                tools:ignore="RtlSymmetry" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="start"
+                tools:ignore="RtlSymmetry" >
+
+                <TextView
+                    android:id="@+id/event_club_name"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:typeface="serif"
+                    tools:ignore="RtlSymmetry" />
+
+                <TextView
+                    android:id="@+id/event_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="16sp"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:typeface="serif"
+                    tools:ignore="RtlSymmetry" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/details_button"
+            android:contentDescription="@string/send_pass"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center|end"
+            android:layout_marginEnd="5dp"
+            android:text="@string/details_button"
+            android:textStyle="bold"
+            android:typeface="serif"
+            android:src="@drawable/ic_edit"
+            android:adjustViewBounds="true"
+            android:scaleType="fitEnd"
+            android:background="@android:color/transparent"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:layout_alignBottom="@id/linear_layout" />
+
+</RelativeLayout>
