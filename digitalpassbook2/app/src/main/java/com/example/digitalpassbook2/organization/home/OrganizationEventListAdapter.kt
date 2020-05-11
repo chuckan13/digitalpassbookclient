@@ -80,7 +80,7 @@ class OrganizationEventListAdapter (private val context: Context,
         dialog.setCanceledOnTouchOutside(true)
         dialog.setContentView(R.layout.dialog_organization_listview)
         dialog.window?.setGravity(Gravity.CENTER)
-        dialog.window?.setLayout(900, 700)
+        dialog.window?.setLayout(600, 470)
 
         val distributed = dialog.findViewById<TextView>(R.id.passes_distributed)
         event.id.let { it1 -> organizationEventListViewModel.getStudents(it1) }
