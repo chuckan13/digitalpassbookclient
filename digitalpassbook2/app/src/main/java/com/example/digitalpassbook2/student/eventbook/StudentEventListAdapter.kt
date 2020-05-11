@@ -109,7 +109,7 @@ class StudentEventListAdapter (private val context: Context,
         dialog.setCancelable(true)
         dialog.setCanceledOnTouchOutside(true)
         dialog.setContentView(R.layout.dialog_event_listview)
-        dialog.window?.setLayout(900, 800)
+        dialog.window?.setLayout(600, 550)
         dialog.window?.setGravity(Gravity.CENTER)
         val btndialog: Button = dialog.findViewById(R.id.btndialog) as Button
         btndialog.setOnClickListener { dialog.dismiss() }

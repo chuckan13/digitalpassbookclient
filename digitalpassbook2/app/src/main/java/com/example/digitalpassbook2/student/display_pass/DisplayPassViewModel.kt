@@ -22,24 +22,4 @@ class DisplayPassViewModel : ViewModel() {
             _event.value = eventServe.get(eventId)
         }
     }
-
-//    // gets the organization associated with a specific organization Id
-//    private val _organization = MutableLiveData<Organization>()
-//    val organization: LiveData<Organization> = _organization
-//
-//    fun getOrganization(orgId : Int) {
-//        viewModelScope.launch {
-//            _organization.value = organizationServe.get(orgId)
-//        }
-//    }
-//
-//    // gets the event associated with a particular eventId
-//    private val _event = MutableLiveData<Event>()
-//    val event: LiveData<Event> = _event
-//
-//    fun getEvent(eventId : Int) {
-//        viewModelScope.launch {
-//            _event.value = eventServe.get(eventId)
-//        }
-//    }
 }
