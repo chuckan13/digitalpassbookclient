@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Digital Passbook</string>
+    <string name="app_name">Passbook</string>
     <string name="organization_activity">Organization Activity</string>
     <string name="student_activity">Student Activity</string>
     <string name="register_activity">Register Activity</string>
