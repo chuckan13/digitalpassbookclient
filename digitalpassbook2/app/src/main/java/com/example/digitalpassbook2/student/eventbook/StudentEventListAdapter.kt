@@ -112,8 +112,8 @@ class StudentEventListAdapter (private val context: Context,
     fun showYesDialog(context: Context, passes : List<Pass?>, eventBookView: View) {
         // create dialog to display the passes
         val dialog = Dialog(context)
-        dialog.setCancelable(false)
-        dialog.setCanceledOnTouchOutside(false)
+        dialog.setCancelable(true)
+        dialog.setCanceledOnTouchOutside(true)
         dialog.setContentView(R.layout.dialog_event_listview)
         dialog.window?.setLayout(600, 550)
         dialog.window?.setGravity(Gravity.CENTER)
