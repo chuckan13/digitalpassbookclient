@@ -52,7 +52,7 @@
         android:textColor="#FFFFFF"
         android:typeface="serif"
         android:textSize="18sp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="3dp"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginEnd="@dimen/activity_horizontal_margin" />
 
@@ -104,7 +104,7 @@
         app:layout_constraintTop_toBottomOf="@id/event_defaults"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="3dp"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         >
@@ -116,7 +116,7 @@
             android:textColor="#FFFFFF"
             android:typeface="serif"
             android:textSize="18sp"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="3dp"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             />
 
@@ -148,7 +148,7 @@
             android:textColor="#FFFFFF"
             android:typeface="serif"
             android:textSize="18sp"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="3dp"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             />
 
@@ -180,7 +180,7 @@
             android:textColor="#FFFFFF"
             android:typeface="serif"
             android:textSize="18sp"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="3dp"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             />
 
@@ -200,7 +200,7 @@
         app:layout_constraintTop_toBottomOf="@id/location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         >
@@ -212,7 +212,7 @@
             android:textColor="#FFFFFF"
             android:typeface="serif"
             android:textSize="18sp"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="3dp"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             />
 
@@ -232,7 +232,7 @@
         app:layout_constraintTop_toBottomOf="@id/transferability"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="14dp"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         >
@@ -244,7 +244,7 @@
             android:textColor="#FFFFFF"
             android:typeface="serif"
             android:textSize="18sp"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="3dp"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             />
 
@@ -264,7 +264,7 @@
         app:layout_constraintTop_toBottomOf="@id/viewable_opening_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="14dp"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         >
@@ -276,7 +276,7 @@
             android:textColor="#FFFFFF"
             android:typeface="serif"
             android:textSize="18sp"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="3dp"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             />
 
@@ -296,7 +296,7 @@
         app:layout_constraintTop_toBottomOf="@id/viewable_closing_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="14dp"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         >
@@ -308,7 +308,7 @@
             android:textColor="#FFFFFF"
             android:typeface="serif"
             android:textSize="18sp"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="3dp"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             />
 
@@ -328,7 +328,7 @@
         app:layout_constraintTop_toBottomOf="@id/viewable_closing_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="14dp"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         >
@@ -340,7 +340,7 @@
             android:textColor="#FFFFFF"
             android:typeface="serif"
             android:textSize="18sp"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="3dp"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             />
 
@@ -353,8 +353,8 @@
             android:shadowColor="#000000"
             android:layout_gravity="start|center"
             android:layout_marginEnd="8dp"
-            android:layout_width="35dp"
-            android:layout_height="25dp" />
+            android:layout_width="30dp"
+            android:layout_height="20dp" />
 
     </LinearLayout>
 

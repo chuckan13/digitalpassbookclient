@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Digital Passbook</string>
+    <string name="app_name">Passbook</string>
     <string name="organization_activity">Organization Activity</string>
     <string name="student_activity">Student Activity</string>
     <string name="register_activity">Register Activity</string>
@@ -52,7 +52,7 @@
     <string name="title_event_details">Event Details</string>
     <string name="permanent_guest_list_invited">Permanent List</string>
     <string name="scan_prompt">Your Barcode Number: </string>
-    <string name="transferability_text">Single Transfer</string>
+    <string name="transferability_text">Unlimited Transfer</string>
     <string name="incomplete_scan">Incomplete</string>
     <string name="date">Date</string>
     <string name="skip">Skip</string>
