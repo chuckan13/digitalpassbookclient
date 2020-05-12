@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.example.digitalpassbook2.MainActivity
 import com.example.digitalpassbook2.R
+import com.example.digitalpassbook2.setSafeOnClickListener
 
 class RegisterFragment : Fragment() {
 
@@ -136,7 +137,7 @@ class RegisterFragment : Fragment() {
             }
         }
 
-       submit.setOnClickListener {
+       submit.setSafeOnClickListener {
             Log.d("Register Fragment", "submit button clicked")
             loading.visibility = View.VISIBLE
             submit.isEnabled = false

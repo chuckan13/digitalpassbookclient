@@ -14,6 +14,7 @@ import com.example.digitalpassbook2.MainActivity
 import com.example.digitalpassbook2.R
 import com.example.digitalpassbook2.login.login.ui.LoggedInUserView
 import com.example.digitalpassbook2.login.login.ui.LoginActivity
+import com.example.digitalpassbook2.setSafeOnClickListener
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_scan.*
 
@@ -29,12 +30,12 @@ class ScanActivity : AppCompatActivity() {
 
         val user = intent.getParcelableExtra<LoggedInUserView>("EXTRA_PARCEL")
 
-        scanner_button.setOnClickListener{
+        scanner_button.setSafeOnClickListener{
             val integrator = IntentIntegrator(this)
             integrator.setOrientationLocked(true)
             integrator.initiateScan()
         }
-        type_button.setOnClickListener{
+        type_button.setSafeOnClickListener{
             var text = ""
             val builder: AlertDialog.Builder = AlertDialog.Builder(this)
             builder.setTitle("Enter Barcode Number:")
@@ -60,7 +61,7 @@ class ScanActivity : AppCompatActivity() {
             ) { dialog, _ -> dialog.cancel() }
             builder.show()
         }
-        continue_button.setOnClickListener {
+        continue_button.setSafeOnClickListener {
             val intent: Intent = Intent(this, MainActivity::class.java)
             intent.putExtra("EXTRA_PARCEL", user)
             startActivity(intent)

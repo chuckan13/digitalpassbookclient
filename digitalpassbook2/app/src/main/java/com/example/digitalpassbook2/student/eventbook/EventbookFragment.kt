@@ -1,8 +1,13 @@
 package com.example.digitalpassbook2.student.eventbook
 
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.ListView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -18,6 +23,7 @@ import com.example.digitalpassbook2.MainActivity
 import com.example.digitalpassbook2.MyUser
 import com.example.digitalpassbook2.R
 import com.example.digitalpassbook2.Util
+import com.example.digitalpassbook2.login.login.ui.LoginActivity
 import com.example.digitalpassbook2.server.Event
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.fragment_eventbook.*
@@ -40,17 +46,33 @@ class EventbookFragment : Fragment() {
         setNavigation(view)
         eventsListView = view.findViewById(R.id.student_events_list_view)
         swipeRefreshLayout = view.findViewById(R.id.swipe_refresh)
+        swipeRefreshLayout.isRefreshing = true
+
+        val noEvents = view?.findViewById<TextView>(R.id.no_events)
+        eventbookViewModel.eventList.observe(context as FragmentActivity, Observer { it ->
+            MainActivity.studentEventList = (it ?: return@Observer)
+            if (MainActivity.studentEventList!!.isNotEmpty()) {
+                noEvents?.visibility = View.INVISIBLE
+            }
+            else {
+                noEvents?.visibility = View.VISIBLE
+            }
+            val adapter = activity?.let { StudentEventListAdapter(it, MainActivity.studentEventList!!, view) }
+            eventsListView.adapter = adapter
+            eventsListView.visibility = View.VISIBLE
+            swipeRefreshLayout.isRefreshing = false
+        })
 
         if (MainActivity.eventUpdateBoolean) {
             refresh()
         }
         else {
-            val adapter = activity?.let { StudentEventListAdapter(it, MainActivity.studentEventList!!) }
+            val adapter = activity?.let { StudentEventListAdapter(it, MainActivity.studentEventList!!, view) }
             eventsListView.adapter = adapter
             eventsListView.visibility = View.VISIBLE
         }
 
-        swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent)
+        swipeRefreshLayout.setColorSchemeColors(Color.RED, Color.GREEN, Color.BLUE)
         swipeRefreshLayout.setOnRefreshListener {
             refresh()
         }
@@ -62,28 +84,30 @@ class EventbookFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        Util.onOptionsStudent(item, context)
-        if (item.itemId == R.id.menu_refresh) {
-            refresh()
+        when (item.itemId) {
+            // Check if user triggered a refresh:
+            R.id.menu_refresh -> {
+                Log.i("EventBookFragment", "Refresh menu item selected")
+
+                // Signal SwipeRefreshLayout to start the progress indicator
+                swipeRefreshLayout.isRefreshing = true
+                // Start the refresh background task.
+                refresh()
+                return true
+            }
+            R.id.navigation_logout -> {
+                val intent = Intent(activity, LoginActivity::class.java)
+                startActivity(intent)
+                activity?.setResult(Activity.RESULT_OK)
+                return true
+            }
         }
+        // User didn't trigger a refresh, let the superclass handle this action
         return super.onOptionsItemSelected(item)
     }
 
     private fun refresh() {
         eventbookViewModel.getEventList(MyUser.id)
-        eventbookViewModel.eventList.observe(context as FragmentActivity, Observer { it ->
-            MainActivity.studentEventList = (it ?: return@Observer)
-            if (MainActivity.studentEventList!!.isNotEmpty()) {
-                no_events.visibility = View.INVISIBLE
-            }
-            else {
-                no_events.visibility = View.VISIBLE
-            }
-            val adapter = activity?.let { StudentEventListAdapter(it, MainActivity.studentEventList!!) }
-            eventsListView.adapter = adapter
-            eventsListView.visibility = View.VISIBLE
-            swipeRefreshLayout.isRefreshing = false
-        })
     }
 
     private fun setNavigation(view : View) {

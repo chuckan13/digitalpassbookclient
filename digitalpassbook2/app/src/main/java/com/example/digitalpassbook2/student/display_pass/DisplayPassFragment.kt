@@ -23,11 +23,14 @@ import com.example.digitalpassbook2.MyUser
 import com.example.digitalpassbook2.R
 import com.example.digitalpassbook2.Util
 import com.example.digitalpassbook2.server.Pass
+import com.example.digitalpassbook2.setSafeOnClickListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.google.zxing.WriterException
 import com.google.zxing.common.BitMatrix
+import kotlinx.android.synthetic.main.fragment_display_pass.*
+import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -61,18 +64,30 @@ class DisplayPassFragment() : Fragment() {
         val orgLogosmall = view.findViewById(R.id.pass_club_logo_small) as ImageView
         val orgName = view.findViewById(R.id.pass_club_name) as TextView
         val studentName = view.findViewById(R.id.user_name) as TextView
+
+        // displayed on start
         val startDateDisplay = view.findViewById(R.id.start_date) as TextView
         val startTimeDisplay = view.findViewById(R.id.start_time) as TextView
+        val infoButton = view.findViewById(R.id.info_button) as ImageView
+
+        // toggle on with more details
+        val eventTitle = view.findViewById<TextView>(R.id.event_title)
+        val eventDescription = view.findViewById<TextView>(R.id.event_description)
+        val startEndTime = view.findViewById<TextView>(R.id.start_end_time)
+        val startEndDate = view.findViewById<TextView>(R.id.start_end_date)
+        val transferability = view.findViewById<TextView>(R.id.transferability)
+        val loadingSpinner = view.findViewById<ProgressBar>(R.id.loading_spinner)
 
         orgLogo.setImageResource(resources.getIdentifier(clubLogo, "drawable", context?.packageName))
         orgLogosmall.setImageResource(resources.getIdentifier(clubLogo, "drawable", context?.packageName))
+        infoButton.setImageResource(resources.getIdentifier("info_button", "drawable", context?.packageName))
         orgName.text = args.clubNameArg
         studentName.text = MyUser.name
 
         val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
-        val dateFormatter = SimpleDateFormat("M/d")
+        val dateFormatter = SimpleDateFormat("MM/dd")
         val date: Date = formatter.parse(pass.date)
-        val timeFormatter = SimpleDateFormat("h:mm a")
+        val timeFormatter = SimpleDateFormat("hh:mm a")
 
         // these are the actual strings
         val formattedDate = dateFormatter.format(date)
@@ -81,6 +96,82 @@ class DisplayPassFragment() : Fragment() {
         startDateDisplay.text = formattedDate
         startTimeDisplay.text = formattedTime
 
+        displayPassViewModel.event.observe(context as FragmentActivity, Observer {
+            val event = it ?: return@Observer
+            infoButton.toggleVisibility()
+            startDateDisplay.toggleVisibility()
+            startTimeDisplay.toggleVisibility()
+
+            if (event.name.isBlank())
+                eventTitle.text = "No Event Title"
+            else
+                eventTitle.text = event.name
+
+            if (event.description.isBlank())
+                eventDescription.text = "No Event Description"
+            else
+                eventDescription.text = event.description
+
+            if (event.transferability) {
+                transferability.text = "Transferability: Unlimited"
+            }
+            else {
+                transferability.text = "Transferability: One-time"
+            }
+
+            // formatting and setting the date/time of event
+            val startTimeDate = formatter.parse(event.startDate)
+            val endTimeDate = formatter.parse(event.endDate)
+
+            val formattedStartDate = dateFormatter.format(startTimeDate)
+            val formattedEndDate = dateFormatter.format(endTimeDate)
+            val formattedStartTime = timeFormatter.format(startTimeDate)
+            val formattedEndTime = timeFormatter.format(endTimeDate)
+
+            if (formattedStartDate.equals(formattedEndDate)) {
+                startEndDate.text = formattedStartDate
+            }
+            else {
+                startEndDate.text = "$formattedStartDate - $formattedEndDate"
+            }
+
+            if (formattedStartTime.equals(formattedEndTime)) {
+                startEndTime.text = formattedStartTime
+            }
+            else {
+                startEndTime.text = "$formattedStartTime - $formattedEndTime"
+            }
+
+            loadingSpinner.toggleVisibility()
+            eventTitle.toggleVisibility()
+            eventDescription.toggleVisibility()
+            transferability.toggleVisibility()
+            startEndDate.toggleVisibility()
+            startEndTime.toggleVisibility()
+        })
+
+        infoButton.setSafeOnClickListener {
+            loadingSpinner.visibility = View.VISIBLE
+            displayPassViewModel.getEvent(pass.eventId)
+        }
+
+        orgLogo.setSafeOnClickListener {
+            if (infoButton.visibility == View.VISIBLE) {
+                loadingSpinner.visibility = View.VISIBLE
+                displayPassViewModel.getEvent(pass.eventId)
+            }
+            else {
+                infoButton.toggleVisibility()
+                startDateDisplay.toggleVisibility()
+                startTimeDisplay.toggleVisibility()
+
+                eventTitle.toggleVisibility()
+                eventDescription.toggleVisibility()
+                transferability.toggleVisibility()
+                startEndDate.toggleVisibility()
+                startEndTime.toggleVisibility()
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

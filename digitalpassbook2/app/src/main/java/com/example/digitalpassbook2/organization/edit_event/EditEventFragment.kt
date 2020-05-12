@@ -21,6 +21,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.example.digitalpassbook2.R
 import com.example.digitalpassbook2.Util
+import com.example.digitalpassbook2.setSafeOnClickListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.text.SimpleDateFormat
 import java.util.*
@@ -42,7 +43,7 @@ class EditEventFragment : Fragment() {
         val format = SimpleDateFormat("M/d/yy, h:mm a")
         format.timeZone = TimeZone.getTimeZone("GMT-04:00")
         button.text = format.format(date)
-        button.setOnClickListener {
+        button.setSafeOnClickListener {
             val datePickerDialog = DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
                 val timePickerDialog = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
                     date.year = year - 1900
@@ -99,7 +100,7 @@ class EditEventFragment : Fragment() {
             val event = (it ?: return@Observer)
 
             val guestList : MutableList<String?> = ArrayList()
-            view.findViewById<ImageButton>(R.id.send_pass_button).setOnClickListener {
+            view.findViewById<ImageButton>(R.id.send_pass_button).setSafeOnClickListener {
                 val guest = guestNameAutoCompleteTextView.text.toString()
                 if (guest in studentStringList) {
                     guestList.add(guest)
@@ -112,7 +113,7 @@ class EditEventFragment : Fragment() {
             }
 
             val bouncerList : MutableList<String?> = ArrayList()
-            view.findViewById<ImageButton>(R.id.add_bouncer_button).setOnClickListener {
+            view.findViewById<ImageButton>(R.id.add_bouncer_button).setSafeOnClickListener {
                 val bouncer = bouncerAutoCompleteTextView.text.toString()
                 if (bouncer in studentStringList) {
                     bouncerList.add(bouncer)
@@ -148,7 +149,7 @@ class EditEventFragment : Fragment() {
             handleDateTime(doorsOpen, startDate, startDate, doorsClose, endDate, formatter)
             handleDateTime(doorsClose, endDate, startDate, doorsClose, endDate, formatter)
 
-            view.findViewById<Button>(R.id.delete_event).setOnClickListener {
+            view.findViewById<Button>(R.id.delete_event).setSafeOnClickListener {
                 val dialogClickListener =
                     DialogInterface.OnClickListener { _, which ->
                         when (which) {
@@ -169,7 +170,7 @@ class EditEventFragment : Fragment() {
                 builder.show()
             }
 
-            view.findViewById<Button>(R.id.submit).setOnClickListener {
+            view.findViewById<Button>(R.id.submit).setSafeOnClickListener {
                 val dialogClickListener =
                     DialogInterface.OnClickListener { _, which ->
                         when (which) {

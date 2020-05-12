@@ -23,6 +23,7 @@ import com.example.digitalpassbook2.R
 import com.example.digitalpassbook2.MyUser
 import com.example.digitalpassbook2.Util
 import com.example.digitalpassbook2.server.Event
+import com.example.digitalpassbook2.setSafeOnClickListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.fragment_create_event.*
 import java.text.SimpleDateFormat
@@ -42,7 +43,7 @@ class CreateEventFragment : Fragment(), NumberPicker.OnValueChangeListener {
         val format = SimpleDateFormat("M/d/yy, h:mm a")
         format.timeZone = TimeZone.getTimeZone("GMT-04:00")
         button.text = format.format(date)
-        button.setOnClickListener {
+        button.setSafeOnClickListener {
             val datePickerDialog = DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
                 val timePickerDialog = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
                     date.year = year - 1900
@@ -76,7 +77,7 @@ class CreateEventFragment : Fragment(), NumberPicker.OnValueChangeListener {
     }
 
     private fun passesNumber(button: Button) {
-        button.setOnClickListener {
+        button.setSafeOnClickListener {
             val dialog = context?.let { it1 -> Dialog(it1) }
             dialog?.setTitle("Number of Passes per Member")
             dialog?.setContentView(R.layout.dialog_number_picker)
@@ -88,10 +89,10 @@ class CreateEventFragment : Fragment(), NumberPicker.OnValueChangeListener {
             numberPicker?.value = button.text.toString().toInt()
             numberPicker?.wrapSelectorWheel = false
             numberPicker?.setOnValueChangedListener(this)
-            cancelButton?.setOnClickListener {
+            cancelButton?.setSafeOnClickListener {
                 dialog.dismiss()
             }
-            setButton?.setOnClickListener {
+            setButton?.setSafeOnClickListener {
                 button.text = numberPicker?.value.toString()
                 dialog.dismiss()
             }
@@ -171,7 +172,7 @@ class CreateEventFragment : Fragment(), NumberPicker.OnValueChangeListener {
             bouncerAutoCompleteTextView.setAdapter(adapter)
         })
         val guestList : MutableList<String?> = ArrayList()
-        view.findViewById<ImageButton>(R.id.add_invited).setOnClickListener {
+        view.findViewById<ImageButton>(R.id.add_invited).setSafeOnClickListener {
             val guest = invitedAutoCompleteTextView.text.toString()
             if (guest in studentStringList) {
                 guestList.add(guest)
@@ -183,7 +184,7 @@ class CreateEventFragment : Fragment(), NumberPicker.OnValueChangeListener {
             }
         }
         val bouncerList : MutableList<String?> = ArrayList()
-        view.findViewById<ImageButton>(R.id.add_bouncer_button).setOnClickListener {
+        view.findViewById<ImageButton>(R.id.add_bouncer_button).setSafeOnClickListener {
             val bouncer = bouncerAutoCompleteTextView.text.toString()
             if (bouncer in studentStringList) {
                 bouncerList.add(bouncer)
@@ -200,7 +201,7 @@ class CreateEventFragment : Fragment(), NumberPicker.OnValueChangeListener {
 
         // Toggle visibility
         val toggleButton = view.findViewById<Button>(R.id.option_toggle)
-        toggleButton.setOnClickListener{
+        toggleButton.setSafeOnClickListener{
             eventTitle.toggleVisibility()
             location.toggleVisibility()
             description.toggleVisibility()
@@ -213,7 +214,7 @@ class CreateEventFragment : Fragment(), NumberPicker.OnValueChangeListener {
         }
 
         // Submit form
-        view.findViewById<Button>(R.id.submit).setOnClickListener {
+        view.findViewById<Button>(R.id.submit).setSafeOnClickListener {
             val dialogClickListener =
             DialogInterface.OnClickListener { _, which ->
                 when (which) {

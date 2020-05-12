@@ -2,7 +2,9 @@ package com.example.digitalpassbook2.organization.home
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
@@ -22,6 +24,7 @@ import com.example.digitalpassbook2.MyUser
 import com.example.digitalpassbook2.Util
 import com.example.digitalpassbook2.login.login.ui.LoginActivity
 import com.example.digitalpassbook2.server.Event
+import com.example.digitalpassbook2.setSafeOnClickListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -43,32 +46,8 @@ class HomeFragment : Fragment() {
         setNavigation(view)
         eventsListView = view.findViewById(R.id.events_list_view)
         swipeRefreshLayout = view.findViewById(R.id.swipe_refresh)
-        refresh()
+        swipeRefreshLayout.isRefreshing = true
 
-        swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent)
-        swipeRefreshLayout.setOnRefreshListener {
-            refresh()
-        }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.organization_toolbar_nav_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        Util.onOptionsOrganization(item, context)
-        if (item.itemId == R.id.menu_refresh) {
-            refresh()
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-    private fun refresh() {
-        create_event.setOnClickListener{
-            findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToNavigationCreateEvent())
-        }
-        homeViewModel.getEventList(MyUser.id)
         homeViewModel.eventList.observe(context as FragmentActivity, Observer { it ->
             val eventList = (it ?: return@Observer)
             var sortedEventList : MutableList<Event?> = ArrayList()
@@ -85,6 +64,55 @@ class HomeFragment : Fragment() {
             eventsListView.visibility = View.VISIBLE
             swipeRefreshLayout.isRefreshing = false
         })
+
+        create_event.setSafeOnClickListener{
+            findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToNavigationCreateEvent())
+        }
+
+        refresh()
+
+        swipeRefreshLayout.setColorSchemeColors(Color.RED, Color.GREEN, Color.BLUE)
+        swipeRefreshLayout.setOnRefreshListener {
+            refresh()
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.organization_toolbar_nav_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            // Check if user triggered a refresh:
+            R.id.menu_refresh -> {
+                Log.i("EventBookFragment", "Refresh menu item selected")
+
+                // Signal SwipeRefreshLayout to start the progress indicator
+                swipeRefreshLayout.isRefreshing = true
+                // Start the refresh background task.
+                refresh()
+                return true
+            }
+            R.id.navigation_preferences -> {
+                findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToNavigationPreferences())
+            }
+            R.id.navigation_create_event -> {
+                findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToNavigationCreateEvent())
+            }
+            R.id.navigation_logout -> {
+                val intent = Intent(activity, LoginActivity::class.java)
+                startActivity(intent)
+                activity?.setResult(Activity.RESULT_OK)
+                return true
+            }
+        }
+        // User didn't trigger a refresh, let the superclass handle this action
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun refresh() {
+        homeViewModel.getEventList(MyUser.id)
     }
 
     private fun setNavigation(view : View) {

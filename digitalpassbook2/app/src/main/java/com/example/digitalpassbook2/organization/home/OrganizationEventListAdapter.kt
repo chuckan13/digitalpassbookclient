@@ -14,6 +14,7 @@ import androidx.navigation.findNavController
 import com.example.digitalpassbook2.R
 import com.example.digitalpassbook2.MyUser
 import com.example.digitalpassbook2.server.*
+import com.example.digitalpassbook2.setSafeOnClickListener
 import java.text.SimpleDateFormat
 
 
@@ -58,14 +59,14 @@ class OrganizationEventListAdapter (private val context: Context,
         val formattedDate = dateformatter.format(date)
         eventDate.text = formattedDate
 
-        rowView.findViewById<ImageButton>(R.id.details_button).setOnClickListener {
+        rowView.findViewById<ImageButton>(R.id.details_button).setSafeOnClickListener {
             val action =
                 HomeFragmentDirections.actionNavigationHomeToNavigationEventDetails(getItemId(position))
             rowView.findNavController().navigate(action)
         }
 
         val organizationRow = rowView.findViewById<RelativeLayout>(R.id.organization_row)
-        organizationRow.setOnClickListener {
+        organizationRow.setSafeOnClickListener {
             showDialog(context, event!!)
         }
 
@@ -80,7 +81,7 @@ class OrganizationEventListAdapter (private val context: Context,
         dialog.setCanceledOnTouchOutside(true)
         dialog.setContentView(R.layout.dialog_organization_listview)
         dialog.window?.setGravity(Gravity.CENTER)
-        dialog.window?.setLayout(900, 700)
+        dialog.window?.setLayout(600, 470)
 
         val distributed = dialog.findViewById<TextView>(R.id.passes_distributed)
         event.id.let { it1 -> organizationEventListViewModel.getStudents(it1) }
@@ -100,7 +101,7 @@ class OrganizationEventListAdapter (private val context: Context,
         arrived.text = event.numArrived.toString()
 
         val okDialog: Button = dialog.findViewById(R.id.ok_button) as Button
-        okDialog.setOnClickListener() { dialog.dismiss() }
+        okDialog.setSafeOnClickListener() { dialog.dismiss() }
 
         dialog.show()
     }

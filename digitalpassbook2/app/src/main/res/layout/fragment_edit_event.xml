@@ -38,7 +38,7 @@
         android:layout_gravity="center"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="17dp"
         android:orientation="horizontal" >
 
         <LinearLayout
@@ -54,9 +54,9 @@
                 android:text="@string/doors_open_text"
                 android:textColor="#FFFFFF"
                 android:typeface="serif"
-                android:textSize="18sp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="16dp" >
+                android:textSize="16sp"
+                android:layout_marginStart="7dp"
+                android:layout_marginEnd="11dp" >
             </TextView>
 
             <Button
@@ -65,17 +65,17 @@
                 android:layout_gravity="center"
                 android:textColor="#FFFFFF"
                 android:typeface="serif"
-                android:textSize="16sp"
-                android:layout_width="170dp"
-                android:layout_height="45dp"
+                android:textSize="14sp"
+                android:layout_width="130dp"
+                android:layout_height="35dp"
                 android:background="@drawable/button_one"
                 android:shadowColor="#000000"
                 android:shadowDx="0"
                 android:shadowDy="0"
                 android:shadowRadius="5"
                 android:layout_marginTop="4dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="16dp" />
+                android:layout_marginStart="7dp"
+                android:layout_marginEnd="11dp" />
 
         </LinearLayout>
 
@@ -92,9 +92,9 @@
                 android:text="@string/doors_close_text"
                 android:textColor="#FFFFFF"
                 android:fontFamily="serif"
-                android:textSize="18sp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="10dp" >
+                android:textSize="16sp"
+                android:layout_marginStart="11dp"
+                android:layout_marginEnd="7dp" >
             </TextView>
 
             <Button
@@ -103,17 +103,17 @@
                 android:layout_gravity="center"
                 android:textColor="#FFFFFF"
                 android:typeface="serif"
-                android:textSize="16sp"
-                android:layout_width="170dp"
-                android:layout_height="45dp"
+                android:textSize="14sp"
+                android:layout_width="130dp"
+                android:layout_height="35dp"
                 android:background="@drawable/button_one"
                 android:shadowColor="#000000"
                 android:shadowDx="0"
                 android:shadowDy="0"
                 android:shadowRadius="5"
                 android:layout_marginTop="4dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="10dp" />
+                android:layout_marginStart="11dp"
+                android:layout_marginEnd="7dp" />
 
         </LinearLayout>
 
@@ -129,12 +129,12 @@
         android:importantForAutofill="no"
         android:inputType="text"
         android:maxLength="30"
-        android:textSize="16sp"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
+        android:textSize="14sp"
+        android:layout_marginTop="11dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginLeft="11dp"
+        android:layout_marginEnd="11dp"
+        android:layout_marginRight="11dp"
         app:layout_constraintTop_toBottomOf="@id/date_time_picker_buttons"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"/>
@@ -149,12 +149,12 @@
         android:importantForAutofill="no"
         android:inputType="text"
         android:maxLength="30"
-        android:textSize="16sp"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
+        android:textSize="14sp"
+        android:layout_marginTop="11dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginLeft="11dp"
+        android:layout_marginEnd="11dp"
+        android:layout_marginRight="11dp"
         app:layout_constraintTop_toBottomOf="@id/date_time_picker_buttons"
         app:layout_constraintStart_toEndOf="@id/event_title"
         app:layout_constraintLeft_toRightOf="@id/event_title"
@@ -171,14 +171,14 @@
         android:importantForAutofill="no"
         android:inputType="text"
         android:maxLength="30"
-        android:textSize="16sp"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintEnd_toStartOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintTop_toBottomOf="@+id/event_title" />
 
     <GridLayout
@@ -192,7 +192,7 @@
         android:gravity="center"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="11dp"
         android:columnCount="4"
         android:rowCount="2"
         android:orientation="horizontal" >
@@ -207,7 +207,7 @@
             android:hint="@string/invite_a_guest"
             android:inputType="text"
             android:textColor="#FFFFFF"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
         <ImageButton
             android:id="@+id/send_pass_button"
@@ -222,52 +222,52 @@
         <TextView
             android:id="@+id/textview4"
             android:layout_gravity="start|center"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="17dp"
             android:layout_marginEnd="2dp"
             android:text="@string/opening_visible"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:typeface="serif"
             android:textColor="#FFFFFF" />
 
         <Switch
             android:id="@+id/viewable_opening_time"
             android:layout_gravity="start|center"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="17dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/textview5"
             android:layout_gravity="start|center"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="17dp"
             android:layout_marginEnd="2dp"
             android:text="@string/closing_date_visible"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:typeface="serif"
             android:textColor="#FFFFFF" />
 
         <Switch
             android:id="@+id/viewable_closing_date"
             android:layout_gravity="start|center"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginTop="17dp"
+            android:layout_marginEnd="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/textview6"
             android:layout_gravity="start|center"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="17dp"
             android:layout_marginEnd="2dp"
             android:text="@string/closing_visible"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:typeface="serif"
             android:textColor="#FFFFFF" />
 
         <Switch
             android:id="@+id/viewable_closing_time"
             android:layout_gravity="start|center"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="17dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -284,7 +284,7 @@
         android:layout_gravity="center"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="17dp"
         android:orientation="horizontal" >
 
         <AutoCompleteTextView
@@ -297,7 +297,7 @@
             android:hint="@string/add_a_bouncer"
             android:inputType="text"
             android:textColor="#FFFFFF"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
         <ImageButton
             android:id="@+id/add_bouncer_button"
@@ -317,7 +317,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/button_two"
         android:text="@string/delete_event"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:typeface="serif"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
         app:layout_constraintStart_toStartOf="parent"
@@ -332,7 +332,7 @@
         android:text="@string/save_changes"
         android:background="@drawable/button_three"
         android:textColor="#FFFFFF"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:typeface="serif"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
         app:layout_constraintStart_toStartOf="parent"

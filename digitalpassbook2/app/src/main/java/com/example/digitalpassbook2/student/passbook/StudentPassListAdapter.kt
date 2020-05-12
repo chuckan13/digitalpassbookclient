@@ -18,7 +18,7 @@ import com.example.digitalpassbook2.student.eventbook.EventbookFragmentDirection
 
 class StudentPassListAdapter (private val context: Context,
                               private val studentPassList: MutableList<Pass?>,
-                              private val dialog: Dialog, private val eventRowView: View) : BaseAdapter() {
+                              private val dialog: Dialog, private val eventBookView: View) : BaseAdapter() {
 
     private val inflater: LayoutInflater =
         context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -66,13 +66,12 @@ class StudentPassListAdapter (private val context: Context,
                         it1
                     )
                 }
-                eventRowView.findNavController().navigate(action)
+                eventBookView.findNavController().navigate(action)
                 dialog.dismiss()
             }
         }
 
-        val passRow = rowView.findViewById<RelativeLayout>(R.id.pass_row)
-        passRow.setOnClickListener {
+        rowView.setOnClickListener {
             val action = pass.let { it1 ->
                 EventbookFragmentDirections.actionNavigationEventbookToNavigationDisplayPass(
                     it1,
@@ -81,7 +80,7 @@ class StudentPassListAdapter (private val context: Context,
                     orgNameArg
                 )
             }
-            eventRowView.findNavController().navigate(action)
+            eventBookView.findNavController().navigate(action)
             dialog.dismiss()
         }
 
