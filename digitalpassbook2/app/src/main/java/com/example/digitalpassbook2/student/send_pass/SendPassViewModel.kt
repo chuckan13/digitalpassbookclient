@@ -46,7 +46,7 @@ class SendPassViewModel : ViewModel() {
             val student = studentServe.getByNetId(netid)
             if (pass != null && student != null && event != null) {
                 pass.userId = student.id
-                if (student.orgId != pass.orgId && event.transferability) {
+                if (student.orgId != pass.orgId && !event.transferability) {
                     pass.isLocked = true
                 }
                 passServe.update(pass.id, pass)

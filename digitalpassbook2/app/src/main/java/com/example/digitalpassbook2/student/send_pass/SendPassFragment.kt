@@ -39,13 +39,13 @@ class SendPassFragment : Fragment() {
         val passId = args.passArg.toInt()
 
         guestNameAutoCompleteTextView = view.findViewById(R.id.guest_name)
-
+        val studentStringList : MutableList<String> = ArrayList()
         sendPassViewModel.getStudentList()
+
         sendPassViewModel.studentList.observe(context as FragmentActivity, Observer { it1 ->
             val studentList = (it1 ?: return@Observer)
 
             // change this to eliminate studentStringList and use custom adapter
-            val studentStringList : MutableList<String> = ArrayList()
             studentList.forEach{
                 if (it != null) {
                     studentStringList.add(it.netid)
@@ -57,9 +57,15 @@ class SendPassFragment : Fragment() {
 
         // Send the pass to them and navigate back to passbook
         view.findViewById<Button>(R.id.send_button_2).setSafeOnClickListener {
-            sendPassViewModel.updatePass(passId, guestNameAutoCompleteTextView.text.toString())
-            Toast.makeText(context, "Pass Sent", Toast.LENGTH_LONG).show()
-            findNavController().navigate(R.id.navigation_eventbook)
+            val inputNetId = guestNameAutoCompleteTextView.text.toString()
+            if (inputNetId in studentStringList) {
+                sendPassViewModel.updatePass(passId, inputNetId)
+                Toast.makeText(context, "Pass Sent", Toast.LENGTH_LONG).show()
+                findNavController().navigate(R.id.navigation_eventbook)
+            }
+            else {
+                Toast.makeText(context, "The NetID \"" + guestNameAutoCompleteTextView.text.toString() + "\" does not match any user", Toast.LENGTH_LONG).show()
+            }
         }
     }
 
