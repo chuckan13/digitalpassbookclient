@@ -23,6 +23,7 @@ import com.example.digitalpassbook2.MyUser
 import com.example.digitalpassbook2.R
 import com.example.digitalpassbook2.Util
 import com.example.digitalpassbook2.server.Pass
+import com.example.digitalpassbook2.setSafeOnClickListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
@@ -101,8 +102,15 @@ class DisplayPassFragment() : Fragment() {
             startDateDisplay.toggleVisibility()
             startTimeDisplay.toggleVisibility()
 
-            eventTitle.text = event.name
-            eventDescription.text = event.description
+            if (event.name.isBlank())
+                eventTitle.text = "No Event Title"
+            else
+                eventTitle.text = event.name
+
+            if (event.description.isBlank())
+                eventDescription.text = "No Event Description"
+            else
+                eventDescription.text = event.description
 
             if (event.transferability) {
                 transferability.text = "Transferability: Unlimited"
@@ -142,12 +150,12 @@ class DisplayPassFragment() : Fragment() {
             startEndTime.toggleVisibility()
         })
 
-        infoButton.setOnClickListener {
+        infoButton.setSafeOnClickListener {
             loadingSpinner.visibility = View.VISIBLE
             displayPassViewModel.getEvent(pass.eventId)
         }
 
-        orgLogo.setOnClickListener {
+        orgLogo.setSafeOnClickListener {
             if (infoButton.visibility == View.VISIBLE) {
                 loadingSpinner.visibility = View.VISIBLE
                 displayPassViewModel.getEvent(pass.eventId)

@@ -21,6 +21,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.digitalpassbook2.R
 import com.example.digitalpassbook2.Util
+import com.example.digitalpassbook2.setSafeOnClickListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.fragment_scan_pass.*
@@ -46,13 +47,13 @@ class ScanPassFragment : Fragment() {
         setNavigation(view)
         val scannerButton = view.findViewById<Button>(R.id.scanner_button)
         val typeButton = view.findViewById<Button>(R.id.type_button)
-        scannerButton.setOnClickListener{
+        scannerButton.setSafeOnClickListener{
             val integrator = IntentIntegrator.forSupportFragment(this)
             integrator.setOrientationLocked(true)
             integrator.initiateScan()
         }
 
-        typeButton.setOnClickListener{
+        typeButton.setSafeOnClickListener{
             val builder: AlertDialog.Builder? = context?.let { it1 -> AlertDialog.Builder(it1) }
             builder?.setTitle("Enter Barcode Number:")
             val input = EditText(context)

@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_navigation_home_to_navigation_event_details"
             app:destination="@id/navigation_event_details" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_preferences"
+            app:destination="@id/navigation_preferences" />
     </fragment>
 
     <fragment
@@ -24,6 +27,9 @@
         <action
             android:id="@+id/action_navigation_create_event_to_navigation_home"
             app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/action_navigation_create_event_to_navigation_preferences"
+            app:destination="@id/navigation_preferences" />
     </fragment>
 
     <fragment
@@ -33,18 +39,24 @@
         <argument
             android:name="eventArg"
             app:argType="long" />
+        <action
+            android:id="@+id/action_navigation_event_details_to_navigation_preferences"
+            app:destination="@id/navigation_preferences" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_preferences"
         android:name="com.example.digitalpassbook2.organization.preferences.PreferencesFragment"
         tools:layout="@layout/fragment_preferences" >
+        <action
+            android:id="@+id/action_navigation_preferences_to_navigation_home"
+            app:destination="@id/navigation_home" />
     </fragment>
 
-    <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.digitalpassbook2.notifications.NotificationsFragment"
-        tools:layout="@layout/fragment_notifications" >
-    </fragment>
+<!--    <fragment-->
+<!--        android:id="@+id/navigation_notifications"-->
+<!--        android:name="com.example.digitalpassbook2.notifications.NotificationsFragment"-->
+<!--        tools:layout="@layout/fragment_notifications" >-->
+<!--    </fragment>-->
 
 </navigation>

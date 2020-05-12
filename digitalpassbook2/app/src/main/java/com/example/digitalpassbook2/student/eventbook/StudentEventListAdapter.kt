@@ -3,6 +3,7 @@ package com.example.digitalpassbook2.student.eventbook
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
+import android.os.SystemClock
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -19,15 +20,18 @@ import com.example.digitalpassbook2.R
 import com.example.digitalpassbook2.server.Event
 import com.example.digitalpassbook2.server.Pass
 import com.example.digitalpassbook2.server.Student
+import com.example.digitalpassbook2.setSafeOnClickListener
 import com.example.digitalpassbook2.student.passbook.StudentPassListAdapter
 import com.google.android.material.internal.ContextUtils.getActivity
 import java.text.SimpleDateFormat
 
 
 class StudentEventListAdapter (private val context: Context,
-                               private val studentEventList: MutableList<Event?>) : BaseAdapter() {
+                               private val studentEventList: MutableList<Event?>, private val eventBookView: View) : BaseAdapter() {
 
     private lateinit var studentEventListViewModel: StudentEventListViewModel
+
+    private var mLastClickTime: Long = 0
 
     private val inflater: LayoutInflater =
         context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -78,58 +82,61 @@ class StudentEventListAdapter (private val context: Context,
             }
         })
 
-        val eventRow = rowView.findViewById<RelativeLayout>(R.id.event_row)
-        studentEventListViewModel.getPassNumber(eventId, MyUser.id)
+        val loadingSpinner = eventBookView.findViewById<ProgressBar>(R.id.loading_spinner)
+        rowView.setSafeOnClickListener {
+            loadingSpinner.visibility = View.VISIBLE
+            studentEventListViewModel.getPassNumber(eventId, MyUser.id)
+        }
         studentEventListViewModel.passes.observe(context, Observer { it1 ->
             val passes = (it1 ?: return@Observer)
-            val yesDialog = yesDialog(context, passes, rowView)
-            val noDialog = noDialog(context)
-            eventRow.setOnClickListener {
-                if (passes.isNotEmpty()) {
-                    yesDialog.show()
-                }
-                else {
-                    noDialog?.show()
-                }
+            loadingSpinner.visibility = View.INVISIBLE
+            if (passes.isNotEmpty()) {
+                Log.d("StudentEventListAdapter", "rowView clicked")
+                showYesDialog(context, passes, eventBookView)
+            }
+            else {
+                showNoDialog(context)
             }
         })
 
-        bounce.setOnClickListener {
+        bounce.setSafeOnClickListener {
             val action = EventbookFragmentDirections.actionNavigationEventbookToNavigationScanPass(eventId)
-            rowView.findNavController().navigate(action)
+            eventBookView.findNavController().navigate(action)
+            Log.d("StudentEventListAdapter", "Success: rowView nav controller found!")
         }
 
         return rowView
     }
 
     @SuppressLint("RestrictedApi")
-    fun yesDialog(context: Context, passes : List<Pass?>, rowView : View) : Dialog {
+    fun showYesDialog(context: Context, passes : List<Pass?>, eventBookView: View) {
         // create dialog to display the passes
         val dialog = Dialog(context)
-        dialog.setCancelable(true)
-        dialog.setCanceledOnTouchOutside(true)
+        dialog.setCancelable(false)
+        dialog.setCanceledOnTouchOutside(false)
         dialog.setContentView(R.layout.dialog_event_listview)
         dialog.window?.setLayout(600, 550)
         dialog.window?.setGravity(Gravity.CENTER)
         val btndialog: Button = dialog.findViewById(R.id.btndialog) as Button
-        btndialog.setOnClickListener { dialog.dismiss() }
+        btndialog.setSafeOnClickListener { dialog.dismiss() }
 
         // set up dialog to contain a list of passes
         val passListAdapter = getActivity(context)?.let { it2 ->
-            StudentPassListAdapter(it2, passes as MutableList<Pass?>, dialog, rowView)
+            StudentPassListAdapter(it2, passes as MutableList<Pass?>, dialog, eventBookView)
         }
+        Log.d("StudentEventListAdapter", "display")
 
         val passListView: ListView = dialog.findViewById(R.id.listview) as ListView
         passListView.adapter = passListAdapter
         passListView.visibility = View.VISIBLE
-        return dialog
+        dialog.show()
     }
 
-    private fun noDialog(context: Context) : AlertDialog.Builder? {
+    private fun showNoDialog(context: Context) {
         val noPasses: AlertDialog.Builder? = AlertDialog.Builder(context)
         noPasses?.setTitle("You have no spots")
         noPasses?.setNegativeButton("OK") { dialog, _ -> dialog.cancel() }
-        return noPasses
+        noPasses?.show()
     }
 
     private fun isBouncer(student: Student, eventsid: Int): Boolean {
@@ -139,4 +146,6 @@ class StudentEventListAdapter (private val context: Context,
         }
         return isBouncer
     }
+
+
 }

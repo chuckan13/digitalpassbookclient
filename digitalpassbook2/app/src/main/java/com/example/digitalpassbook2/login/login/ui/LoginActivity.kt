@@ -14,6 +14,7 @@ import com.example.digitalpassbook2.MainActivity
 import android.widget.*
 import com.example.digitalpassbook2.R
 import com.example.digitalpassbook2.login.register.ui.RegisterActivity
+import com.example.digitalpassbook2.setSafeOnClickListener
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var loginViewModel: LoginViewModel
@@ -90,12 +91,12 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        login.setOnClickListener {
+        login.setSafeOnClickListener {
             loading.visibility = View.VISIBLE
             loginViewModel.login(username.text.toString(), password.text.toString())
         }
 
-        register.setOnClickListener {
+        register.setSafeOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
 

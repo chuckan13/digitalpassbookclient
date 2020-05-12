@@ -56,7 +56,7 @@ class SendPassFragment : Fragment() {
         })
 
         // Send the pass to them and navigate back to passbook
-        view.findViewById<Button>(R.id.send_button_2).setOnClickListener {
+        view.findViewById<Button>(R.id.send_button_2).setSafeOnClickListener {
             sendPassViewModel.updatePass(passId, guestNameAutoCompleteTextView.text.toString())
             Toast.makeText(context, "Pass Sent", Toast.LENGTH_LONG).show()
             findNavController().navigate(R.id.navigation_eventbook)
