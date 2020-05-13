@@ -117,6 +117,7 @@ class EditEventFragment : Fragment() {
                 val bouncer = bouncerAutoCompleteTextView.text.toString()
                 if (bouncer in studentStringList) {
                     bouncerList.add(bouncer)
+                    editEventViewModel.bouncerList(bouncerList, event)
                     bouncerAutoCompleteTextView.setText("")
                     Toast.makeText(context, "Bouncer added!", Toast.LENGTH_LONG).show()
                 }
