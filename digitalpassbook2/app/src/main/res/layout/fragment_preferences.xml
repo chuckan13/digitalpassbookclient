@@ -208,7 +208,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/single_transfer_text"
+            android:text="@string/transferability_text"
             android:textColor="#FFFFFF"
             android:typeface="serif"
             android:textSize="18sp"
