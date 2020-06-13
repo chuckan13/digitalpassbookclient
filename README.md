@@ -1,3 +1,3 @@
-#Digital Passbook Project
+# Digital Passbook Project
 
-Note that the "server" folder will not have anything in it. There is a separate repository for the server code.
+This is the Android app client code for the Digital Passbook project, which handles the distribution of invites to Princeton University eating club social events.
